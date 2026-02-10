@@ -1,0 +1,32 @@
+allow_steal: true
+allow_attack: true
+allow_proposals: true
+allow_votes: true
+
+work_income: [2, 4]
+steal_min_resources: 1
+steal_amount: 3
+steal_success_base: 0.45
+steal_catch_prob: 0.25
+steal_catch_penalty: 2
+steal_fail_penalty: 1
+
+attack_cost: 8
+attack_success_base: 0.12
+attack_fail_penalty: 2
+attack_loot_ratio: 0.4
+
+mutable_keys:
+  - work_income
+  - steal_amount
+  - steal_success_base
+  - steal_catch_penalty
+  - attack_cost
+  - attack_success_base
+
+key_ranges:
+  steal_amount: {min: 1, max: 8}
+  steal_success_base: {min: 0.05, max: 0.9}
+  steal_catch_penalty: {min: 0, max: 8}
+  attack_cost: {min: 2, max: 15}
+  attack_success_base: {min: 0.01, max: 0.75}
