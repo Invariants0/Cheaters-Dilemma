@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from cheaters_dilemma.engine.actions import Action, ActionType
-from cheaters_dilemma.engine.agent import Agent, AgentObservation
+from engine.actions import Action, ActionType
+from engine.agent import Agent, AgentObservation
 
 
 class CheaterAgent(Agent):

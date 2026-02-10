@@ -4,13 +4,13 @@ from dataclasses import dataclass
 from random import Random
 from typing import Any
 
-from cheaters_dilemma.engine.actions import Action, ActionType
-from cheaters_dilemma.engine.agent import Agent, AgentObservation
-from cheaters_dilemma.engine.governance import GovernanceSystem
-from cheaters_dilemma.engine.logger import EventLogger
-from cheaters_dilemma.engine.reputation import ReputationBook
-from cheaters_dilemma.engine.resolver import ConflictResolver
-from cheaters_dilemma.engine.rules import RuleSet
+from engine.actions import Action, ActionType
+from engine.agent import Agent, AgentObservation
+from engine.governance import GovernanceSystem
+from engine.logger import EventLogger
+from engine.reputation import ReputationBook
+from engine.resolver import ConflictResolver
+from engine.rules import RuleSet
 
 
 @dataclass

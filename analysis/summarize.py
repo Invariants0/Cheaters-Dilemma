@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from cheaters_dilemma.analysis.metrics import compute_metrics
+from analysis.metrics import compute_metrics
 
 
 def leaderboard_lines(result: dict[str, Any], limit: int = 10) -> list[str]:

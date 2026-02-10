@@ -10,7 +10,7 @@ PARENT = ROOT.parent
 if str(PARENT) not in sys.path:
     sys.path.insert(0, str(PARENT))
 
-from cheaters_dilemma.run import run_simulation
+from run import run_simulation
 
 
 def main() -> None:

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from cheaters_dilemma.engine.rules import RuleSet
+from engine.rules import RuleSet
 
 
 @dataclass

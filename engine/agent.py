@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Any
 
-from cheaters_dilemma.engine.actions import Action
+from engine.actions import Action
 
 
 @dataclass(frozen=True)

@@ -13,15 +13,15 @@ PARENT = ROOT.parent
 if str(PARENT) not in sys.path:
     sys.path.insert(0, str(PARENT))
 
-from cheaters_dilemma.agents.cheater import CheaterAgent
-from cheaters_dilemma.agents.greedy import GreedyAgent
-from cheaters_dilemma.agents.politician import PoliticianAgent
-from cheaters_dilemma.agents.warlord import WarlordAgent
-from cheaters_dilemma.analysis.summarize import summarize_result
-from cheaters_dilemma.engine.world import World
+from agents.cheater import CheaterAgent
+from agents.greedy import GreedyAgent
+from agents.politician import PoliticianAgent
+from agents.warlord import WarlordAgent
+from analysis.summarize import summarize_result
+from engine.world import World
 
 
-CONFIG_DIR = ROOT / "config" if (ROOT / "config").exists() else ROOT / "cheaters_dilemma" / "config"
+CONFIG_DIR = ROOT / "config"
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:

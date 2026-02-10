@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from cheaters_dilemma.engine.actions import Action, ActionType
+from engine.actions import Action, ActionType
 
 
 @dataclass
