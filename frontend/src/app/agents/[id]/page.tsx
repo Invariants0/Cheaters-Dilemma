@@ -1,0 +1,163 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { apiClient } from "@/lib/api";
+import { AgentDetail } from "@/lib/types";
+import { GameLayout, TopBar } from "@/components/GameLayout";
+import { GamePanel, GameButton, StatDisplay } from "@/components/GameUI";
+
+export default function AgentDetailPage() {
+  const params = useParams();
+  const agentId = parseInt(params.id as string);
+  const [agent, setAgent] = useState<AgentDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [simulationId] = useState("default");
+
+  useEffect(() => {
+    const loadAgent = async () => {
+      try {
+        const agentData = await apiClient.getAgentDetail(agentId, simulationId);
+        setAgent(agentData);
+      } catch (error) {
+        console.error("Failed to load agent:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAgent();
+  }, [agentId, simulationId]);
+
+  if (loading) {
+    return (
+      <GameLayout
+        topBar={<TopBar />}
+        centerContent={
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="text-[#00ffff] font-mono text-2xl">LOADING AGENT DATA...</div>
+          </div>
+        }
+      />
+    );
+  }
+
+  if (!agent) {
+    return (
+      <GameLayout
+        topBar={<TopBar />}
+        centerContent={
+          <div className="flex items-center justify-center w-full h-full">
+            <GamePanel title="ERROR">
+              <p className="text-[#ff0055] font-mono">Agent not found</p>
+              <Link href="/agents" className="block mt-4">
+                <GameButton className="w-full">BACK TO AGENTS</GameButton>
+              </Link>
+            </GamePanel>
+          </div>
+        }
+      />
+    );
+  }
+
+  const strategyColors: Record<string, string> = {
+    cheater: "text-[#ff0055]",
+    greedy: "text-[#ffff00]",
+    politician: "text-[#00d9ff]",
+    warlord: "text-[#ff6600]",
+  };
+
+  const successRate =
+    agent.total_actions > 0
+      ? ((agent.successful_actions / agent.total_actions) * 100).toFixed(1)
+      : "0.0";
+
+  return (
+    <GameLayout
+      topBar={<TopBar />}
+      leftPanel={
+        <div className="space-y-4">
+          <GamePanel title="AGENT STATUS">
+            <div className="space-y-3 text-xs font-mono">
+              <div>
+                <span className="text-[#ff00ff]">ID:</span>
+                <span className="float-right text-[#00ffff]">{agent.agent_id}</span>
+              </div>
+              <div>
+                <span className="text-[#ff00ff]">STRATEGY:</span>
+                <span className={`float-right uppercase font-bold ${strategyColors[agent.strategy]}`}>
+                  {agent.strategy}
+                </span>
+              </div>
+              <div>
+                <span className="text-[#ff00ff]">STATUS:</span>
+                <span className={`float-right font-bold ${agent.alive ? "text-[#00ff00]" : "text-[#ff0055]"}`}>
+                  {agent.alive ? "ALIVE" : "DEAD"}
+                </span>
+              </div>
+            </div>
+          </GamePanel>
+
+          <GamePanel title="RESOURCES & POWER">
+            <div className="space-y-2 text-xs text-[#00d9ff]">
+              <StatDisplay label="Resources" value={agent.resources} />
+              <StatDisplay label="Strength" value={agent.strength} />
+              <StatDisplay label="Trust" value={agent.trust.toFixed(2)} unit="/1.0" />
+              <StatDisplay label="Aggression" value={agent.aggression.toFixed(2)} unit="/1.0" />
+            </div>
+          </GamePanel>
+
+          <GamePanel title="ACTION RECORD">
+            <div className="space-y-2 text-xs text-[#00d9ff]">
+              <StatDisplay label="Total" value={agent.total_actions} />
+              <StatDisplay label="Successful" value={agent.successful_actions} />
+              <StatDisplay label="Failed" value={agent.failed_actions} />
+              <StatDisplay label="Success Rate" value={`${successRate}%`} />
+            </div>
+          </GamePanel>
+
+          <Link href="/agents" className="block">
+            <GameButton className="w-full">BACK TO AGENTS</GameButton>
+          </Link>
+        </div>
+      }
+      centerContent={
+        <div className="w-full h-full overflow-auto p-8">
+          <GamePanel title="RESOURCE HISTORY" className="mb-4">
+            <div className="h-32 flex items-end gap-1 bg-[#0a0e27] p-4 border border-[#00ffff]">
+              {agent.resource_history.slice(0, 20).map((val, idx) => {
+                const max = Math.max(...agent.resource_history);
+                const height = max > 0 ? (val / max) * 100 : 0;
+                return (
+                  <div
+                    key={idx}
+                    className="flex-1 bg-gradient-to-t from-[#00ffff] to-[#ff00ff] opacity-80 hover:opacity-100"
+                    style={{ height: `${Math.max(height, 5)}%` }}
+                    title={`Turn ${idx}: ${val} resources`}
+                  />
+                );
+              })}
+            </div>
+          </GamePanel>
+
+          <GamePanel title="TRUST TIMELINE">
+            <div className="h-32 flex items-end gap-1 bg-[#0a0e27] p-4 border border-[#00ffff]">
+              {agent.reputation_history.slice(0, 20).map((val, idx) => {
+                const height = (val / 1.0) * 100;
+                return (
+                  <div
+                    key={idx}
+                    className="flex-1 bg-gradient-to-t from-[#00d9ff] to-[#00ffff]"
+                    style={{ height: `${Math.max(height, 5)}%` }}
+                    title={`Turn ${idx}: ${val.toFixed(2)} trust`}
+                  />
+                );
+              })}
+            </div>
+          </GamePanel>
+        </div>
+      }
+    />
+  );
+}

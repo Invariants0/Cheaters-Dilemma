@@ -1,75 +1,106 @@
 import Link from "next/link";
+import { GamePanel, GameButton } from "@/components/GameUI";
 
 export default function Home() {
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          The Cheater's Dilemma
+    <div className="w-full h-screen bg-[#0a0e27] overflow-hidden flex flex-col">
+      {/* Animated Header */}
+      <div className="border-b-2 border-[#00ffff] bg-[#0f1629] p-8 text-center scanlines">
+        <h1 className="retro-title mb-2 text-5xl">
+          THE CHEATER&apos;S DILEMMA
         </h1>
-        <p className="text-xl text-gray-600 mb-8">
-          A multi-agent game-theoretic simulation where winning corrupts the rules
+        <p className="retro-subtitle text-lg">
+          &gt; A MULTI-AGENT GAME-THEORETIC SIMULATION &lt;
         </p>
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-          <h2 className="text-lg font-semibold text-blue-900 mb-2">About</h2>
-          <p className="text-blue-800">
-            Explore emergent behaviors when rational agents compete in a world where cheating is often the fastest strategy,
-            but rules themselves can be rewritten as strategic assets. Violence is possible but costly, and power emerges
-            through alliances, strength, and governance capture.
-          </p>
+        <p className="text-[#00d9ff] text-sm mt-4 font-mono">
+          WHERE WINNING CORRUPTS THE RULES
+        </p>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          {/* About Panel */}
+          <GamePanel title="ABOUT" className="col-span-1 md:col-span-2" neon>
+            <p className="text-[#00d9ff] font-mono text-sm leading-relaxed">
+              Explore emergent behaviors when rational agents compete in a world where cheating
+              is often the fastest strategy, but rules themselves can be rewritten as strategic
+              assets. Violence is possible but costly, and <span className="text-[#00ffff]">power</span> emerges
+              through alliances, <span className="text-[#ff00ff]">strength</span>, and governance capture.
+            </p>
+          </GamePanel>
+
+          {/* Start Simulation */}
+          <GamePanel title="START SIMULATION">
+            <div className="space-y-4">
+              <p className="text-[#00d9ff] text-sm mb-4">
+                Launch a new multi-agent simulation with customizable parameters.
+              </p>
+              <Link href="/simulation" className="block">
+                <GameButton className="w-full">LAUNCH WORLD</GameButton>
+              </Link>
+            </div>
+          </GamePanel>
+
+          {/* View Replays */}
+          <GamePanel title="VIEW REPLAYS">
+            <div className="space-y-4">
+              <p className="text-[#00d9ff] text-sm mb-4">
+                Browse completed simulations and analyze outcomes.
+              </p>
+              <Link href="/replays" className="block">
+                <GameButton className="w-full">REPLAY LOG</GameButton>
+              </Link>
+            </div>
+          </GamePanel>
+
+          {/* Game Info */}
+          <GamePanel title="GAME INFO">
+            <div className="space-y-3 text-xs font-mono text-[#00d9ff]">
+              <div>
+                <span className="text-[#ff00ff]">&gt;</span> AGENTS: Dynamic behavioral strategies
+              </div>
+              <div>
+                <span className="text-[#ff00ff]">&gt;</span> ACTIONS: Work, Steal, Attack, Propose, Vote
+              </div>
+              <div>
+                <span className="text-[#ff00ff]">&gt;</span> METRICS: Gini Coefficient, HHI, Governance
+              </div>
+            </div>
+          </GamePanel>
+
+          {/* Rules Info */}
+          <GamePanel title="RULES">
+            <div className="space-y-3 text-xs font-mono text-[#00d9ff]">
+              <div>
+                <span className="text-[#00ffff]">[ 1 ]</span> Agents can propose rule changes
+              </div>
+              <div>
+                <span className="text-[#00ffff]">[ 2 ]</span> Voting determines if rules take effect
+              </div>
+              <div>
+                <span className="text-[#00ffff]">[ 3 ]</span> Winners shape the world forever
+              </div>
+            </div>
+          </GamePanel>
+
+          {/* Explore More */}
+          <GamePanel title="EXPLORE" className="col-span-1 md:col-span-2">
+            <div className="grid grid-cols-2 gap-4">
+              <Link href="/agents" className="block">
+                <GameButton className="w-full">AGENTS</GameButton>
+              </Link>
+              <Link href="/rules" className="block">
+                <GameButton className="w-full">RULES</GameButton>
+              </Link>
+            </div>
+          </GamePanel>
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 mb-12">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Start a Simulation</h3>
-          <p className="text-gray-600 mb-4">
-            Launch a new multi-agent simulation with customizable parameters.
-            Watch as agents compete, form alliances, and manipulate governance.
-          </p>
-          <Link
-            href="/simulation"
-            className="inline-block bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
-          >
-            Start Simulation
-          </Link>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">View Past Runs</h3>
-          <p className="text-gray-600 mb-4">
-            Browse completed simulations, analyze outcomes, and replay
-            historical runs to understand emergent strategies.
-          </p>
-          <Link
-            href="/replays"
-            className="inline-block bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors"
-          >
-            View Replays
-          </Link>
-        </div>
-      </div>
-
-      <div className="bg-gray-50 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Agent Strategies</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-gray-900">Greedy</h4>
-            <p className="text-sm text-gray-600">Works honestly but steals from the rich</p>
-          </div>
-          <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-gray-900">Cheater</h4>
-            <p className="text-sm text-gray-600">Aggressive theft and rule manipulation</p>
-          </div>
-          <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-gray-900">Politician</h4>
-            <p className="text-sm text-gray-600">Governance-focused with strategic voting</p>
-          </div>
-          <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-gray-900">Warlord</h4>
-            <p className="text-sm text-gray-600">Late-game eliminations and attack buffs</p>
-          </div>
-        </div>
+      {/* Footer */}
+      <div className="border-t-2 border-[#00ffff] bg-[#0f1629] px-8 py-4 text-center text-xs font-mono text-[#00d9ff] scanlines">
+        &gt; MOLTIVERSE HACKATHON 2026 &lt; | &gt; SIMULATION ENGINE READY &lt;
       </div>
     </div>
   );

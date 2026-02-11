@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { apiClient } from "@/lib/api";
 import { SimulationState, SimulationEvent } from "@/lib/types";
+import { GameLayout, TopBar } from "@/components/GameLayout";
+import { GamePanel, GameButton, StatDisplay, AgentCard, EventLog } from "@/components/GameUI";
 
 export default function SimulationPage() {
   const [simulationId, setSimulationId] = useState<string | null>(null);
@@ -50,42 +53,33 @@ export default function SimulationPage() {
     }
   };
 
-  return (
-    <div className="max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Simulation Control</h1>
-
-      {!simulationId ? (
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Start New Simulation</h2>
-          <div className="grid md:grid-cols-3 gap-4 mb-6">
+  if (!simulationId) {
+    return (
+      <div className="w-full h-screen bg-[#0a0e27] p-8 flex items-center justify-center">
+        <GamePanel title="LAUNCH SIMULATION" className="max-w-md w-full">
+          <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Number of Agents
-              </label>
+              <label className="stat-label block mb-2">AGENT COUNT</label>
               <input
                 type="number"
                 min="5"
                 max="20"
                 value={config.agent_count}
                 onChange={(e) => setConfig(prev => ({ ...prev, agent_count: parseInt(e.target.value) }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Random Seed
-              </label>
+              <label className="stat-label block mb-2">RANDOM SEED</label>
               <input
                 type="number"
                 value={config.seed}
                 onChange={(e) => setConfig(prev => ({ ...prev, seed: parseInt(e.target.value) }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Max Turns (optional)
-              </label>
+              <label className="stat-label block mb-2">MAX TURNS (OPTIONAL)</label>
               <input
                 type="number"
                 placeholder="500"
@@ -94,116 +88,114 @@ export default function SimulationPage() {
                   ...prev,
                   turns: e.target.value ? parseInt(e.target.value) : undefined
                 }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
               />
             </div>
-          </div>
-          <button
-            onClick={startSimulation}
-            disabled={isRunning}
-            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isRunning ? "Starting..." : "Start Simulation"}
-          </button>
-        </div>
-      ) : (
-        <div className="space-y-8">
-          {/* Simulation Controls */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold">Simulation #{simulationId}</h2>
-              <button
-                onClick={stepSimulation}
-                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-              >
-                Step Forward
-              </button>
+            <div className="flex gap-2">
+              <GameButton onClick={startSimulation} disabled={isRunning} className="flex-1">
+                {isRunning ? "LOADING..." : "LAUNCH"}
+              </GameButton>
+              <Link href="/" className="flex-1">
+                <GameButton className="w-full">BACK</GameButton>
+              </Link>
             </div>
-
-            {simulationState && (
-              <div className="grid md:grid-cols-4 gap-4 text-center">
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <div className="text-2xl font-bold text-gray-900">{simulationState.current_turn}</div>
-                  <div className="text-sm text-gray-600">Current Turn</div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <div className="text-2xl font-bold text-gray-900">{simulationState.agents.length}</div>
-                  <div className="text-sm text-gray-600">Total Agents</div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <div className="text-2xl font-bold text-gray-900">{simulationState.alive_count}</div>
-                  <div className="text-sm text-gray-600">Alive Agents</div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <div className="text-2xl font-bold text-gray-900">{simulationState.event_count}</div>
-                  <div className="text-sm text-gray-600">Total Events</div>
-                </div>
-              </div>
-            )}
           </div>
+        </GamePanel>
+      </div>
+    );
+  }
 
-          {/* Agent Status */}
-          {simulationState && (
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold mb-4">Agent Status</h3>
-              <div className="overflow-x-auto">
-                <table className="min-w-full table-auto">
-                  <thead>
-                    <tr className="bg-gray-50">
-                      <th className="px-4 py-2 text-left">ID</th>
-                      <th className="px-4 py-2 text-left">Strategy</th>
-                      <th className="px-4 py-2 text-left">Resources</th>
-                      <th className="px-4 py-2 text-left">Strength</th>
-                      <th className="px-4 py-2 text-left">Status</th>
-                      <th className="px-4 py-2 text-left">Trust</th>
-                      <th className="px-4 py-2 text-left">Aggression</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {simulationState.agents.map((agent) => (
-                      <tr key={agent.agent_id} className="border-t">
-                        <td className="px-4 py-2">{agent.agent_id}</td>
-                        <td className="px-4 py-2">{agent.strategy}</td>
-                        <td className="px-4 py-2">{agent.resources}</td>
-                        <td className="px-4 py-2">{agent.strength}</td>
-                        <td className="px-4 py-2">
-                          <span className={`px-2 py-1 rounded-full text-xs ${
-                            agent.alive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                          }`}>
-                            {agent.alive ? 'Alive' : 'Dead'}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2">{agent.trust.toFixed(2)}</td>
-                        <td className="px-4 py-2">{agent.aggression.toFixed(2)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+  // Simulation Running View
+  const mockAgents = simulationState?.agents.slice(0, 5).map((agent, idx) => ({
+    id: agent.agent_id,
+    name: `Agent ${agent.agent_id}`,
+    type: agent.strategy || "unknown",
+    resources: agent.resources || 0,
+    strength: agent.strength || 0,
+    trust: agent.trust || 0,
+    alive: agent.alive,
+  })) || [];
+
+  return (
+    <GameLayout
+      topBar={<TopBar />}
+      leftPanel={
+        <>
+          <GamePanel title="SIMULATION CONTROL" className="flex-shrink-0">
+            <div className="space-y-3">
+              <StatDisplay label="SIM ID" value={simulationId.slice(0, 8)} />
+              <StatDisplay label="TURN" value={simulationState?.current_turn || 0} />
+              <StatDisplay label="ALIVE" value={simulationState?.alive_count || 0} unit="/" className="inline" />
+              <div className="text-xs text-[#00d9ff]">/{simulationState?.agents.length || 0}</div>
+              <GameButton onClick={stepSimulation} className="w-full mt-4">
+                STEP FORWARD
+              </GameButton>
             </div>
-          )}
+          </GamePanel>
 
-          {/* Event Log */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold mb-4">Event Log</h3>
-            <div className="max-h-96 overflow-y-auto space-y-2">
-              {events.slice(-20).map((event, index) => (
-                <div key={index} className="bg-gray-50 p-3 rounded-md">
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium">Turn {event.turn}</span>
-                    <span className="text-sm text-gray-600">Agent {event.actor}</span>
-                  </div>
-                  <div className="mt-1">
-                    <span className="font-medium text-blue-600">{event.action}</span>
-                    {event.target && <span className="ml-2 text-gray-600">→ Agent {event.target}</span>}
-                  </div>
-                  <div className="text-sm text-gray-600 mt-1">{event.outcome}</div>
-                </div>
+          <GamePanel title="LEADERBOARD">
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {mockAgents.map((agent, idx) => (
+                <AgentCard key={agent.id} agent={agent} rank={idx + 1} />
               ))}
             </div>
+          </GamePanel>
+        </>
+      }
+      rightPanel={
+        <>
+          <GamePanel title="METRICS">
+            <div className="space-y-3 text-xs">
+              <div>
+                <span className="text-[#ff00ff]">GINI:</span>
+                <span className="float-right text-[#00ffff] font-bold">
+                  {simulationState?.metrics?.gini_resources?.toFixed(3) || "?.???"}
+                </span>
+              </div>
+              <div>
+                <span className="text-[#ff00ff]">HHI:</span>
+                <span className="float-right text-[#00ffff] font-bold">
+                  {simulationState?.metrics?.hhi_resources?.toFixed(0) || "?.?"}
+                </span>
+              </div>
+              <div>
+                <span className="text-[#ff00ff]">EVENTS:</span>
+                <span className="float-right text-[#00ffff] font-bold">
+                  {simulationState?.event_count || 0}
+                </span>
+              </div>
+            </div>
+          </GamePanel>
+
+          <GamePanel title="EVENT LOG" className="flex-1 overflow-hidden flex flex-col">
+            <EventLog events={events.slice(-15).map(e => ({
+              turn: e.turn,
+              message: `${e.action} ${e.target ? `→ ${e.target}` : ""}`
+            }))} maxHeight="h-auto" />
+          </GamePanel>
+
+          <Link href="/" className="block">
+            <GameButton className="w-full">BACK TO MENU</GameButton>
+          </Link>
+        </>
+      }
+      centerContent={
+        <div className="w-full h-full flex items-center justify-center p-8">
+          <div className="text-center">
+            <div className="text-4xl font-bold text-[#00ffff] mb-4 glitch" data-text="WORLD VIEW">
+              WORLD VIEW
+            </div>
+            <div className="text-[#00d9ff] font-mono text-sm mb-6">
+              &gt; BEAUTIFUL GAME WORLD VISUALIZATION AREA &lt;
+            </div>
+            <div className="space-y-2 text-xs text-[#00d9ff]">
+              <div>&gt; Central game world will render here</div>
+              <div>&gt; Agents interact, strategies evolve</div>
+              <div>&gt; Governance emerges dynamically</div>
+            </div>
           </div>
         </div>
-      )}
-    </div>
+      }
+    />
   );
 }

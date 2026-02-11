@@ -8,7 +8,7 @@ export interface AgentSummary {
   alive: boolean;
   trust: number;
   aggression: number;
-  rank: number;
+  rank?: number;
 }
 
 export interface AgentDetail extends AgentSummary {
@@ -19,6 +19,14 @@ export interface AgentDetail extends AgentSummary {
   resource_history: number[];
 }
 
+export interface Metrics {
+  gini_resources: number;        // 0.0 = equal, 1.0 = one agent has all
+  hhi_resources: number;         // Herfindahl-Hirschman Index
+  avg_strength: number;
+  avg_resources: number;
+  governance_level: number;      // How much rules are active
+}
+
 export interface SimulationState {
   simulation_id: string;
   current_turn: number;
@@ -26,6 +34,7 @@ export interface SimulationState {
   rules: number;
   alive_count: number;
   event_count: number;
+  metrics?: Metrics;
 }
 
 export interface SimulationEvent {
