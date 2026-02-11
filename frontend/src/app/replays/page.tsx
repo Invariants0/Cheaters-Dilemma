@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { apiClient } from "@/lib/api";
 import { ReplaySummary } from "@/lib/types";
-import { GameLayout, TopBar } from "@/components/GameLayout";
 import { GamePanel, GameButton, StatDisplay } from "@/components/GameUI";
 
 export default function ReplaysPage() {
@@ -40,10 +39,10 @@ export default function ReplaysPage() {
   );
 
   return (
-    <GameLayout
-      topBar={<TopBar />}
-      leftPanel={
-        <div className="space-y-4">
+    <div className="w-full h-full overflow-auto p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+        {/* Left Panel - Filters & Stats */}
+        <div className="lg:col-span-1 space-y-4">
           <GamePanel title="FILTER BY WINNER">
             <div className="space-y-2 text-xs font-mono">
               <button
@@ -88,12 +87,12 @@ export default function ReplaysPage() {
             <GameButton className="w-full">BACK TO MENU</GameButton>
           </Link>
         </div>
-      }
-      centerContent={
-        <div className="w-full h-full overflow-auto p-8">
+
+        {/* Center - Replay List */}
+        <div className="lg:col-span-3">
           {loading ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-[#00ffff] font-mono text-2xl">LOADING REPLAYS...</div>
+              <div className="text-[#00ffff] font-mono text-2xl">&gt; LOADING REPLAYS... &lt;</div>
             </div>
           ) : filtered.length === 0 ? (
             <GamePanel title="NO REPLAYS FOUND" className="max-w-md mx-auto mt-12">
@@ -109,44 +108,42 @@ export default function ReplaysPage() {
               </div>
             </GamePanel>
           ) : (
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 gap-4">
-                {filtered.map((replay, idx) => (
-                  <GamePanel key={replay.replay_id} title={`REPLAY ${idx + 1}`} className="p-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-[#00ffff]">{replay.agent_count}</div>
-                        <div className="text-xs text-[#00d9ff]">AGENTS</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-[#00ffff]">{replay.turns_completed}</div>
-                        <div className="text-xs text-[#00d9ff]">TURNS</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-lg font-bold text-[#ff00ff] uppercase">{replay.winner_strategy}</div>
-                        <div className="text-xs text-[#00d9ff]">WINNER</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-[#00ffff]">{replay.winner_resources}</div>
-                        <div className="text-xs text-[#00d9ff]">RESOURCES</div>
-                      </div>
+            <div className="space-y-4 h-full overflow-y-auto">
+              {filtered.map((replay, idx) => (
+                <GamePanel key={replay.replay_id} title={`REPLAY ${idx + 1}`} className="p-6">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#00ffff]">{replay.agent_count}</div>
+                      <div className="text-xs text-[#00d9ff]">AGENTS</div>
                     </div>
-
-                    <div className="flex items-center justify-between text-xs text-[#00d9ff] font-mono mb-4">
-                      <span>SEED: {replay.seed}</span>
-                      <span>{new Date(replay.created_at).toLocaleString()}</span>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#00ffff]">{replay.turns_completed}</div>
+                      <div className="text-xs text-[#00d9ff]">TURNS</div>
                     </div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[#ff00ff] uppercase">{replay.winner_strategy}</div>
+                      <div className="text-xs text-[#00d9ff]">WINNER</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#00ffff]">{replay.winner_resources}</div>
+                      <div className="text-xs text-[#00d9ff]">RESOURCES</div>
+                    </div>
+                  </div>
 
-                    <Link href={`/replays/${replay.replay_id}`} className="block">
-                      <GameButton className="w-full">VIEW REPLAY</GameButton>
-                    </Link>
-                  </GamePanel>
-                ))}
-              </div>
+                  <div className="flex items-center justify-between text-xs text-[#00d9ff] font-mono mb-4">
+                    <span>SEED: {replay.seed}</span>
+                    <span>{new Date(replay.created_at).toLocaleString()}</span>
+                  </div>
+
+                  <Link href={`/replays/${replay.replay_id}`} className="block">
+                    <GameButton className="w-full">VIEW REPLAY</GameButton>
+                  </Link>
+                </GamePanel>
+              ))}
             </div>
           )}
         </div>
-      }
-    />
+      </div>
+    </div>
   );
 }

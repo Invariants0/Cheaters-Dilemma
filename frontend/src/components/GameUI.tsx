@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { GameButtonProps, StatDisplayProps, AgentCardProps, EventLogEntry, EventLogProps } from "@/lib/types";
 
 interface GamePanelProps {
   title?: string;
@@ -22,7 +23,7 @@ export function GamePanel({ title, children, className = "", neon = false }: Gam
   );
 }
 
-export function GameButton({ children, className = "", onClick, disabled = false }: any) {
+export function GameButton({ children, className = "", onClick, disabled = false }: GameButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -34,7 +35,7 @@ export function GameButton({ children, className = "", onClick, disabled = false
   );
 }
 
-export function StatDisplay({ label, value, unit = "", className = "" }: any) {
+export function StatDisplay({ label, value, unit = "", className = "" }: StatDisplayProps) {
   return (
     <div className={`mb-4 ${className}`}>
       <div className="stat-label mb-1">{label}</div>
@@ -45,7 +46,7 @@ export function StatDisplay({ label, value, unit = "", className = "" }: any) {
   );
 }
 
-export function AgentCard({ agent, rank }: any) {
+export function AgentCard({ agent, rank }: AgentCardProps) {
   return (
     <div className="retro-panel mb-3 border-[#00d9ff] hover:border-[#ff00ff]">
       <div className="flex items-center gap-3 mb-3">
@@ -75,14 +76,14 @@ export function AgentCard({ agent, rank }: any) {
   );
 }
 
-export function EventLog({ events, maxHeight = "h-64" }: any) {
+export function EventLog({ events, maxHeight = "h-64" }: EventLogProps) {
   return (
     <div className={`retro-panel ${maxHeight} overflow-y-auto`} style={{
       background: "linear-gradient(to bottom, rgba(0, 255, 255, 0.02), rgba(255, 0, 255, 0.01))"
     }}>
       {events && events.length > 0 ? (
         <div className="space-y-2 text-xs font-mono">
-          {events.map((event: any, idx: number) => (
+          {events.map((event: EventLogEntry, idx: number) => (
             <div key={idx} className="text-[#00d9ff] border-l-2 border-[#ff00ff] pl-2 py-1">
               <span className="text-[#ff00ff]">[{event.turn || "?"}]</span> {event.message || event.type}
             </div>

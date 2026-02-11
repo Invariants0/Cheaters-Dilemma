@@ -1,5 +1,7 @@
 // TypeScript types matching backend Pydantic schemas
 
+import { ReactNode } from 'react';
+
 export interface AgentSummary {
   agent_id: number;
   strategy: string;
@@ -37,6 +39,10 @@ export interface SimulationState {
   metrics?: Metrics;
 }
 
+export interface EventDetails {
+  [key: string]: string | number | boolean | null | undefined;
+}
+
 export interface SimulationEvent {
   turn: number;
   actor: number;
@@ -44,7 +50,7 @@ export interface SimulationEvent {
   target: number | null;
   outcome: string;
   rule_justification: string;
-  details: Record<string, any>;
+  details: EventDetails;
 }
 
 export interface SimulationEvents {
@@ -63,9 +69,11 @@ export interface SimulationSummary {
   rules_version: number;
 }
 
+export type RuleValue = string | number | boolean | string[] | number[];
+
 export interface Ruleset {
   version: number;
-  rules: Record<string, any>;
+  rules: Record<string, RuleValue>;
 }
 
 export interface RuleHistory {
@@ -74,9 +82,27 @@ export interface RuleHistory {
   change_type: string;
   changed_by: number | null;
   key: string | null;
-  old_value: any;
-  new_value: any;
+  old_value: string | number | boolean | null;
+  new_value: string | number | boolean | null;
   description: string;
+}
+
+export interface AgentLeaderboardEntry {
+  agent_id: number;
+  strategy: string;
+  resources: number;
+  strength: number;
+  alive: boolean;
+  [key: string]: string | number | boolean;
+}
+
+export interface ReplayEvent {
+  turn: number;
+  actor?: number;
+  action: string;
+  target?: number | null;
+  outcome?: string;
+  details?: EventDetails;
 }
 
 export interface ReplaySummary {
@@ -94,7 +120,51 @@ export interface ReplayDetail {
   seed: number;
   agent_count: number;
   turns_completed: number;
-  leaderboard: Record<string, any>[];
-  events: Record<string, any>[];
+  leaderboard: AgentLeaderboardEntry[];
+  events: ReplayEvent[];
   log_digest: string;
+}
+
+// Component prop interfaces
+export interface GameButtonProps {
+  children: ReactNode;
+  className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+}
+
+export interface StatDisplayProps {
+  label: string;
+  value: string | number;
+  unit?: string;
+  className?: string;
+}
+
+export interface Agent {
+  id?: number;
+  agent_id?: number;
+  name?: string;
+  strategy?: string;
+  type?: string;
+  resources?: number;
+  strength?: number;
+  trust?: number;
+  aggression?: number;
+  alive?: boolean;
+}
+
+export interface AgentCardProps {
+  agent: Agent;
+  rank: number;
+}
+
+export interface EventLogEntry {
+  turn: number;
+  message: string;
+  type?: string;
+}
+
+export interface EventLogProps {
+  events: EventLogEntry[];
+  maxHeight?: string;
 }

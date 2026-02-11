@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { apiClient } from "@/lib/api";
 import { Ruleset, RuleHistory } from "@/lib/types";
-import { GameLayout, TopBar } from "@/components/GameLayout";
 import { GamePanel, GameButton, StatDisplay } from "@/components/GameUI";
 
 export default function RulesPage() {
@@ -45,10 +44,10 @@ export default function RulesPage() {
     : { economy: {}, violence: {}, governance: {} };
 
   return (
-    <GameLayout
-      topBar={<TopBar />}
-      leftPanel={
-        <div className="space-y-4">
+    <div className="w-full h-full overflow-auto p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+        {/* Left Panel - Rule Info */}
+        <div className="lg:col-span-1 space-y-4">
           <GamePanel title="RULESET VERSION">
             <div className="text-[#00ffff] font-mono text-2xl font-bold text-center py-4">
               v{ruleset?.version || "?"}
@@ -77,15 +76,15 @@ export default function RulesPage() {
             <GameButton className="w-full">BACK TO MENU</GameButton>
           </Link>
         </div>
-      }
-      centerContent={
-        <div className="w-full h-full overflow-auto p-8">
+
+        {/* Center - Rules Display */}
+        <div className="lg:col-span-3">
           {loading ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-[#00ffff] font-mono">LOADING RULES...</div>
+              <div className="text-[#00ffff] font-mono text-2xl">&gt; LOADING RULES... &lt;</div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4 h-full overflow-y-auto">
               {/* Current Ruleset */}
               <GamePanel title="CURRENT RULESET">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -158,7 +157,7 @@ export default function RulesPage() {
             </div>
           )}
         </div>
-      }
-    />
+      </div>
+    </div>
   );
 }

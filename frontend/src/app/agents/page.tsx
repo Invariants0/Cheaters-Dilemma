@@ -4,14 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { apiClient } from "@/lib/api";
 import { AgentSummary } from "@/lib/types";
-import { GameLayout, TopBar } from "@/components/GameLayout";
 import { GamePanel, GameButton, StatDisplay, AgentCard } from "@/components/GameUI";
 
 export default function AgentsPage() {
   const [agents, setAgents] = useState<AgentSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStrategy, setSelectedStrategy] = useState<string | null>(null);
-  const [simulationId, setSimulationId] = useState<string>("default");
+  const [simulationId] = useState<string>("default");
 
   useEffect(() => {
     const loadAgents = async () => {
@@ -45,10 +44,10 @@ export default function AgentsPage() {
   const sortedByResources = [...filtered].sort((a, b) => b.resources - a.resources);
 
   return (
-    <GameLayout
-      topBar={<TopBar />}
-      leftPanel={
-        <div className="space-y-4">
+    <div className="w-full h-full overflow-auto p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+        {/* Left Panel - Filters & Stats */}
+        <div className="lg:col-span-1 space-y-4">
           <GamePanel title="AGENT STRATEGIES">
             <div className="space-y-2 text-xs font-mono">
               {strategies.map((strat) => (
@@ -83,28 +82,26 @@ export default function AgentsPage() {
             <GameButton className="w-full">BACK TO MENU</GameButton>
           </Link>
         </div>
-      }
-      centerContent={
-        <div className="w-full h-full overflow-auto p-8">
+
+        {/* Center - Agent Grid */}
+        <div className="lg:col-span-3">
           {loading ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-[#00ffff] font-mono">LOADING AGENTS...</div>
+              <div className="text-[#00ffff] font-mono text-xl">&gt; LOADING AGENTS... &lt;</div>
             </div>
           ) : (
-            <div className="space-y-4">
-              <GamePanel title={selectedStrategy ? selectedStrategy.toUpperCase() : "ALL AGENTS"} className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {sortedByResources.map((agent, idx) => (
-                    <Link key={agent.agent_id} href={`/agents/${agent.agent_id}`}>
-                      <AgentCard agent={agent} rank={idx + 1} />
-                    </Link>
-                  ))}
-                </div>
-              </GamePanel>
-            </div>
+            <GamePanel title={selectedStrategy ? selectedStrategy.toUpperCase() : "ALL AGENTS"} className="h-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 p-4 h-full overflow-y-auto">
+                {sortedByResources.map((agent, idx) => (
+                  <Link key={agent.agent_id} href={`/agents/${agent.agent_id}`}>
+                    <AgentCard agent={agent} rank={idx + 1} />
+                  </Link>
+                ))}
+              </div>
+            </GamePanel>
           )}
         </div>
-      }
-    />
+      </div>
+    </div>
   );
 }

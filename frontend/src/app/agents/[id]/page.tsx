@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { apiClient } from "@/lib/api";
 import { AgentDetail } from "@/lib/types";
-import { GameLayout, TopBar } from "@/components/GameLayout";
 import { GamePanel, GameButton, StatDisplay } from "@/components/GameUI";
 
 export default function AgentDetailPage() {
@@ -32,23 +31,21 @@ export default function AgentDetailPage() {
 
   if (loading) {
     return (
-      <GameLayout
-        topBar={<TopBar />}
-        centerContent={
-          <div className="flex items-center justify-center w-full h-full">
+      <div className="w-full h-full overflow-auto p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+          <div className="lg:col-span-4 flex items-center justify-center">
             <div className="text-[#00ffff] font-mono text-2xl">LOADING AGENT DATA...</div>
           </div>
-        }
-      />
+        </div>
+      </div>
     );
   }
 
   if (!agent) {
     return (
-      <GameLayout
-        topBar={<TopBar />}
-        centerContent={
-          <div className="flex items-center justify-center w-full h-full">
+      <div className="w-full h-full overflow-auto p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+          <div className="lg:col-span-4 flex items-center justify-center">
             <GamePanel title="ERROR">
               <p className="text-[#ff0055] font-mono">Agent not found</p>
               <Link href="/agents" className="block mt-4">
@@ -56,8 +53,8 @@ export default function AgentDetailPage() {
               </Link>
             </GamePanel>
           </div>
-        }
-      />
+        </div>
+      </div>
     );
   }
 
@@ -74,10 +71,10 @@ export default function AgentDetailPage() {
       : "0.0";
 
   return (
-    <GameLayout
-      topBar={<TopBar />}
-      leftPanel={
-        <div className="space-y-4">
+    <div className="w-full h-full overflow-auto p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+        {/* Left Panel - Agent Info */}
+        <div className="lg:col-span-1 space-y-4">
           <GamePanel title="AGENT STATUS">
             <div className="space-y-3 text-xs font-mono">
               <div>
@@ -121,43 +118,45 @@ export default function AgentDetailPage() {
             <GameButton className="w-full">BACK TO AGENTS</GameButton>
           </Link>
         </div>
-      }
-      centerContent={
-        <div className="w-full h-full overflow-auto p-8">
-          <GamePanel title="RESOURCE HISTORY" className="mb-4">
-            <div className="h-32 flex items-end gap-1 bg-[#0a0e27] p-4 border border-[#00ffff]">
-              {agent.resource_history.slice(0, 20).map((val, idx) => {
-                const max = Math.max(...agent.resource_history);
-                const height = max > 0 ? (val / max) * 100 : 0;
-                return (
-                  <div
-                    key={idx}
-                    className="flex-1 bg-gradient-to-t from-[#00ffff] to-[#ff00ff] opacity-80 hover:opacity-100"
-                    style={{ height: `${Math.max(height, 5)}%` }}
-                    title={`Turn ${idx}: ${val} resources`}
-                  />
-                );
-              })}
-            </div>
-          </GamePanel>
 
-          <GamePanel title="TRUST TIMELINE">
-            <div className="h-32 flex items-end gap-1 bg-[#0a0e27] p-4 border border-[#00ffff]">
-              {agent.reputation_history.slice(0, 20).map((val, idx) => {
-                const height = (val / 1.0) * 100;
-                return (
-                  <div
-                    key={idx}
-                    className="flex-1 bg-gradient-to-t from-[#00d9ff] to-[#00ffff]"
-                    style={{ height: `${Math.max(height, 5)}%` }}
-                    title={`Turn ${idx}: ${val.toFixed(2)} trust`}
-                  />
-                );
-              })}
-            </div>
-          </GamePanel>
+        {/* Center - Charts & History */}
+        <div className="lg:col-span-3">
+          <div className="space-y-4 h-full overflow-y-auto">
+            <GamePanel title="RESOURCE HISTORY" className="mb-4">
+              <div className="h-32 flex items-end gap-1 bg-[#0a0e27] p-4 border border-[#00ffff]">
+                {agent.resource_history.slice(0, 20).map((val, idx) => {
+                  const max = Math.max(...agent.resource_history);
+                  const height = max > 0 ? (val / max) * 100 : 0;
+                  return (
+                    <div
+                      key={idx}
+                      className="flex-1 bg-gradient-to-t from-[#00ffff] to-[#ff00ff] opacity-80 hover:opacity-100"
+                      style={{ height: `${Math.max(height, 5)}%` }}
+                      title={`Turn ${idx}: ${val} resources`}
+                    />
+                  );
+                })}
+              </div>
+            </GamePanel>
+
+            <GamePanel title="TRUST TIMELINE">
+              <div className="h-32 flex items-end gap-1 bg-[#0a0e27] p-4 border border-[#00ffff]">
+                {agent.reputation_history.slice(0, 20).map((val, idx) => {
+                  const height = (val / 1.0) * 100;
+                  return (
+                    <div
+                      key={idx}
+                      className="flex-1 bg-gradient-to-t from-[#00d9ff] to-[#00ffff]"
+                      style={{ height: `${Math.max(height, 5)}%` }}
+                      title={`Turn ${idx}: ${val.toFixed(2)} trust`}
+                    />
+                  );
+                })}
+              </div>
+            </GamePanel>
+          </div>
         </div>
-      }
-    />
+      </div>
+    </div>
   );
 }

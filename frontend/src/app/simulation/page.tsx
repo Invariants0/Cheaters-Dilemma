@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { apiClient } from "@/lib/api";
 import { SimulationState, SimulationEvent } from "@/lib/types";
-import { GameLayout, TopBar } from "@/components/GameLayout";
 import { GamePanel, GameButton, StatDisplay, AgentCard, EventLog } from "@/components/GameUI";
 
 export default function SimulationPage() {
@@ -51,6 +50,12 @@ export default function SimulationPage() {
     } catch (error) {
       console.error("Failed to step simulation:", error);
     }
+  };
+
+  const resetSimulation = () => {
+    setSimulationId(null);
+    setSimulationState(null);
+    setEvents([]);
   };
 
   if (!simulationId) {
@@ -106,7 +111,7 @@ export default function SimulationPage() {
   }
 
   // Simulation Running View
-  const mockAgents = simulationState?.agents.slice(0, 5).map((agent, idx) => ({
+  const mockAgents = simulationState?.agents.slice(0, 5).map((agent) => ({
     id: agent.agent_id,
     name: `Agent ${agent.agent_id}`,
     type: agent.strategy || "unknown",
@@ -117,85 +122,116 @@ export default function SimulationPage() {
   })) || [];
 
   return (
-    <GameLayout
-      topBar={<TopBar />}
-      leftPanel={
-        <>
+    <div className="w-full h-full overflow-auto p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
+        {/* Left Panel - Simulation Control */}
+        <div className="lg:col-span-1 space-y-4">
           <GamePanel title="SIMULATION CONTROL" className="flex-shrink-0">
             <div className="space-y-3">
-              <StatDisplay label="SIM ID" value={simulationId.slice(0, 8)} />
+              <StatDisplay label="SIM ID" value={simulationId?.slice(0, 8) || "NONE"} />
               <StatDisplay label="TURN" value={simulationState?.current_turn || 0} />
               <StatDisplay label="ALIVE" value={simulationState?.alive_count || 0} unit="/" className="inline" />
               <div className="text-xs text-[#00d9ff]">/{simulationState?.agents.length || 0}</div>
-              <GameButton onClick={stepSimulation} className="w-full mt-4">
-                STEP FORWARD
+              <GameButton onClick={stepSimulation} className="w-full mt-4" disabled={!simulationId || isRunning}>
+                STEP
+              </GameButton>
+              <GameButton onClick={resetSimulation} className="w-full" disabled={isRunning}>
+                RESET
               </GameButton>
             </div>
           </GamePanel>
 
-          <GamePanel title="LEADERBOARD">
-            <div className="space-y-2 max-h-64 overflow-y-auto">
-              {mockAgents.map((agent, idx) => (
-                <AgentCard key={agent.id} agent={agent} rank={idx + 1} />
-              ))}
-            </div>
-          </GamePanel>
-        </>
-      }
-      rightPanel={
-        <>
-          <GamePanel title="METRICS">
-            <div className="space-y-3 text-xs">
+          <GamePanel title="CONFIGURATION">
+            <div className="space-y-3">
               <div>
-                <span className="text-[#ff00ff]">GINI:</span>
-                <span className="float-right text-[#00ffff] font-bold">
-                  {simulationState?.metrics?.gini_resources?.toFixed(3) || "?.???"}
-                </span>
+                <label className="block text-xs text-[#00d9ff] mb-1">AGENTS</label>
+                <input
+                  type="number"
+                  value={config.agent_count}
+                  onChange={(e) => setConfig({ ...config, agent_count: parseInt(e.target.value) })}
+                  className="w-full bg-[#0f1629] border border-[#00d9ff] text-[#00ffff] px-2 py-1 text-xs font-mono"
+                  min="2"
+                  max="20"
+                />
               </div>
               <div>
-                <span className="text-[#ff00ff]">HHI:</span>
-                <span className="float-right text-[#00ffff] font-bold">
-                  {simulationState?.metrics?.hhi_resources?.toFixed(0) || "?.?"}
-                </span>
+                <label className="block text-xs text-[#00d9ff] mb-1">SEED</label>
+                <input
+                  type="number"
+                  value={config.seed}
+                  onChange={(e) => setConfig({ ...config, seed: parseInt(e.target.value) })}
+                  className="w-full bg-[#0f1629] border border-[#00d9ff] text-[#00ffff] px-2 py-1 text-xs font-mono"
+                />
               </div>
-              <div>
-                <span className="text-[#ff00ff]">EVENTS:</span>
-                <span className="float-right text-[#00ffff] font-bold">
-                  {simulationState?.event_count || 0}
-                </span>
-              </div>
+              <GameButton onClick={startSimulation} className="w-full" disabled={isRunning}>
+                START NEW
+              </GameButton>
             </div>
           </GamePanel>
-
-          <GamePanel title="EVENT LOG" className="flex-1 overflow-hidden flex flex-col">
-            <EventLog events={events.slice(-15).map(e => ({
-              turn: e.turn,
-              message: `${e.action} ${e.target ? `→ ${e.target}` : ""}`
-            }))} maxHeight="h-auto" />
-          </GamePanel>
-
-          <Link href="/" className="block">
-            <GameButton className="w-full">BACK TO MENU</GameButton>
-          </Link>
-        </>
-      }
-      centerContent={
-        <div className="w-full h-full flex items-center justify-center p-8">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-[#00ffff] mb-4 glitch" data-text="WORLD VIEW">
-              WORLD VIEW
-            </div>
-            <div className="text-[#00d9ff] font-mono text-sm mb-6">
-              &gt; BEAUTIFUL GAME WORLD VISUALIZATION AREA &lt;
-            </div>
-            <div className="space-y-2 text-xs text-[#00d9ff]">
-              <div>&gt; Central game world will render here</div>
-              <div>&gt; Agents interact, strategies evolve</div>
-              <div>&gt; Governance emerges dynamically</div>
-            </div>
-          </div>
         </div>
-      }
-    />
+
+        {/* Center - World Visualization */}
+        <div className="lg:col-span-2">
+          <GamePanel title="WORLD VISUALIZATION" className="h-full">
+            {!simulationState ? (
+              <div className="h-full flex items-center justify-center text-[#00d9ff] font-mono text-center">
+                <div>
+                  <div className="text-xl font-bold text-[#00ffff] mb-4">&gt; READY TO LAUNCH &lt;</div>
+                  <div className="text-sm opacity-50">Configure parameters and start simulation</div>
+                </div>
+              </div>
+            ) : (
+              <div className="h-full flex flex-col">
+                {/* World Canvas Placeholder */}
+                <div className="flex-1 bg-[#0a0e27] border border-[#00d9ff] rounded mb-4 flex items-center justify-center">
+                  <div className="text-center text-[#00d9ff] font-mono">
+                    <div className="text-lg font-bold text-[#00ffff] mb-2">&gt; WORLD MAP &lt;</div>
+                    <div className="text-xs opacity-50">[ Interactive visualization coming soon ]</div>
+                  </div>
+                </div>
+
+                {/* Agent List */}
+                <div className="flex-1">
+                  <div className="text-xs text-[#00d9ff] mb-2 font-mono">&gt; AGENTS ({mockAgents.length})</div>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {mockAgents.map((agent, idx) => (
+                      <AgentCard key={agent.id} agent={agent} rank={idx + 1} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </GamePanel>
+        </div>
+
+        {/* Right Panel - Events & Stats */}
+        <div className="lg:col-span-1 space-y-4">
+          <GamePanel title="EVENT LOG">
+            <EventLog events={events.slice(-10).map(e => ({
+              turn: e.turn,
+              message: `${e.action.toUpperCase()}: ${e.actor} → ${e.target || 'WORLD'}`,
+              type: e.outcome.includes('success') ? 'success' : 'neutral'
+            }))} />
+          </GamePanel>
+
+          <GamePanel title="METRICS">
+            <div className="space-y-2 text-xs font-mono">
+              <div className="flex justify-between">
+                <span className="text-[#00d9ff]">GINI:</span>
+                <span className="text-[#00ffff]">{simulationState?.metrics?.gini_resources?.toFixed(3) || '0.000'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#00d9ff]">HHI:</span>
+                <span className="text-[#00ffff]">{simulationState?.metrics?.hhi_resources?.toFixed(3) || '0.000'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#00d9ff]">GOV:</span>
+                <span className="text-[#00ffff]">{simulationState?.metrics?.governance_level?.toFixed(2) || '0.00'}</span>
+              </div>
+            </div>
+          </GamePanel>
+        </div>
+      </div>
+    </div>
   );
 }

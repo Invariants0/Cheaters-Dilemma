@@ -1,7 +1,17 @@
+"use client";
+
 import { ReactNode } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface GameLayoutProps {
-  children: ReactNode;
+  leftPanel?: ReactNode;
+  rightPanel?: ReactNode;
+  topBar?: ReactNode;
+  centerContent?: ReactNode;
+}
+
+interface GameLayoutProps {
   leftPanel?: ReactNode;
   rightPanel?: ReactNode;
   topBar?: ReactNode;
@@ -9,17 +19,16 @@ interface GameLayoutProps {
 }
 
 export function GameLayout({
-  children,
   leftPanel,
   rightPanel,
   topBar,
   centerContent,
 }: GameLayoutProps) {
   return (
-    <div className="w-full h-screen bg-[#0a0e27] overflow-hidden flex flex-col">
+    <div className="w-screen h-screen bg-[#0a0e27] overflow-hidden flex flex-col fixed inset-0">
       {/* Top Bar */}
       {topBar && (
-        <div className="border-b-2 border-[#00ffff] bg-[#0f1629] p-3 flex items-center justify-between scanlines">
+        <div className="border-b-2 border-[#00ffff] bg-[#0f1629] p-3 flex items-center justify-between scanlines z-10">
           {topBar}
         </div>
       )}
@@ -52,7 +61,7 @@ export function GameLayout({
       </div>
 
       {/* Bottom Status Bar */}
-      <div className="border-t-2 border-[#00ffff] bg-[#0f1629] px-4 py-2 text-xs font-mono text-[#00d9ff] flex justify-between scanlines">
+      <div className="border-t-2 border-[#00ffff] bg-[#0f1629] px-4 py-2 text-xs font-mono text-[#00d9ff] flex justify-between scanlines z-10">
         <div>&gt; STATUS: READY &lt;</div>
         <div>&gt; TICK: 0000 &lt;</div>
         <div>&gt; CYCLE: DAY &lt;</div>
@@ -62,22 +71,47 @@ export function GameLayout({
 }
 
 export function TopBar() {
+  const pathname = usePathname();
+
+  const navItems = [
+    { href: "/", label: "HOME", icon: "🏠" },
+    { href: "/simulation", label: "SIMULATION", icon: "🎮" },
+    { href: "/agents", label: "AGENTS", icon: "🤖" },
+    { href: "/rules", label: "RULES", icon: "📜" },
+    { href: "/replays", label: "REPLAYS", icon: "🎬" },
+  ];
+
   return (
     <>
-      <div className="flex items-center gap-3">
-        <div className="text-2xl font-bold text-[#00ffff] glitch" data-text="THE CHEATER'S DILEMMA">
-          THE CHEATER&apos;S DILEMMA
+      <div className="flex items-center gap-4">
+        <div className="text-xl font-bold text-[#00ffff] glitch" data-text="CHEATER'S DILEMMA">
+          CHEATER&apos;S DILEMMA
+        </div>
+        <div className="flex gap-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`px-3 py-1 text-xs font-mono border transition-all duration-200 ${
+                pathname === item.href
+                  ? "border-[#ff00ff] bg-[#ff00ff]/20 text-[#ff00ff] shadow-[0_0_10px_#ff00ff]"
+                  : "border-[#00d9ff] text-[#00d9ff] hover:border-[#ff00ff] hover:text-[#ff00ff] hover:shadow-[0_0_5px_#ff00ff]"
+              }`}
+            >
+              {item.icon} {item.label}
+            </Link>
+          ))}
         </div>
       </div>
       <div className="flex gap-4 text-xs font-mono">
         <div>
-          <span className="text-[#ff00ff]">AGENTS:</span> <span className="text-[#00ffff]">10</span>
+          <span className="text-[#ff00ff]">&gt; AGENTS:</span> <span className="text-[#00ffff]">10</span>
         </div>
         <div>
-          <span className="text-[#ff00ff]">SEED:</span> <span className="text-[#00ffff]">42</span>
+          <span className="text-[#ff00ff]">&gt; SEED:</span> <span className="text-[#00ffff]">42</span>
         </div>
         <div>
-          <span className="text-[#ff00ff]">GINI:</span> <span className="text-[#00ffff]">0.234</span>
+          <span className="text-[#ff00ff]">&gt; GINI:</span> <span className="text-[#00ffff]">0.234</span>
         </div>
       </div>
     </>
