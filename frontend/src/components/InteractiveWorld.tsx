@@ -132,17 +132,17 @@ export function InteractiveWorld({
     if (events.length === 0) return;
 
     const lastEvent = events[events.length - 1];
-    const newActiveEvents = new Map(activeEvents);
-
-    // Add actors and targets to active events
-    if (lastEvent.actor) {
-      newActiveEvents.set(lastEvent.actor, 10); // 10 animation frames
-    }
-    if (lastEvent.target) {
-      newActiveEvents.set(lastEvent.target, 10);
-    }
-
-    setActiveEvents(newActiveEvents);
+    // Add actors and targets to active events.
+    setActiveEvents((prev) => {
+      const next = new Map(prev);
+      if (lastEvent.actor !== null && lastEvent.actor !== undefined) {
+        next.set(lastEvent.actor, 10); // 10 animation frames
+      }
+      if (lastEvent.target !== null && lastEvent.target !== undefined) {
+        next.set(lastEvent.target, 10);
+      }
+      return next;
+    });
 
     // Decay animation frames
     const timer = setInterval(() => {
@@ -242,7 +242,7 @@ export function InteractiveWorld({
     // Draw interaction lines for recent events
     if (events.length > 0) {
       const lastEvent = events[events.length - 1];
-      if (lastEvent.actor && lastEvent.target) {
+      if (lastEvent.actor !== null && lastEvent.actor !== undefined && lastEvent.target !== null && lastEvent.target !== undefined) {
         const actorAgent = worldAgents.find((a) => a.agent_id === lastEvent.actor);
         const targetAgent = worldAgents.find((a) => a.agent_id === lastEvent.target);
 

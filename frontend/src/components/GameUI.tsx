@@ -78,14 +78,17 @@ export function AgentCard({ agent, rank }: AgentCardProps) {
 
 export function EventLog({ events, maxHeight = "h-64" }: EventLogProps) {
   return (
-    <div className={`retro-panel ${maxHeight} overflow-y-auto`} style={{
-      background: "linear-gradient(to bottom, rgba(0, 255, 255, 0.02), rgba(255, 0, 255, 0.01))"
-    }}>
+    <div
+      className={`retro-panel ${maxHeight} overflow-y-auto`}
+      style={{
+        background: "linear-gradient(to bottom, rgba(0, 255, 255, 0.02), rgba(255, 0, 255, 0.01))",
+      }}
+    >
       {events && events.length > 0 ? (
         <div className="space-y-2 text-xs font-mono">
           {events.map((event: EventLogEntry, idx: number) => (
             <div key={idx} className="text-[#00d9ff] border-l-2 border-[#ff00ff] pl-2 py-1">
-              <span className="text-[#ff00ff]">[{event.turn || "?"}]</span> {event.message || event.type}
+              <span className="text-[#ff00ff]">[{event.turn ?? "?"}]</span> {event.message || event.type}
             </div>
           ))}
         </div>
