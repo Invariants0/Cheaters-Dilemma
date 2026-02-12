@@ -130,7 +130,7 @@ export default function AgentDetailPage() {
                   return (
                     <div
                       key={idx}
-                      className="flex-1 bg-gradient-to-t from-[#00ffff] to-[#ff00ff] opacity-80 hover:opacity-100"
+                      className="flex-1 bg-linear-to-t from-[#00ffff] to-[#ff00ff] opacity-80 hover:opacity-100"
                       style={{ height: `${Math.max(height, 5)}%` }}
                       title={`Turn ${idx}: ${val} resources`}
                     />
@@ -146,7 +146,7 @@ export default function AgentDetailPage() {
                   return (
                     <div
                       key={idx}
-                      className="flex-1 bg-gradient-to-t from-[#00d9ff] to-[#00ffff]"
+                      className="flex-1 bg-linear-to-t from-[#00d9ff] to-[#00ffff]"
                       style={{ height: `${Math.max(height, 5)}%` }}
                       title={`Turn ${idx}: ${val.toFixed(2)} trust`}
                     />
