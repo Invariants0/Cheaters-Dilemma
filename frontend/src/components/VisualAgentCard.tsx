@@ -12,7 +12,7 @@ interface AgentCardProps {
 const VisualAgentCard: React.FC<AgentCardProps> = ({ agent }) => {
   if (!agent) {
     return (
-      <div className="bg-slate-800 p-4 rounded-lg border border-slate-700 h-full flex items-center justify-center text-slate-500 text-sm italic">
+      <div className="bg-slate-800 p-4 rounded-lg border-2 border-slate-700 flex items-center justify-center text-slate-500 text-sm italic shadow-lg min-h-[200px]">
         Select an agent to view details
       </div>
     );

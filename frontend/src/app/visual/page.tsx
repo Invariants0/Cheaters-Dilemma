@@ -194,7 +194,7 @@ export default function VisualSimulationPage() {
       {/* Main Content */}
       <main className="flex-1 overflow-hidden p-4 flex gap-4">
         {/* Left Column: Game Board */}
-        <div className="flex-1 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800/50 relative">
+        <div className="flex-1 flex items-center justify-center bg-slate-900/50 rounded-lg border-2 border-slate-700 shadow-2xl relative">
           <VisualGameBoard
             agents={gameState.agents}
             onAgentClick={(a) => setSelectedAgentId(a.id)}
@@ -226,12 +226,12 @@ export default function VisualSimulationPage() {
         {/* Right Column: Stats & Logs */}
         <div className="w-96 flex flex-col gap-4 shrink-0">
           {/* Top Right: Agent Detail */}
-          <div className="h-64 shrink-0">
+          <div className="shrink-0">
             <VisualAgentCard agent={selectedAgent} />
           </div>
 
           {/* Middle Right: Leaderboard */}
-          <div className="h-48 shrink-0">
+          <div className="h-56 shrink-0">
             <VisualLeaderboard agents={gameState.agents} />
           </div>
 

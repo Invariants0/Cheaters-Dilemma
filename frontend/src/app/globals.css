@@ -2,29 +2,25 @@
 
 @layer base {
   :root {
-    /* Retro Game Aesthetic */
-    --bg-dark: #0a0e27;
-    --bg-darker: #050810;
-    --bg-card: #0f1629;
-    --text-primary: #00ffff;
-    --text-secondary: #00d9ff;
-    --text-accent: #ff00ff;
-    --border-color: #00ffff;
-    --border-accent: #ff00ff;
-    --success: #00ff00;
-    --warning: #ffff00;
-    --danger: #ff0055;
-    --info: #00d9ff;
+    /* Dark RPG Aesthetic */
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    --bg-card: #1e293b;
+    --text-primary: #e2e8f0;
+    --text-secondary: #cbd5e1;
+    --text-accent: #fbbf24;
+    --border-color: #475569;
+    --border-accent: #fbbf24;
+    --success: #10b981;
+    --warning: #eab308;
+    --danger: #ef4444;
+    --info: #06b6d4;
   }
 }
 
 @layer base {
   body {
-    @apply bg-[#0a0e27] text-[#00ffff] font-mono;
-    background-image:
-      linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 20px 20px;
+    @apply bg-slate-950 text-slate-200 font-sans;
   }
 
   html {
@@ -37,114 +33,61 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-[#0a0e27];
+    @apply bg-slate-950;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-[#00ffff] hover:bg-[#ff00ff];
+    @apply bg-slate-700 hover:bg-slate-600;
   }
 }
 
 @layer components {
-  /* Retro Panel with Pixel Borders */
+  /* RPG Panel with Dark Borders */
   .retro-panel {
-    @apply bg-[#0f1629] border-2 border-[#00ffff] rounded-none;
+    @apply bg-slate-900 border-2 border-slate-700 rounded-lg;
     box-shadow:
-      inset 0 0 0 1px rgba(0, 255, 255, 0.3),
-      0 0 20px rgba(0, 255, 255, 0.2),
-      0 0 40px rgba(0, 255, 255, 0.1);
+      inset 0 0 0 1px rgba(71, 85, 105, 0.3),
+      0 0 20px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(0, 0, 0, 0.2);
   }
 
   .retro-panel:hover {
-    @apply border-[#ff00ff];
+    @apply border-slate-600;
     box-shadow:
-      inset 0 0 0 1px rgba(255, 0, 255, 0.3),
-      0 0 30px rgba(255, 0, 255, 0.3),
-      0 0 60px rgba(0, 255, 255, 0.2);
+      inset 0 0 0 1px rgba(100, 116, 139, 0.4),
+      0 0 30px rgba(0, 0, 0, 0.4),
+      0 0 60px rgba(0, 0, 0, 0.3);
   }
 
-  /* Retro Button */
+  /* RPG Button */
   .retro-button {
-    @apply px-4 py-2 font-mono font-bold text-[#00ffff] border-2 border-[#00ffff] bg-[#0a0e27] hover:bg-[#00ffff] hover:text-[#0a0e27] transition-all duration-200 hover:shadow-[0_0_20px_rgba(0,255,255,0.6)] cursor-pointer;
+    @apply px-4 py-2 font-mono font-bold text-slate-200 border-2 border-slate-600 bg-slate-800 hover:bg-slate-700 hover:border-slate-500 transition-all duration-200 hover:shadow-[0_0_15px_rgba(251,191,36,0.3)] cursor-pointer rounded;
   }
 
   .retro-button:active {
     @apply transform scale-95;
   }
 
-  /* Retro Title */
+  /* RPG Title */
   .retro-title {
-    @apply font-mono font-bold text-3xl text-[#00ffff] drop-shadow-[0_0_10px_rgba(0,255,255,0.8)];
-    text-shadow: 2px 2px 0px #ff00ff;
+    @apply font-bold text-3xl text-white drop-shadow-lg;
   }
 
-  /* Retro Subtitle */
+  /* RPG Subtitle */
   .retro-subtitle {
-    @apply font-mono text-sm text-[#00d9ff];
-    text-shadow: 1px 1px 0px rgba(0, 255, 255, 0.5);
+    @apply font-mono text-sm text-slate-400;
   }
 
   /* Stat Label */
   .stat-label {
-    @apply text-xs font-bold text-[#ff00ff] uppercase tracking-wider;
+    @apply text-xs font-bold text-slate-400 uppercase tracking-wider;
   }
 
   .stat-value {
-    @apply text-xl font-bold text-[#00ffff] font-mono;
+    @apply text-xl font-bold text-white font-mono;
   }
 
-  /* Glitch Effect */
-  .glitch {
-    position: relative;
-  }
-
-  .glitch::before,
-  .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .glitch::before {
-    animation: glitch 2s infinite;
-    color: #ff00ff;
-    z-index: -1;
-  }
-
-  .glitch::after {
-    animation: glitch 2s infinite reverse;
-    color: #00d9ff;
-    z-index: -2;
-  }
-
-  @keyframes glitch {
-    0% {
-      clip-path: rect(0, 900px, 0, 0);
-    }
-    5% {
-      clip-path: rect(10px, 9999px, 30px, 0);
-    }
-    10% {
-      clip-path: rect(5px, 9999px, 10px, 0);
-    }
-    15% {
-      clip-path: rect(5px, 9999px, 20px, 0);
-    }
-    20% {
-      clip-path: rect(10px, 9999px, 5px, 0);
-    }
-    25% {
-      clip-path: rect(0, 9999px, 0, 0);
-    }
-    100% {
-      clip-path: rect(0, 9999px, 0, 0);
-    }
-  }
-
-  /* Scanlines Effect */
+  /* Scanlines Effect - Subtle */
   .scanlines::after {
     content: "";
     position: absolute;
@@ -154,8 +97,8 @@
     height: 100%;
     background: repeating-linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.15),
-      rgba(0, 0, 0, 0.15) 1px,
+      rgba(0, 0, 0, 0.05),
+      rgba(0, 0, 0, 0.05) 1px,
       transparent 1px,
       transparent 2px
     );
