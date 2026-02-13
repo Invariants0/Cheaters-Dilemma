@@ -29,7 +29,7 @@ class SimulationService:
         # Load configs
         import yaml
         import os
-        config_dir = os.path.join(os.path.dirname(__file__), "..", "..", "config")
+        config_dir = os.path.join(os.path.dirname(__file__), "..", "config")
 
         with open(os.path.join(config_dir, "world.yaml"), "r") as f:
             world_cfg = yaml.safe_load(f)

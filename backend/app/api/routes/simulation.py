@@ -1,6 +1,8 @@
+from datetime import datetime, timezone
 from typing import Any, Dict
-from fastapi import APIRouter, HTTPException, BackgroundTasks
-from pydantic import BaseModel
+import asyncio
+
+from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 
 from ...services.simulation_service import SimulationService
 from ..schemas.simulation import (
@@ -51,6 +53,10 @@ class SimulationManager:
 
 
 simulation_manager = SimulationManager()
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 @router.post("/start", response_model=Dict[str, str])
@@ -145,3 +151,121 @@ async def get_simulation_summary(simulation_id: str) -> SimulationSummary:
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get simulation summary: {str(e)}")
+
+
+@router.websocket("/ws/health")
+async def simulation_health_socket(websocket: WebSocket) -> None:
+    """Lightweight backend heartbeat channel for frontend connectivity checks."""
+    await websocket.accept()
+    tick = 0
+    try:
+        await websocket.send_json(
+            {
+                "type": "connected",
+                "service": "simulation",
+                "timestamp": _utc_now_iso(),
+            }
+        )
+        while True:
+            tick += 1
+            await websocket.send_json(
+                {
+                    "type": "heartbeat",
+                    "tick": tick,
+                    "timestamp": _utc_now_iso(),
+                }
+            )
+            await asyncio.sleep(2.0)
+    except WebSocketDisconnect:
+        return
+
+
+@router.websocket("/ws/stream/{simulation_id}")
+async def simulation_stream_socket(
+    websocket: WebSocket,
+    simulation_id: str,
+    interval_ms: int = 250,
+    from_turn: int = 1,
+) -> None:
+    """Stream simulation events turn-by-turn over WebSocket."""
+    await websocket.accept()
+    try:
+        sim = simulation_manager.get_simulation(simulation_id)
+    except HTTPException:
+        await websocket.send_json(
+            {
+                "type": "error",
+                "message": "Simulation not found",
+                "simulation_id": simulation_id,
+            }
+        )
+        await websocket.close(code=4404)
+        return
+
+    result = sim["result"]
+    events = sorted(
+        result.get("events", []),
+        key=lambda e: (
+            e.get("turn", 0),
+            e.get("actor", -1),
+            e.get("action", ""),
+            e.get("target", -1) if e.get("target") is not None else -1,
+        ),
+    )
+
+    events_by_turn: Dict[int, list[dict[str, Any]]] = {}
+    for event in events:
+        turn = int(event.get("turn", 0))
+        events_by_turn.setdefault(turn, []).append(event)
+
+    turns_completed = int(result.get("turns_completed", 0))
+    delay_seconds = max(50, min(interval_ms, 5000)) / 1000.0
+    start_turn = max(1, from_turn)
+
+    try:
+        await websocket.send_json(
+            {
+                "type": "init",
+                "simulation_id": simulation_id,
+                "turns_completed": turns_completed,
+                "event_count": len(events),
+                "from_turn": start_turn,
+                "timestamp": _utc_now_iso(),
+            }
+        )
+
+        for turn in range(start_turn, turns_completed + 1):
+            await websocket.send_json(
+                {
+                    "type": "turn",
+                    "simulation_id": simulation_id,
+                    "turn": turn,
+                    "events": events_by_turn.get(turn, []),
+                    "timestamp": _utc_now_iso(),
+                }
+            )
+            await asyncio.sleep(delay_seconds)
+
+        await websocket.send_json(
+            {
+                "type": "complete",
+                "simulation_id": simulation_id,
+                "turns_completed": turns_completed,
+                "event_count": len(events),
+                "timestamp": _utc_now_iso(),
+            }
+        )
+
+        # Keep the socket alive for optional ping/pong after stream completion.
+        while True:
+            message = await websocket.receive_text()
+            if message.strip().lower() == "ping":
+                await websocket.send_json(
+                    {
+                        "type": "pong",
+                        "simulation_id": simulation_id,
+                        "timestamp": _utc_now_iso(),
+                    }
+                )
+    except WebSocketDisconnect:
+        return
