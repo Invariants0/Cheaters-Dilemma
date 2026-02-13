@@ -162,9 +162,14 @@ export interface EventLogEntry {
   turn: number;
   message: string;
   type?: string;
+  action?: string;
+  actor?: number;
+  target?: number | null;
 }
 
 export interface EventLogProps {
   events: EventLogEntry[];
   maxHeight?: string;
+  showControls?: boolean;
+  live?: boolean;
 }
