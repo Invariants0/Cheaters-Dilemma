@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import Link from "next/link";
 import { apiClient } from "@/lib/api";
+import { getSimulationStreamSocketUrl } from "@/lib/ws";
 import { SimulationState, SimulationEvent } from "@/lib/types";
 import { InteractiveWorld } from "@/components/InteractiveWorld";
 import { AllianceGraph } from "@/components/AllianceGraph";
@@ -16,28 +17,32 @@ interface SimulationConfig {
   turns: number | undefined;
 }
 
+type StreamStatus = "idle" | "connecting" | "connected" | "paused" | "complete" | "error";
+
 interface SimulationPageState {
   simulationId: string | null;
   simulationState: SimulationState | null;
-  allEvents: SimulationEvent[];
   events: SimulationEvent[];
   displayTurn: number;
   isRunning: boolean;
   isAutoPlaying: boolean;
   isStepping: boolean;
+  streamStatus: StreamStatus;
+  streamError: string | null;
   config: SimulationConfig;
 }
 
 type SimulationPageAction =
   | { type: "SET_CONFIG"; patch: Partial<SimulationConfig> }
   | { type: "START_REQUEST" }
-  | { type: "START_SUCCESS"; simulationId: string; simulationState: SimulationState; allEvents: SimulationEvent[] }
-  | { type: "START_FAILURE" }
-  | { type: "STEP_REQUEST" }
-  | { type: "STEP_COMPLETE"; nextTurn: number; turnEvents: SimulationEvent[]; reachedEnd: boolean }
-  | { type: "STEP_FAILURE" }
-  | { type: "PLAY" }
-  | { type: "PAUSE" }
+  | { type: "START_SUCCESS"; simulationId: string; simulationState: SimulationState }
+  | { type: "START_FAILURE"; error?: string }
+  | { type: "STREAM_CONNECTING"; mode: "play" | "step" }
+  | { type: "STREAM_CONNECTED" }
+  | { type: "STREAM_TURN"; turn: number; events: SimulationEvent[] }
+  | { type: "STREAM_PAUSED" }
+  | { type: "STREAM_COMPLETE"; turnsCompleted: number }
+  | { type: "STREAM_ERROR"; error: string }
   | { type: "RESET" };
 
 const DEFAULT_CONFIG: SimulationConfig = {
@@ -49,14 +54,29 @@ const DEFAULT_CONFIG: SimulationConfig = {
 const initialState: SimulationPageState = {
   simulationId: null,
   simulationState: null,
-  allEvents: [],
   events: [],
   displayTurn: 0,
   isRunning: false,
   isAutoPlaying: false,
   isStepping: false,
+  streamStatus: "idle",
+  streamError: null,
   config: DEFAULT_CONFIG,
 };
+
+function mergeEvents(existing: SimulationEvent[], incoming: SimulationEvent[]): SimulationEvent[] {
+  if (incoming.length === 0) return existing;
+  const seen = new Set(existing.map((e) => `${e.turn}:${e.actor}:${e.action}:${e.target}:${e.outcome}`));
+  const merged = [...existing];
+  for (const event of incoming) {
+    const key = `${event.turn}:${event.actor}:${event.action}:${event.target}:${event.outcome}`;
+    if (!seen.has(key)) {
+      merged.push(event);
+      seen.add(key);
+    }
+  }
+  return merged;
+}
 
 function simulationReducer(state: SimulationPageState, action: SimulationPageAction): SimulationPageState {
   switch (action.type) {
@@ -74,51 +94,70 @@ function simulationReducer(state: SimulationPageState, action: SimulationPageAct
         isRunning: true,
         isAutoPlaying: false,
         isStepping: false,
+        streamStatus: "idle",
+        streamError: null,
       };
     case "START_SUCCESS":
       return {
         ...state,
         simulationId: action.simulationId,
         simulationState: action.simulationState,
-        allEvents: action.allEvents,
         events: [],
         displayTurn: 0,
         isRunning: false,
         isAutoPlaying: false,
         isStepping: false,
+        streamStatus: "idle",
+        streamError: null,
       };
     case "START_FAILURE":
       return {
         ...state,
         isRunning: false,
+        streamStatus: "error",
+        streamError: action.error || "Failed to start simulation",
       };
-    case "STEP_REQUEST":
+    case "STREAM_CONNECTING":
       return {
         ...state,
-        isStepping: true,
+        isAutoPlaying: action.mode === "play",
+        isStepping: action.mode === "step",
+        streamStatus: "connecting",
+        streamError: null,
       };
-    case "STEP_COMPLETE":
+    case "STREAM_CONNECTED":
       return {
         ...state,
-        displayTurn: action.nextTurn,
-        events: action.turnEvents.length > 0 ? [...state.events, ...action.turnEvents] : state.events,
-        isStepping: false,
-        isAutoPlaying: action.reachedEnd ? false : state.isAutoPlaying,
+        streamStatus: "connected",
       };
-    case "STEP_FAILURE":
+    case "STREAM_TURN":
       return {
         ...state,
-        isStepping: false,
+        displayTurn: Math.max(state.displayTurn, action.turn),
+        events: mergeEvents(state.events, action.events),
       };
-    case "PLAY":
-      return {
-        ...state,
-        isAutoPlaying: true,
-      };
-    case "PAUSE":
+    case "STREAM_PAUSED":
       return {
         ...state,
         isAutoPlaying: false,
+        isStepping: false,
+        streamStatus: "paused",
+      };
+    case "STREAM_COMPLETE":
+      return {
+        ...state,
+        displayTurn: Math.max(state.displayTurn, action.turnsCompleted),
+        isAutoPlaying: false,
+        isStepping: false,
+        streamStatus: "complete",
+      };
+    case "STREAM_ERROR":
+      return {
+        ...state,
+        isAutoPlaying: false,
+        isStepping: false,
+        streamStatus: "error",
+        streamError: action.error,
       };
     case "RESET":
       return {
@@ -135,85 +174,174 @@ function parseIntOrFallback(value: string, fallback: number): number {
   return Number.isNaN(parsed) ? fallback : parsed;
 }
 
+interface StreamMessage {
+  type: string;
+  turn?: number;
+  turns_completed?: number;
+  events?: SimulationEvent[];
+  message?: string;
+}
+
 export default function SimulationPage() {
   const [state, dispatch] = useReducer(simulationReducer, initialState);
+  const socketRef = useRef<WebSocket | null>(null);
+  const streamModeRef = useRef<"play" | "step" | null>(null);
+  const expectedCloseRef = useRef(false);
+
+  const closeStream = useCallback((status: "paused" | "complete" = "paused") => {
+    expectedCloseRef.current = true;
+    if (socketRef.current) {
+      socketRef.current.close();
+      socketRef.current = null;
+    }
+    streamModeRef.current = null;
+    if (status === "complete") {
+      return;
+    }
+    dispatch({ type: "STREAM_PAUSED" });
+  }, []);
+
+  const connectStream = useCallback(
+    (mode: "play" | "step") => {
+      if (!state.simulationId) return;
+
+      const maxTurn = state.simulationState?.current_turn ?? 0;
+      if (state.displayTurn >= maxTurn) {
+        dispatch({ type: "STREAM_COMPLETE", turnsCompleted: maxTurn });
+        return;
+      }
+
+      if (socketRef.current && socketRef.current.readyState <= WebSocket.OPEN) {
+        return;
+      }
+
+      const fromTurn = state.displayTurn + 1;
+      const intervalMs = mode === "step" ? 60 : 300;
+      const url = getSimulationStreamSocketUrl(state.simulationId, intervalMs, fromTurn);
+
+      dispatch({ type: "STREAM_CONNECTING", mode });
+      streamModeRef.current = mode;
+      expectedCloseRef.current = false;
+
+      const socket = new WebSocket(url);
+      socketRef.current = socket;
+
+      socket.onopen = () => {
+        dispatch({ type: "STREAM_CONNECTED" });
+      };
+
+      socket.onmessage = (event) => {
+        let payload: StreamMessage;
+        try {
+          payload = JSON.parse(event.data) as StreamMessage;
+        } catch {
+          return;
+        }
+
+        if (payload.type === "turn" && typeof payload.turn === "number") {
+          dispatch({ type: "STREAM_TURN", turn: payload.turn, events: payload.events ?? [] });
+
+          if (streamModeRef.current === "step") {
+            closeStream("paused");
+          }
+          return;
+        }
+
+        if (payload.type === "complete") {
+          const turnsCompleted = payload.turns_completed ?? state.simulationState?.current_turn ?? state.displayTurn;
+          dispatch({ type: "STREAM_COMPLETE", turnsCompleted });
+          expectedCloseRef.current = true;
+          socket.close();
+          socketRef.current = null;
+          streamModeRef.current = null;
+          return;
+        }
+
+        if (payload.type === "error") {
+          dispatch({ type: "STREAM_ERROR", error: payload.message || "Stream error" });
+          expectedCloseRef.current = true;
+          socket.close();
+          socketRef.current = null;
+          streamModeRef.current = null;
+        }
+      };
+
+      socket.onerror = () => {
+        dispatch({ type: "STREAM_ERROR", error: "WebSocket connection error" });
+      };
+
+      socket.onclose = () => {
+        socketRef.current = null;
+        if (expectedCloseRef.current) {
+          expectedCloseRef.current = false;
+          return;
+        }
+        dispatch({ type: "STREAM_PAUSED" });
+      };
+    },
+    [
+      closeStream,
+      state.displayTurn,
+      state.simulationId,
+      state.simulationState?.current_turn,
+    ]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (socketRef.current) {
+        expectedCloseRef.current = true;
+        socketRef.current.close();
+        socketRef.current = null;
+      }
+    };
+  }, []);
 
   const startSimulation = async () => {
     try {
+      if (socketRef.current) {
+        expectedCloseRef.current = true;
+        socketRef.current.close();
+        socketRef.current = null;
+      }
       dispatch({ type: "START_REQUEST" });
       const response = await apiClient.startSimulation(state.config);
       const simulationState = await apiClient.getSimulationState(response.simulation_id);
-      const eventsData = await apiClient.getSimulationEvents(response.simulation_id);
-      const sortedEvents = [...eventsData.events].sort((a, b) => a.turn - b.turn);
 
       dispatch({
         type: "START_SUCCESS",
         simulationId: response.simulation_id,
         simulationState,
-        allEvents: sortedEvents,
       });
     } catch (error) {
       console.error("Failed to start simulation:", error);
-      dispatch({ type: "START_FAILURE" });
+      dispatch({ type: "START_FAILURE", error: "Failed to start simulation" });
     }
   };
 
   const stepSimulation = useCallback(async () => {
-    if (!state.simulationId || state.isStepping) return;
-
-    try {
-      dispatch({ type: "STEP_REQUEST" });
-
-      const maxTurn = state.simulationState?.current_turn ?? 0;
-      if (state.displayTurn >= maxTurn) {
-        dispatch({
-          type: "STEP_COMPLETE",
-          nextTurn: state.displayTurn,
-          turnEvents: [],
-          reachedEnd: true,
-        });
-        return;
-      }
-
-      const nextTurn = state.displayTurn + 1;
-      const nextTurnEvents = state.allEvents.filter((event) => event.turn === nextTurn);
-
-      dispatch({
-        type: "STEP_COMPLETE",
-        nextTurn,
-        turnEvents: nextTurnEvents,
-        reachedEnd: nextTurn >= maxTurn,
-      });
-    } catch (error) {
-      console.error("Failed to step simulation:", error);
-      dispatch({ type: "STEP_FAILURE" });
-    }
-  }, [state.simulationId, state.isStepping, state.simulationState, state.displayTurn, state.allEvents]);
-
-  const resetSimulation = () => {
-    dispatch({ type: "RESET" });
-  };
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (state.isAutoPlaying && state.simulationId && !state.isRunning && !state.isStepping) {
-      interval = setInterval(() => {
-        stepSimulation();
-      }, 1000);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [state.isAutoPlaying, state.simulationId, state.isRunning, state.isStepping, stepSimulation]);
+    connectStream("step");
+  }, [connectStream]);
 
   const playSimulation = () => {
-    dispatch({ type: "PLAY" });
+    connectStream("play");
   };
 
   const pauseSimulation = () => {
-    dispatch({ type: "PAUSE" });
+    closeStream("paused");
   };
+
+  const resetSimulation = () => {
+    if (socketRef.current) {
+      expectedCloseRef.current = true;
+      socketRef.current.close();
+      socketRef.current = null;
+    }
+    streamModeRef.current = null;
+    dispatch({ type: "RESET" });
+  };
+
+  const maxTurns = state.simulationState?.current_turn || state.config.turns;
 
   if (!state.simulationId) {
     return (
@@ -286,9 +414,9 @@ export default function SimulationPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
         <div className="lg:col-span-1 space-y-4">
           <SimulationControls
-            isRunning={state.isRunning || state.isAutoPlaying || state.isStepping}
+            isRunning={state.isRunning || state.isAutoPlaying || state.isStepping || state.streamStatus === "connecting"}
             currentTurn={state.displayTurn}
-            maxTurns={state.config.turns}
+            maxTurns={maxTurns}
             onStep={stepSimulation}
             onPlay={playSimulation}
             onPause={pauseSimulation}
@@ -296,6 +424,26 @@ export default function SimulationPage() {
             seedValue={state.config.seed}
             agentCount={state.config.agent_count}
           />
+
+          <GamePanel title="STREAM STATUS">
+            <div className="space-y-2 text-xs font-mono">
+              <div className="flex justify-between">
+                <span className="text-[#00d9ff]">STATE:</span>
+                <span className="text-[#00ffff]">{state.streamStatus.toUpperCase()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#00d9ff]">TURN:</span>
+                <span className="text-[#00ffff]">{state.displayTurn}/{maxTurns || "?"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#00d9ff]">EVENTS:</span>
+                <span className="text-[#00ffff]">{state.events.length}</span>
+              </div>
+              {state.streamError && (
+                <div className="text-[#ff0055]">{state.streamError}</div>
+              )}
+            </div>
+          </GamePanel>
 
           <GamePanel title="CONFIGURATION">
             <div className="space-y-3">
@@ -414,7 +562,7 @@ export default function SimulationPage() {
         </div>
 
         <div className="lg:col-span-1 space-y-4">
-          <AllianceGraph alliances={[]} loading={state.isRunning || state.isStepping} />
+          <AllianceGraph alliances={[]} loading={state.isRunning || state.isStepping || state.streamStatus === "connecting"} />
 
           <GamePanel title="EVENT LOG">
             <LiveEventLog
@@ -426,7 +574,7 @@ export default function SimulationPage() {
                 message: `${event.action.toUpperCase()}: ${event.actor} -> ${event.target ?? "WORLD"}`,
                 type: event.outcome.includes("success") ? "success" : "neutral",
               }))}
-              live={state.isAutoPlaying || state.isStepping}
+              live={state.isAutoPlaying || state.isStepping || state.streamStatus === "connecting" || state.streamStatus === "connected"}
               maxHeight="h-[28rem]"
             />
           </GamePanel>
