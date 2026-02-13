@@ -124,9 +124,9 @@ export default function VisualSimulationPage() {
     gameState.agents.find((a) => a.id === selectedAgentId) || null;
 
   return (
-    <div className="h-screen w-screen bg-slate-950 text-slate-200 flex flex-col">
+    <div className="h-screen w-screen bg-slate-950 text-slate-200 flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 shrink-0">
+      <header className="h-16 bg-slate-900 border-b-2 border-slate-800 flex items-center justify-between px-6 shrink-0 relative z-50">
         <div className="flex items-center gap-4">
           <Link
             href="/"
@@ -135,7 +135,7 @@ export default function VisualSimulationPage() {
             <Home size={20} />
           </Link>
           <div className="flex items-center gap-2">
-            <div className="bg-yellow-500 text-black p-1 rounded font-bold text-xs">
+            <div className="bg-yellow-500 text-black px-2 py-1 rounded font-bold text-xs">
               VISUAL
             </div>
             <h1 className="font-bold text-lg tracking-tight text-white">
@@ -144,12 +144,12 @@ export default function VisualSimulationPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 bg-slate-800 rounded-lg p-1 border border-slate-700">
+        <div className="flex items-center gap-4 relative z-50">
+          <div className="flex items-center gap-2 bg-slate-800 rounded-lg p-1.5 border-2 border-slate-700">
             <button
               onClick={togglePlay}
               disabled={!!gameState.winner}
-              className={`p-2 rounded hover:bg-slate-700 transition ${gameState.isRunning ? "text-yellow-400" : "text-green-400"} ${!!gameState.winner ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`p-2.5 rounded hover:bg-slate-700 transition ${gameState.isRunning ? "text-yellow-400" : "text-green-400"} ${!!gameState.winner ? "opacity-50 cursor-not-allowed" : ""} cursor-pointer relative z-50`}
               title={gameState.isRunning ? "Pause" : "Play"}
             >
               {gameState.isRunning ? (
@@ -160,7 +160,7 @@ export default function VisualSimulationPage() {
             </button>
             <button
               onClick={changeSpeed}
-              className="p-2 rounded hover:bg-slate-700 text-blue-400 transition"
+              className="p-2.5 rounded hover:bg-slate-700 text-blue-400 transition cursor-pointer"
               title="Toggle Speed"
             >
               <FastForward
@@ -171,7 +171,7 @@ export default function VisualSimulationPage() {
             <div className="w-[1px] h-6 bg-slate-700 mx-1"></div>
             <button
               onClick={() => setShowInteractions(!showInteractions)}
-              className={`p-2 rounded hover:bg-slate-700 transition ${showInteractions ? "text-yellow-400" : "text-slate-500"}`}
+              className={`p-2.5 rounded hover:bg-slate-700 transition cursor-pointer ${showInteractions ? "text-yellow-400" : "text-slate-500"}`}
               title="Toggle Interaction Bubbles"
             >
               <MessageSquare size={20} />
@@ -179,22 +179,22 @@ export default function VisualSimulationPage() {
             <div className="w-[1px] h-6 bg-slate-700 mx-1"></div>
             <button
               onClick={resetGame}
-              className="p-2 rounded hover:bg-slate-700 text-red-400 transition"
+              className="p-2.5 rounded hover:bg-slate-700 text-red-400 transition cursor-pointer"
               title="Reset Simulation"
             >
               <RotateCcw size={20} />
             </button>
           </div>
-          <div className="font-mono text-sm text-slate-400 bg-slate-900 px-3 py-1 rounded border border-slate-800">
+          <div className="font-mono text-sm text-slate-400 bg-slate-900 px-4 py-2 rounded border border-slate-800">
             TICK: <span className="text-white">{gameState.tick}</span>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-hidden p-4 flex gap-4">
+      <main className="flex-1 p-4 flex gap-4 overflow-hidden min-h-0">
         {/* Left Column: Game Board */}
-        <div className="flex-1 flex items-center justify-center bg-slate-900/50 rounded-lg border-2 border-slate-700 shadow-2xl relative">
+        <div className="flex-1 flex items-center justify-center bg-slate-900/50 rounded-lg border-2 border-slate-700 shadow-2xl relative min-h-0">
           <VisualGameBoard
             agents={gameState.agents}
             onAgentClick={(a) => setSelectedAgentId(a.id)}
@@ -204,7 +204,7 @@ export default function VisualSimulationPage() {
 
           {/* Winner Overlay */}
           {gameState.winner && (
-            <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-50 animate-fade-in backdrop-blur-sm rounded-xl">
+            <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-40 animate-fade-in backdrop-blur-sm rounded-xl">
               <Trophy
                 size={64}
                 className="text-yellow-400 mb-4 animate-bounce"
@@ -215,7 +215,7 @@ export default function VisualSimulationPage() {
               </p>
               <button
                 onClick={resetGame}
-                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 px-8 rounded-full transition transform hover:scale-105"
+                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 px-8 rounded-full transition transform hover:scale-105 cursor-pointer"
               >
                 Start New Simulation
               </button>
