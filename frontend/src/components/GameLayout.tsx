@@ -11,13 +11,6 @@ interface GameLayoutProps {
   centerContent?: ReactNode;
 }
 
-interface GameLayoutProps {
-  leftPanel?: ReactNode;
-  rightPanel?: ReactNode;
-  topBar?: ReactNode;
-  centerContent?: ReactNode;
-}
-
 export function GameLayout({
   leftPanel,
   rightPanel,
@@ -26,21 +19,15 @@ export function GameLayout({
 }: GameLayoutProps) {
   return (
     <div className="w-screen h-screen bg-[#0a0e27] overflow-hidden flex flex-col fixed inset-0">
-      {/* Top Bar */}
       {topBar && (
         <div className="border-b-2 border-[#00ffff] bg-[#0f1629] p-3 flex items-center justify-between scanlines z-10">
           {topBar}
         </div>
       )}
 
-      {/* Main Content Area */}
       <div className="flex-1 flex overflow-hidden gap-2 p-2">
-        {/* Left Panel */}
-        {leftPanel && (
-          <div className="w-64 flex flex-col gap-2 overflow-y-auto">{leftPanel}</div>
-        )}
+        {leftPanel && <div className="w-64 flex flex-col gap-2 overflow-y-auto">{leftPanel}</div>}
 
-        {/* Center World/Canvas Area */}
         <div className="flex-1 retro-panel relative overflow-hidden">
           {centerContent ? (
             centerContent
@@ -54,13 +41,9 @@ export function GameLayout({
           )}
         </div>
 
-        {/* Right Panel */}
-        {rightPanel && (
-          <div className="w-80 flex flex-col gap-2 overflow-y-auto">{rightPanel}</div>
-        )}
+        {rightPanel && <div className="w-80 flex flex-col gap-2 overflow-y-auto">{rightPanel}</div>}
       </div>
 
-      {/* Bottom Status Bar */}
       <div className="border-t-2 border-[#00ffff] bg-[#0f1629] px-4 py-2 text-xs font-mono text-[#00d9ff] flex justify-between scanlines z-10">
         <div>&gt; STATUS: READY &lt;</div>
         <div>&gt; TICK: 0000 &lt;</div>
@@ -74,11 +57,11 @@ export function TopBar() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/", label: "HOME", icon: "🏠" },
-    { href: "/simulation", label: "SIMULATION", icon: "🎮" },
-    { href: "/agents", label: "AGENTS", icon: "🤖" },
-    { href: "/rules", label: "RULES", icon: "📜" },
-    { href: "/replays", label: "REPLAYS", icon: "🎬" },
+    { href: "/", label: "HOME", icon: "[H]" },
+    { href: "/simulation", label: "SIMULATION", icon: "[SIM]" },
+    { href: "/agents", label: "AGENTS", icon: "[AG]" },
+    { href: "/rules", label: "RULES", icon: "[RL]" },
+    { href: "/replays", label: "REPLAYS", icon: "[RP]" },
   ];
 
   return (

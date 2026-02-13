@@ -7,11 +7,11 @@ export function Navigation() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/", label: "HOME", icon: "🏠" },
-    { href: "/simulation", label: "SIMULATION", icon: "🎮" },
-    { href: "/agents", label: "AGENTS", icon: "🤖" },
-    { href: "/rules", label: "RULES", icon: "📜" },
-    { href: "/replays", label: "REPLAYS", icon: "🎬" },
+    { href: "/", label: "HOME", icon: "[H]" },
+    { href: "/simulation", label: "SIMULATION", icon: "[SIM]" },
+    { href: "/agents", label: "AGENTS", icon: "[AG]" },
+    { href: "/rules", label: "RULES", icon: "[RL]" },
+    { href: "/replays", label: "REPLAYS", icon: "[RP]" },
   ];
 
   return (
