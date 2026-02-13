@@ -22,10 +22,12 @@ export default function Home() {
         {/* About Panel */}
         <GamePanel title="ABOUT" className="col-span-1 md:col-span-2" neon>
           <p className="text-[#00d9ff] font-mono text-sm leading-relaxed">
-            Explore emergent behaviors when rational agents compete in a world where cheating
-            is often the fastest strategy, but rules themselves can be rewritten as strategic
-            assets. Violence is possible but costly, and <span className="text-[#00ffff]">power</span> emerges
-            through alliances, <span className="text-[#ff00ff]">strength</span>, and governance capture.
+            Explore emergent behaviors when rational agents compete in a world
+            where cheating is often the fastest strategy, but rules themselves
+            can be rewritten as strategic assets. Violence is possible but
+            costly, and <span className="text-[#00ffff]">power</span> emerges
+            through alliances, <span className="text-[#ff00ff]">strength</span>,
+            and governance capture.
           </p>
         </GamePanel>
 
@@ -57,13 +59,16 @@ export default function Home() {
         <GamePanel title="GAME INFO">
           <div className="space-y-3 text-xs font-mono text-[#00d9ff]">
             <div>
-              <span className="text-[#ff00ff]">&gt;</span> AGENTS: Dynamic behavioral strategies
+              <span className="text-[#ff00ff]">&gt;</span> AGENTS: Dynamic
+              behavioral strategies
             </div>
             <div>
-              <span className="text-[#ff00ff]">&gt;</span> ACTIONS: Work, Steal, Attack, Propose, Vote
+              <span className="text-[#ff00ff]">&gt;</span> ACTIONS: Work, Steal,
+              Attack, Propose, Vote
             </div>
             <div>
-              <span className="text-[#ff00ff]">&gt;</span> METRICS: Gini Coefficient, HHI, Governance
+              <span className="text-[#ff00ff]">&gt;</span> METRICS: Gini
+              Coefficient, HHI, Governance
             </div>
           </div>
         </GamePanel>
@@ -72,14 +77,40 @@ export default function Home() {
         <GamePanel title="RULES">
           <div className="space-y-3 text-xs font-mono text-[#00d9ff]">
             <div>
-              <span className="text-[#00ffff]">[ 1 ]</span> Agents can propose rule changes
+              <span className="text-[#00ffff]">[ 1 ]</span> Agents can propose
+              rule changes
             </div>
             <div>
-              <span className="text-[#00ffff]">[ 2 ]</span> Voting determines if rules take effect
+              <span className="text-[#00ffff]">[ 2 ]</span> Voting determines if
+              rules take effect
             </div>
             <div>
-              <span className="text-[#00ffff]">[ 3 ]</span> Winners shape the world forever
+              <span className="text-[#00ffff]">[ 3 ]</span> Winners shape the
+              world forever
             </div>
+          </div>
+        </GamePanel>
+
+        {/* Visual Simulation */}
+        <GamePanel
+          title="VISUAL BATTLE ROYALE"
+          className="col-span-1 md:col-span-2"
+          neon
+        >
+          <div className="space-y-4">
+            <p className="text-[#00ffff] text-sm mb-4">
+              Watch agents compete in a{" "}
+              <span className="text-[#ff00ff] font-bold">
+                dynamic grid-based arena
+              </span>{" "}
+              with real-time combat, stealing, and survival mechanics.
+              Experience{" "}
+              <span className="text-[#00ffff]">pixel art avatars</span>, health
+              bars, and action bubbles showing every move.
+            </p>
+            <Link href="/visual" className="block">
+              <GameButton className="w-full">LAUNCH VISUAL SIM</GameButton>
+            </Link>
           </div>
         </GamePanel>
 

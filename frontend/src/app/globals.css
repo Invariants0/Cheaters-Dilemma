@@ -21,16 +21,9 @@
 @layer base {
   body {
     @apply bg-[#0a0e27] text-[#00ffff] font-mono;
-    background-image: 
-      linear-gradient(
-        rgba(0, 255, 255, 0.03) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        rgba(0, 255, 255, 0.03) 1px,
-        transparent 1px
-      );
+    background-image:
+      linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 
@@ -56,7 +49,7 @@
   /* Retro Panel with Pixel Borders */
   .retro-panel {
     @apply bg-[#0f1629] border-2 border-[#00ffff] rounded-none;
-    box-shadow: 
+    box-shadow:
       inset 0 0 0 1px rgba(0, 255, 255, 0.3),
       0 0 20px rgba(0, 255, 255, 0.2),
       0 0 40px rgba(0, 255, 255, 0.1);
@@ -64,7 +57,7 @@
 
   .retro-panel:hover {
     @apply border-[#ff00ff];
-    box-shadow: 
+    box-shadow:
       inset 0 0 0 1px rgba(255, 0, 255, 0.3),
       0 0 30px rgba(255, 0, 255, 0.3),
       0 0 60px rgba(0, 255, 255, 0.2);
@@ -167,5 +160,52 @@
       transparent 2px
     );
     pointer-events: none;
+  }
+
+  /* Pixel Art Rendering */
+  .pixelated {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  /* Hide Scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Animation: Fade In */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-in-out;
+  }
+
+  /* Animation: Fade In Up */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -100%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.4s ease-out;
   }
 }
