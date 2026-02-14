@@ -16,7 +16,7 @@ class AnalyticsService:
             state = "alive" if row["alive"] else "removed"
             lines.append(
                 f"{idx:>2}. agent={row['agent_id']:>2} type={row['strategy']:<10} "
-                f"res={row['resources']:<4} str={row['strength']:<2} {state:<10} "
+                f"tokens={row['token_balance']:<4} str={row['strength']:<2} {state:<10} "
                 f"trust={row['trust']:.2f} aggr={row['aggression']:.2f}"
             )
         return lines
@@ -37,7 +37,7 @@ class AnalyticsService:
             f"Run metadata: seed={seed} agents={agent_count} turns={turns}",
             f"First rule change turn: {timeline['first_rule_change_turn']}",
             f"First removal turn: {timeline['first_removal_turn']}",
-            f"Final Gini coefficient: {metrics['gini_resources']}",
+            f"Final Gini coefficient: {metrics['gini_token_balance']}",
             (
                 f"Winner: agent={winner['winner_id']} strategy={winner['winner_strategy']} "
                 f"won via {winner['winner_reason']}"

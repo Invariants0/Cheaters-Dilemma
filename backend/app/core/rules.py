@@ -24,7 +24,7 @@ class RuleSet:
                 return False, "rule_disallows_steal"
             if action.target is None:
                 return False, "steal_requires_target"
-            if actor_state["resources"] < int(self.values.get("steal_min_resources", 0)):
+            if actor_state["token_balance"] < int(self.values.get("steal_min_token_balance", 0)):
                 return False, "insufficient_resources_for_steal"
             return True, "steal_allowed_by_rules"
 
@@ -34,7 +34,7 @@ class RuleSet:
             if action.target is None:
                 return False, "attack_requires_target"
             cost = int(self.values.get("attack_cost", 0))
-            if actor_state["resources"] < cost:
+            if actor_state["token_balance"] < cost:
                 return False, "insufficient_resources_for_attack"
             return True, "attack_allowed_by_rules"
 

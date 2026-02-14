@@ -33,20 +33,27 @@ class GovernanceSystem:
         self.votes[actor] = vote
         return True, "vote_recorded"
 
-    def try_resolve(self, alive_ids: list[int], turn: int, force: bool = False) -> tuple[bool, str, dict[str, Any] | None]:
+    def try_resolve(self, alive_ids: list[int], turn: int, force: bool = False, token_balances: dict[int, int] = None) -> tuple[bool, str, dict[str, Any] | None]:
         if self.pending is None:
             return False, "no_pending_proposal", None
 
+        if token_balances is None:
+            token_balances = {}
+        
         total_alive = len(alive_ids)
         if total_alive == 0:
             return False, "no_alive_agents", None
 
-        yes_votes = sum(1 for aid in alive_ids if self.votes.get(aid) == "yes")
-        no_votes = sum(1 for aid in alive_ids if self.votes.get(aid) == "no")
-        unresolved = total_alive - yes_votes - no_votes
-
-        passed = yes_votes > (total_alive / 2)
-        failed = no_votes >= (total_alive / 2) or (yes_votes + unresolved) <= (total_alive / 2)
+        # Calculate total token supply of alive agents
+        total_token_supply = sum(token_balances.get(aid, 0) for aid in alive_ids)
+        
+        # Calculate YES and NO vote weights
+        yes_vote_weight = sum(token_balances.get(aid, 0) for aid in alive_ids if self.votes.get(aid) == "yes")
+        no_vote_weight = sum(token_balances.get(aid, 0) for aid in alive_ids if self.votes.get(aid) == "no")
+        
+        # Proposal passes if YES votes exceed 50% of total token supply
+        passed = yes_vote_weight > (total_token_supply / 2)
+        failed = no_vote_weight >= (total_token_supply / 2) or (yes_vote_weight + (total_token_supply - yes_vote_weight - no_vote_weight)) <= (total_token_supply / 2)
 
         if not force and not passed and not failed:
             return False, "awaiting_votes", None

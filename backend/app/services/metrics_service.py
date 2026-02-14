@@ -172,17 +172,17 @@ class MetricsService:
     @staticmethod
     def compute_metrics(result: dict[str, Any]) -> dict[str, Any]:
         """Compute comprehensive metrics for a simulation result."""
-        resources = [row["resources"] for row in result["leaderboard"]]
+        token_balances = [row["token_balance"] for row in result["leaderboard"]]
         alive_count = sum(1 for row in result["leaderboard"] if row["alive"])
         governance = MetricsService._calculate_governance_capture_metrics(result)
         timeline = MetricsService._calculate_timeline_markers(result)
         winner = MetricsService._calculate_winner_reason(result)
 
         return {
-            "gini_resources": MetricsService.calculate_gini(resources),
-            "hhi_resources": MetricsService.calculate_hhi(resources),
-            "top1_share": MetricsService.calculate_top_share(resources, 1),
-            "top3_share": MetricsService.calculate_top_share(resources, 3),
+            "gini_token_balance": MetricsService.calculate_gini(token_balances),
+            "hhi_token_balance": MetricsService.calculate_hhi(token_balances),
+            "top1_share": MetricsService.calculate_top_share(token_balances, 1),
+            "top3_share": MetricsService.calculate_top_share(token_balances, 3),
             "alive_count": alive_count,
             "strategy_frequency": MetricsService.calculate_strategy_frequency(result["leaderboard"]),
             "action_frequency": MetricsService._calculate_external_action_frequency(result.get("action_counts", {})),

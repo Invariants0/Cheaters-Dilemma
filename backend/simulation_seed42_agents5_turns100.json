@@ -1,0 +1,7341 @@
+{
+  "result": {
+    "action_counts": {
+      "ATTACK": 6,
+      "DO_NOTHING": 0,
+      "PROPOSE_RULE": 25,
+      "STEAL": 160,
+      "VOTE_RULE": 41,
+      "WORK": 268
+    },
+    "alive": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "event_count": 525,
+    "events": [
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 1
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 1
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 1
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 1,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 1
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 1
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 3,
+        "details": {
+          "proposal": {
+            "actor": 3,
+            "key": "attack_success_base",
+            "proposal_id": 1,
+            "turn": 1,
+            "value": 0.13999999999999999
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 1
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 2
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 2
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 2
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 2
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 2
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 3
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 3
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 2,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 3
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 3
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 3
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 2,
+            "turn": 3,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 3
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 4
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 4
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 4
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 4
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 4
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 5
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 5
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 5
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 5
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 5
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 6
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 6
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 6
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 6
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 6
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 7
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 7
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 7
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 1,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 7
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 3,
+        "turn": 7
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 8
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 8
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 8
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 8
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 8
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 9
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 9
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 9
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 9
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 9
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 10
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 10
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 10
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 10
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 10
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 11
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 11
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 11
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 11
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 11
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 12
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 12
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 12
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 12
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 12
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 13
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 13
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 13
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 13
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 13
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 14
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 14
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 14
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 14
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 14
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 15
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 15
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 15
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "proposal_id": 3,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 15
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 15
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 3,
+        "details": {
+          "proposal": {
+            "actor": 3,
+            "key": "attack_success_base",
+            "proposal_id": 3,
+            "turn": 15,
+            "value": 0.13999999999999999
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 15
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 16
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 16
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 16
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 16
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 16
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 17
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 17
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 4,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 17
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 17
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 17
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 4,
+            "turn": 17,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 17
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 18
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 18
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 18
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 18
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 18
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 19
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 19
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 19
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 19
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 19
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 20
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 20
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 20
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 20
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 20
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 21
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 21
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 21
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 21
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 21
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 22
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 22
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 22
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 22
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 22
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 23
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 23
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 23
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 23
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 23
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 24
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 24
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 24
+      },
+      {
+        "action": "ELIMINATE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "penalty": 2,
+          "reason": "attack_failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "attack_allowed_by_rules",
+        "target": 2,
+        "turn": 24
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 24
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 25
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 25
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 25
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 25
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 25
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 26
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 26
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 26
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 26
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 26
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 27
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 27
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 27
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 27
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 27
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 28
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 28
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "proposal_id": 5,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 28
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 28
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 28
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 5,
+            "turn": 28,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 28
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 29
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 29
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 29
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 29
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 6,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 29
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 4,
+        "details": {
+          "proposal": {
+            "actor": 4,
+            "key": "work_income",
+            "proposal_id": 6,
+            "turn": 29,
+            "value": [
+              3,
+              5
+            ]
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 29
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 30
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 30
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 30
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 30
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 30
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 31
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 31
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "proposal_id": 7,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 31
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 31
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 31
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 7,
+            "turn": 31,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 31
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 32
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 32
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 32
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 32
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 32
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 33
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 33
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 33
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 33
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 33
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 34
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 34
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "proposal_id": 8,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 34
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 34
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 34
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 8,
+            "turn": 34,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 34
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 35
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 35
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 35
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 35
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 35
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 36
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 36
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 36
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 36
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 36
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 37
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 37
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 37
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 37
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 37
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 38
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 38
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 3,
+          "proposal_id": 9,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 38
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 38
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 38
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "steal_catch_penalty",
+            "proposal_id": 9,
+            "turn": 38,
+            "value": 3
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 38
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 39
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 39
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 39
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 39
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 39
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 40
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 40
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 10,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 40
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 40
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 40
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 10,
+            "turn": 40,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 40
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 41
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 41
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "proposal_id": 11,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 41
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 41
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 41
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 11,
+            "turn": 41,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 41
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 42
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 42
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 42
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 42
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 42
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 43
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 43
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 43
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "proposal_id": 12,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 43
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 43
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 3,
+        "details": {
+          "proposal": {
+            "actor": 3,
+            "key": "attack_success_base",
+            "proposal_id": 12,
+            "turn": 43,
+            "value": 0.13999999999999999
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 43
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 44
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 44
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 44
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 44
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 44
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 45
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 45
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 45
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 45
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 45
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 46
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 46
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 46
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 46
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 46
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 47
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 47
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 47
+      },
+      {
+        "action": "ELIMINATE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "penalty": 2,
+          "reason": "attack_failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "attack_allowed_by_rules",
+        "target": 2,
+        "turn": 47
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 47
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 48
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 48
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 48
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 48
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 48
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "proposal_id": 13,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 49
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 49
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 49
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 49
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 49
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 0,
+        "details": {
+          "proposal": {
+            "actor": 0,
+            "key": "work_income",
+            "proposal_id": 13,
+            "turn": 49,
+            "value": [
+              3,
+              5
+            ]
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 49
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 50
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 50
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 50
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 50
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 14,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 50
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 4,
+        "details": {
+          "proposal": {
+            "actor": 4,
+            "key": "work_income",
+            "proposal_id": 14,
+            "turn": 50,
+            "value": [
+              3,
+              5
+            ]
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 50
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 51
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 51
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 51
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 51
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 51
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 52
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 52
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 52
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 52
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 52
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 53
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 53
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 53
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 53
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 53
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 54
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 54
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 54
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 54
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 54
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 55
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 55
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 15,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 55
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 55
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 55
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 15,
+            "turn": 55,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 55
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 56
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 56
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 56
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 56
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 56
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 57
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 57
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 57
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 57
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 57
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 58
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 58
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "proposal_id": 16,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 58
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 58
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 58
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 16,
+            "turn": 58,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 58
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 59
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 59
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 59
+      },
+      {
+        "action": "ELIMINATE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "penalty": 2,
+          "reason": "attack_failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "attack_allowed_by_rules",
+        "target": 2,
+        "turn": 59
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 59
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 60
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 60
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 60
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 60
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 60
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 61
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 61
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 61
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 61
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 61
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 62
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 62
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 3,
+          "proposal_id": 17,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 62
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 62
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 62
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "steal_catch_penalty",
+            "proposal_id": 17,
+            "turn": 62,
+            "value": 3
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 62
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 63
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 63
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 63
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 63
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 63
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 64
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 64
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 64
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "proposal_id": 18,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 64
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 64
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 3,
+        "details": {
+          "proposal": {
+            "actor": 3,
+            "key": "attack_success_base",
+            "proposal_id": 18,
+            "turn": 64,
+            "value": 0.13999999999999999
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 64
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 65
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 65
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 65
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 65
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 65
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 66
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 66
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 66
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 66
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 66
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 67
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 67
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 67
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 67
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 67
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 68
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 68
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 68
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 68
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 68
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 69
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 69
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 69
+      },
+      {
+        "action": "ELIMINATE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "penalty": 2,
+          "reason": "attack_failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "attack_allowed_by_rules",
+        "target": 2,
+        "turn": 69
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 69
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 70
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 70
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 70
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 70
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 70
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 71
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 71
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 71
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 71
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 71
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 72
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 72
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 72
+      },
+      {
+        "action": "ELIMINATE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "penalty": 2,
+          "reason": "attack_failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "attack_allowed_by_rules",
+        "target": 2,
+        "turn": 72
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 72
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 73
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 73
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 73
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 73
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 73
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 74
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 74
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 74
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 74
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 74
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 75
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 75
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 75
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 75
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 75
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 76
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 76
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 76
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "proposal_id": 19,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 76
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 76
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 3,
+        "details": {
+          "proposal": {
+            "actor": 3,
+            "key": "attack_success_base",
+            "proposal_id": 19,
+            "turn": 76,
+            "value": 0.13999999999999999
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 76
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 77
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 77
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 77
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 77
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 77
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 78
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 78
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 78
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 78
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 78
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 79
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 79
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 79
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 79
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 79
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 80
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 80
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 80
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 80
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 80
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 81
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 81
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 81
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 81
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "proposal_id": 20,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 81
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 4,
+        "details": {
+          "proposal": {
+            "actor": 4,
+            "key": "work_income",
+            "proposal_id": 20,
+            "turn": 81,
+            "value": [
+              3,
+              5
+            ]
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 81
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 82
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 82
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 82
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "proposal_id": 21,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 82
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 82
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 3,
+        "details": {
+          "proposal": {
+            "actor": 3,
+            "key": "attack_success_base",
+            "proposal_id": 21,
+            "turn": 82,
+            "value": 0.13999999999999999
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 82
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 83
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 83
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "proposal_id": 22,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 83
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 83
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 83
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 22,
+            "turn": 83,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 83
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 84
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 84
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 84
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 84
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 84
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "proposal_id": 23,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 85
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 85
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 85
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 85
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 85
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 0,
+        "details": {
+          "proposal": {
+            "actor": 0,
+            "key": "work_income",
+            "proposal_id": 23,
+            "turn": 85,
+            "value": [
+              3,
+              5
+            ]
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 85
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 86
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 86
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 86
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 86
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 86
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 87
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 87
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 87
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "proposal_id": 24,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 87
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 87
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 3,
+        "details": {
+          "proposal": {
+            "actor": 3,
+            "key": "attack_success_base",
+            "proposal_id": 24,
+            "turn": 87,
+            "value": 0.13999999999999999
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 87
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 88
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 88
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 88
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 88
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 88
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 89
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 89
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 89
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 89
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 89
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 90
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 90
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 90
+      },
+      {
+        "action": "ELIMINATE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "penalty": 2,
+          "reason": "attack_failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "attack_allowed_by_rules",
+        "target": 2,
+        "turn": 90
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 90
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 91
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 91
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 91
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 91
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 91
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 92
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 92
+      },
+      {
+        "action": "PROPOSE_RULE",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "proposal_id": 25,
+          "proposal_reason": "proposal_registered"
+        },
+        "outcome": "accepted",
+        "rule_justification": "proposal_allowed",
+        "target": null,
+        "turn": 92
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 92
+      },
+      {
+        "action": "VOTE_RULE",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "vote_reason": "vote_recorded"
+        },
+        "outcome": "accepted",
+        "rule_justification": "vote_allowed",
+        "target": null,
+        "turn": 92
+      },
+      {
+        "action": "RULE_VOTE_RESULT",
+        "actor": 2,
+        "details": {
+          "proposal": {
+            "actor": 2,
+            "key": "attack_cost",
+            "proposal_id": 25,
+            "turn": 92,
+            "value": 9
+          },
+          "rules_version": 1
+        },
+        "outcome": "proposal_rejected",
+        "rule_justification": "simple_majority",
+        "target": null,
+        "turn": 92
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 93
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 93
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 93
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 93
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 93
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 94
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 94
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 94
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 94
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 94
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 95
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 95
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 95
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 95
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 95
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 96
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 96
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 96
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 96
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 96
+      },
+      {
+        "action": "WORK",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 97
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 0,
+        "turn": 97
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 97
+      },
+      {
+        "action": "STEAL",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "amount": 3,
+          "penalty": 2,
+          "reason": "caught_after_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 97
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 2,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 97
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 2,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 98
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 98
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 98
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 98
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 98
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 99
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 99
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 2,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 99
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 99
+      },
+      {
+        "action": "WORK",
+        "actor": 4,
+        "details": {
+          "actor_rank": 1,
+          "gain": 3,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 99
+      },
+      {
+        "action": "STEAL",
+        "actor": 0,
+        "details": {
+          "actor_rank": 3,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 100
+      },
+      {
+        "action": "STEAL",
+        "actor": 1,
+        "details": {
+          "actor_rank": 5,
+          "amount": 3,
+          "reason": "clean_success",
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 4,
+        "turn": 100
+      },
+      {
+        "action": "WORK",
+        "actor": 2,
+        "details": {
+          "actor_rank": 1,
+          "gain": 2,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 100
+      },
+      {
+        "action": "WORK",
+        "actor": 3,
+        "details": {
+          "actor_rank": 4,
+          "gain": 4,
+          "success": true
+        },
+        "outcome": "success",
+        "rule_justification": "work_always_allowed",
+        "target": null,
+        "turn": 100
+      },
+      {
+        "action": "STEAL",
+        "actor": 4,
+        "details": {
+          "actor_rank": 3,
+          "amount": 0,
+          "penalty": 1,
+          "reason": "failed",
+          "success": false
+        },
+        "outcome": "failed",
+        "rule_justification": "steal_allowed_by_rules",
+        "target": 2,
+        "turn": 100
+      }
+    ],
+    "leaderboard": [
+      {
+        "agent_id": 2,
+        "aggression": 0.0,
+        "alive": true,
+        "strategy": "politician",
+        "strength": 3,
+        "token_balance": 176,
+        "trust": 1.0
+      },
+      {
+        "agent_id": 0,
+        "aggression": 1.0,
+        "alive": true,
+        "strategy": "greedy",
+        "strength": 4,
+        "token_balance": 172,
+        "trust": 0.13
+      },
+      {
+        "agent_id": 4,
+        "aggression": 0.88,
+        "alive": true,
+        "strategy": "greedy",
+        "strength": 9,
+        "token_balance": 171,
+        "trust": 0.54
+      },
+      {
+        "agent_id": 3,
+        "aggression": 1.0,
+        "alive": true,
+        "strategy": "warlord",
+        "strength": 2,
+        "token_balance": 98,
+        "trust": 0.03
+      },
+      {
+        "agent_id": 1,
+        "aggression": 1.0,
+        "alive": true,
+        "strategy": "cheater",
+        "strength": 4,
+        "token_balance": 38,
+        "trust": 0.0
+      }
+    ],
+    "log_digest": "82c5885a1264edef155864fa9f70af79b670df8c1262c7c20b782c80f04e717b",
+    "rules_version": 1,
+    "seed": 42,
+    "turns_completed": 100
+  },
+  "summary": {
+    "judge_lines": [
+      "Canonical demo scenario: seed=42 agents=10 turns=500",
+      "Run metadata: seed=42 agents=5 turns=100",
+      "First rule change turn: None",
+      "First removal turn: None",
+      "Final Gini coefficient: 0.21374",
+      "Winner: agent=2 strategy=politician won via resources",
+      "Governance capture: 0.0% of accepted rules came from top-2 agents"
+    ],
+    "leaderboard_lines": [
+      " 1. agent= 2 type=politician tokens=176  str=3  alive      trust=1.00 aggr=0.00",
+      " 2. agent= 0 type=greedy     tokens=172  str=4  alive      trust=0.13 aggr=1.00",
+      " 3. agent= 4 type=greedy     tokens=171  str=9  alive      trust=0.54 aggr=0.88",
+      " 4. agent= 3 type=warlord    tokens=98   str=2  alive      trust=0.03 aggr=1.00",
+      " 5. agent= 1 type=cheater    tokens=38   str=4  alive      trust=0.00 aggr=1.00"
+    ],
+    "metrics": {
+      "action_frequency": {
+        "DO_NOTHING": 0,
+        "ELIMINATE": 6,
+        "PROPOSE_RULE": 25,
+        "STEAL": 160,
+        "VOTE_RULE": 41,
+        "WORK": 268
+      },
+      "alive_count": 5,
+      "event_count": 525,
+      "gini_token_balance": 0.21374,
+      "governance_capture": {
+        "accepted_rule_count": 0,
+        "accepted_rules_by_top2_percent": 0.0,
+        "governance_power_hhi": 0.0,
+        "proposal_acceptance_rate_by_rank": {
+          "rank_1": 0.0,
+          "rank_2": 0.0,
+          "rank_3": 0.0,
+          "rank_4": 0.0
+        }
+      },
+      "hhi_token_balance": 2350.656,
+      "log_digest": "82c5885a1264edef155864fa9f70af79b670df8c1262c7c20b782c80f04e717b",
+      "rules_version": 1,
+      "strategy_frequency": {
+        "cheater": 1,
+        "greedy": 2,
+        "politician": 1,
+        "warlord": 1
+      },
+      "timeline_markers": {
+        "first_removal_turn": null,
+        "first_rule_change_turn": null
+      },
+      "top1_share": null,
+      "top3_share": null,
+      "winner_analysis": {
+        "winner_governance_changes": 0,
+        "winner_id": 2,
+        "winner_reason": "resources",
+        "winner_removals": 0,
+        "winner_strategy": "politician",
+        "winner_work_steal_gain": 252
+      }
+    }
+  }
+}

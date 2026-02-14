@@ -15,7 +15,7 @@ class SimulationStepRequest(BaseModel):
 class AgentState(BaseModel):
     agent_id: int
     strategy: str
-    resources: int
+    token_balance: int
     strength: int
     alive: bool
     trust: float
@@ -24,10 +24,10 @@ class AgentState(BaseModel):
 
 class Metrics(BaseModel):
     """Economic and governance metrics"""
-    gini_resources: float = 0.0  # 0.0 = equal, 1.0 = one agent has all
-    hhi_resources: float = 0.0   # Herfindahl-Hirschman Index for concentration
+    gini_token_balance: float = 0.0  # 0.0 = equal, 1.0 = one agent has all
+    hhi_token_balance: float = 0.0   # Herfindahl-Hirschman Index for concentration
     avg_strength: float = 0.0
-    avg_resources: float = 0.0
+    avg_token_balance: float = 0.0
     governance_level: float = 0.0  # How much rules are being used
 
 

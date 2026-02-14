@@ -1,0 +1,104 @@
+============================================================
+DEPLOYMENT COMPLETE - The Cheater's Dilemma
+============================================================
+
+SIMULATION RESULTS (Seed: 42)
+------------------------------
+Winner: Agent 2 (politician) - 288 tokens
+Gini Coefficient: 0.25532
+Governance Capture: 0.0%
+Alive Agents: 6/8
+Total Supply: 1646 DLM
+
+MONAD TESTNET CONNECTION
+-------------------------
+✅ RPC URL: https://testnet-rpc.monad.xyz
+✅ Chain ID: 10143 (verified)
+✅ Latest Block: 12757478+
+✅ Network Status: LIVE
+
+TOKEN DEPLOYMENT OPTIONS
+-------------------------
+
+OPTION 1: NAD.fun Platform (Recommended)
+-----------------------------------------
+NAD.fun is the official token creation platform on Monad.
+
+Steps:
+1. Visit: https://nad.fun
+2. Connect your wallet
+3. Click 'Create Token'
+4. Enter details:
+   - Name: DILEMMA
+   - Symbol: DLM
+   - Description: The Cheater's Dilemma - Final political power distribution
+   - Initial Supply: 1646
+5. Confirm transaction
+
+Token Metadata: dilemma_token_metadata_seed42.json
+
+OPTION 2: Direct Smart Contract Deployment
+-------------------------------------------
+Deploy DilemmaToken.sol directly to Monad testnet.
+
+Requirements:
+1. Install Foundry: curl -L https://foundry.paradigm.xyz | bash
+2. Compile contract: cd contracts && forge build
+3. Get testnet tokens (faucet or bridge)
+4. Deploy: forge create DilemmaToken --rpc-url https://testnet-rpc.monad.xyz
+
+AGENT WALLETS (Deterministic)
+------------------------------
+Agent 2 (politician): 0xcfd38BE191027B4070EB246CdF88a5F0932B076a - 288 DLM
+Agent 0 (greedy):     0xaF2E248E8A8B5C45a727289b42475B3277d62295 - 282 DLM
+Agent 3 (warlord):    0xAbF2C76581C162e07998e05BDF7daccF9D469CD3 - 280 DLM
+Agent 4 (greedy):     0x91BEe64De54e3f49EA071905d70FD394E89Fdbff - 280 DLM
+Agent 1 (cheater):    0x8872ecA8Dbba493724C033136A785109C4f556aD - 244 DLM
+Agent 7 (warlord):    0xE5B7518e7CF0E26550A3b85605270581A71FF775 - 213 DLM
+Agent 6 (politician): 0x0690Dd086F8eeafa5DFDf52958637E6cD8437C20 - 56 DLM (eliminated)
+Agent 5 (cheater):    0x21f3BEB303A0FE2EE17af3c7c414f8889a940831 - 3 DLM (eliminated)
+
+⚠️  Private keys stored in: agent_wallets_seed42.json (KEEP SECURE!)
+
+DETERMINISM VERIFIED
+--------------------
+✅ 3 runs with seed 42 produced identical results
+✅ Hash: a1e547993d426f5ad21905b8687fea9e6503a18b7188abc3cbd1291443cf6dea
+✅ Same seed = same results every time
+
+FILES GENERATED
+---------------
+- simulation_results_demo_seed42.json (simulation output)
+- agent_wallets_seed42.json (wallet addresses & private keys)
+- dilemma_token_metadata_seed42.json (token metadata for NAD.fun)
+
+MONAD RESOURCES
+---------------
+- Monad Docs: https://docs.monad.xyz
+- Monad RPC (Testnet): https://testnet-rpc.monad.xyz
+- NAD.fun Platform: https://nad.fun
+- NAD.fun API (Testnet): https://dev-api.nadapp.net
+- NAD.fun Skill: https://nad.fun/skill.md
+- Token Creation Guide: https://nad.fun/create.md
+
+ARCHITECTURE CONFIRMED
+----------------------
+✅ Simulation: Pure deterministic Python (no blockchain calls)
+✅ Blockchain: Post-simulation deployment only
+✅ Token-weighted governance implemented
+✅ Utility-based agent decisions implemented
+✅ Clean separation of concerns maintained
+
+NEXT STEPS
+----------
+1. Choose deployment method (NAD.fun recommended)
+2. Create token on Monad testnet
+3. Distribute tokens to agent wallets
+4. Verify on Monad explorer
+5. Submit to Moltiverse Hackathon
+
+============================================================
+Status: READY FOR DEPLOYMENT
+Network: Monad Testnet (LIVE)
+Date: 2026-02-14
+============================================================

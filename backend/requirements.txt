@@ -1,0 +1,11 @@
+# Core dependencies
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+pydantic-settings>=2.0.0
+pyyaml>=6.0.0
+python-multipart>=0.0.6
+
+# Blockchain dependencies for token deployment
+web3>=6.0.0
+eth-account>=0.10.0

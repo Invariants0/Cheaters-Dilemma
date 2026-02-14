@@ -44,7 +44,7 @@ class World:
         self.agent_slots: list[AgentSlot] = [
             AgentSlot(agent_id=i, brain=agent, label=agent.name) for i, agent in enumerate(agents)
         ]
-        self.resources: dict[int, int] = {
+        self.token_balances: dict[int, int] = {
             slot.agent_id: self.rng.randint(int(initial_resource_range[0]), int(initial_resource_range[1]))
             for slot in self.agent_slots
         }
@@ -59,7 +59,7 @@ class World:
         self.turns_completed: int = 0
 
     def _rank_of(self, agent_id: int) -> int:
-        ordered = sorted(self.alive, key=lambda aid: (-self.resources[aid], aid))
+        ordered = sorted(self.alive, key=lambda aid: (-self.token_balances[aid], aid))
         return ordered.index(agent_id) + 1
 
     def _observation_for(self, slot: AgentSlot, turn: int) -> AgentObservation:
@@ -68,11 +68,11 @@ class World:
         return AgentObservation(
             turn=turn,
             self_id=aid,
-            self_resources=self.resources[aid],
+            self_token_balance=self.token_balances[aid],
             self_strength=self.strength[aid],
             self_rank=self._rank_of(aid),
             alive_ids=alive_ids,
-            resources_by_agent={i: self.resources[i] for i in alive_ids},
+            token_balance_by_agent={i: self.token_balances[i] for i in alive_ids},
             strength_by_agent={i: self.strength[i] for i in alive_ids},
             trust_by_agent={i: self.reputation.trust[i] for i in alive_ids},
             aggression_by_agent={i: self.reputation.aggression[i] for i in alive_ids},
@@ -105,7 +105,7 @@ class World:
         )
 
     def _try_governance_resolution(self, turn: int, force: bool = False) -> None:
-        changed, status, proposal = self.governance.try_resolve(sorted(self.alive), turn, force=force)
+        changed, status, proposal = self.governance.try_resolve(sorted(self.alive), turn, force=force, token_balances=self.token_balances)
         if not changed:
             return
         actor = int(proposal["actor"]) if proposal else -1
@@ -140,14 +140,14 @@ class World:
 
             valid, reason = self.rule_set.validate_action(
                 action=action,
-                actor_state={"resources": self.resources[actor]},
+                actor_state={"token_balance": self.token_balances[actor]},
             )
             if not valid:
                 self._log_action(turn, action, "blocked", reason)
                 continue
 
             if action.kind == ActionType.WORK:
-                outcome = self.resolver.resolve_work(actor, self.resources, self.rng)
+                outcome = self.resolver.resolve_work(actor, self.token_balances, self.rng)
                 self.reputation.record_work(actor)
                 self._log_action(turn, action, "success", reason, details=outcome)
                 continue
@@ -160,7 +160,7 @@ class World:
                 result = self.resolver.resolve_steal(
                     actor=actor,
                     target=int(action.target),
-                    resources=self.resources,
+                    token_balances=self.token_balances,
                     strength=self.strength,
                     rng=self.rng,
                 )
@@ -177,7 +177,7 @@ class World:
                 result = self.resolver.resolve_attack(
                     actor=actor,
                     target=int(action.target),
-                    resources=self.resources,
+                    token_balances=self.token_balances,
                     strength=self.strength,
                     alive=self.alive,
                     rng=self.rng,
@@ -225,7 +225,7 @@ class World:
                 {
                     "agent_id": slot.agent_id,
                     "strategy": slot.label,
-                    "resources": self.resources[slot.agent_id],
+                    "token_balance": self.token_balances[slot.agent_id],
                     "strength": self.strength[slot.agent_id],
                     "alive": slot.agent_id in self.alive,
                     "trust": round(self.reputation.trust[slot.agent_id], 4),
@@ -233,7 +233,7 @@ class World:
                 }
                 for slot in self.agent_slots
             ),
-            key=lambda row: (-row["resources"], row["agent_id"]),
+            key=lambda row: (-row["token_balance"], row["agent_id"]),
         )
 
         return {

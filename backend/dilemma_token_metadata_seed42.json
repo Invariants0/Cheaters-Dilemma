@@ -1,0 +1,11 @@
+{
+  "name": "DILEMMA",
+  "symbol": "DLM",
+  "description": "The Cheater's Dilemma - A token representing final political power distribution from a multi-agent governance war simulation",
+  "image": "",
+  "simulation_seed": 42,
+  "total_supply": 1646,
+  "agent_count": 8,
+  "winner_agent_id": 2,
+  "winner_strategy": "politician"
+}

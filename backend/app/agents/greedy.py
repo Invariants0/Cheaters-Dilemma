@@ -21,10 +21,10 @@ class GreedyAgent(Agent):
         if not others:
             return Action(actor=obs.self_id, kind=ActionType.WORK)
 
-        richest = max(others, key=lambda aid: obs.resources_by_agent[aid])
+        richest = max(others, key=lambda aid: obs.token_balance_by_agent[aid])
         if (
-            obs.resources_by_agent[richest] > obs.self_resources + 2
-            and obs.self_resources >= obs.current_rules.get("steal_min_resources", 0)
+            obs.token_balance_by_agent[richest] > obs.self_token_balance + 2
+            and obs.self_token_balance >= obs.current_rules.get("steal_min_token_balance", 0)
             and rng.random() < 0.35
         ):
             return Action(actor=obs.self_id, kind=ActionType.STEAL, target=richest)

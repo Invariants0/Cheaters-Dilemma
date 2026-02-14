@@ -24,7 +24,7 @@ class Agent:
     """Core agent entity."""
     agent_id: int
     strategy: AgentStrategy
-    resources: int
+    token_balance: int
     strength: int
     alive: bool = True
     trust: float = 0.5
@@ -34,13 +34,13 @@ class Agent:
     successful_actions: int = 0
     failed_actions: int = 0
     reputation_history: List[float] = None
-    resource_history: List[int] = None
+    token_balance_history: List[int] = None
 
     def __post_init__(self):
         if self.reputation_history is None:
             self.reputation_history = []
-        if self.resource_history is None:
-            self.resource_history = []
+        if self.token_balance_history is None:
+            self.token_balance_history = []
 
 
 @dataclass
