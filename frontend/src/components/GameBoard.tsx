@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AgentSummary } from '@/lib/types';
-import { Skull, Swords, Footprints, HandCoins, ShieldPlus } from 'lucide-react';
+import { Skull, Swords, Footprints, HandCoins, ShieldPlus, Trophy } from 'lucide-react';
 
 
 export const AVATAR_API_BASE = "https://api.dicebear.com/7.x/pixel-art/svg?seed=";
@@ -18,6 +18,13 @@ interface GameBoardProps {
   showInteractions?: boolean;
   agentCount?: number;
   seed?: number;
+  recentEvents?: Array<{
+    turn: number;
+    actor: number;
+    action: string;
+    target: number | null;
+    outcome: string;
+  }>;
 }
 
 const GRID_SIZE = 15;
@@ -35,7 +42,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
   selectedAgentId,
   showInteractions = false,
   agentCount = 10,
-  seed = 42
+  seed = 42,
+  recentEvents = []
 }) => {
   // Filter only alive agents
   const aliveAgents = agents.filter(agent => agent.alive);
@@ -54,12 +62,72 @@ const GameBoard: React.FC<GameBoardProps> = ({
     };
   };
 
-  // Generate random position for agent
-  const getAgentPosition = (agentId: number): Position => {
-    const rng = seededRandom(`${seed}-${agentId}`);
-    const x = Math.floor(rng() * GRID_SIZE);
-    const y = Math.floor(rng() * GRID_SIZE);
-    return { x, y };
+  // Generate dynamic position for agent based on their actions
+  const getAgentPosition = (agent: AgentSummary): Position => {
+    // Base position from seed
+    const baseRng = seededRandom(`${seed}-${agent.agent_id}`);
+    const baseX = Math.floor(baseRng() * GRID_SIZE);
+    const baseY = Math.floor(baseRng() * GRID_SIZE);
+
+    // Find recent actions to determine movement
+    const recentActions = recentEvents.filter(event => event.actor === agent.agent_id);
+    const actionCount = recentActions.length;
+
+    if (actionCount === 0) return { x: baseX, y: baseY };
+
+    // Get the most recent action
+    const lastAction = recentActions[recentActions.length - 1];
+
+    // Movement based on action type
+    let moveX = 0;
+    let moveY = 0;
+
+    switch (lastAction.action.toLowerCase()) {
+      case 'attack':
+        // Move towards target if attacking
+        if (lastAction.target) {
+          // Simple directional movement towards target area
+          const targetRng = seededRandom(`${seed}-${lastAction.target}`);
+          const targetX = Math.floor(targetRng() * GRID_SIZE);
+          const targetY = Math.floor(targetRng() * GRID_SIZE);
+          moveX = targetX > baseX ? 1 : targetX < baseX ? -1 : 0;
+          moveY = targetY > baseY ? 1 : targetY < baseY ? -1 : 0;
+        }
+        break;
+      case 'steal':
+        // Move away from target if stealing
+        if (lastAction.target) {
+          const targetRng = seededRandom(`${seed}-${lastAction.target}`);
+          const targetX = Math.floor(targetRng() * GRID_SIZE);
+          const targetY = Math.floor(targetRng() * GRID_SIZE);
+          moveX = targetX > baseX ? -1 : targetX < baseX ? 1 : 0;
+          moveY = targetY > baseY ? -1 : targetY < baseY ? 1 : 0;
+        }
+        break;
+      case 'work':
+        // Stay relatively still when working
+        moveX = Math.floor(Math.random() * 3) - 1;
+        moveY = Math.floor(Math.random() * 3) - 1;
+        break;
+      case 'vote':
+        // Move towards center when voting (governance)
+        const centerX = Math.floor(GRID_SIZE / 2);
+        const centerY = Math.floor(GRID_SIZE / 2);
+        moveX = baseX < centerX ? 1 : baseX > centerX ? -1 : 0;
+        moveY = baseY < centerY ? 1 : baseY > centerY ? -1 : 0;
+        break;
+      default:
+        // Random movement for other actions
+        const movementRng = seededRandom(`${seed}-${agent.agent_id}-${actionCount}`);
+        moveX = Math.floor(movementRng() * 3) - 1;
+        moveY = Math.floor(movementRng() * 3) - 1;
+    }
+
+    // Calculate new position with bounds checking
+    const newX = Math.max(0, Math.min(GRID_SIZE - 1, baseX + moveX));
+    const newY = Math.max(0, Math.min(GRID_SIZE - 1, baseY + moveY));
+
+    return { x: newX, y: newY };
   };
 
   // Create grid cells
@@ -73,26 +141,89 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Find agent at position (only alive agents)
   const getAgentAt = (pos: Position) => {
     return aliveAgents.find(agent => {
-      const agentPos = getAgentPosition(agent.agent_id);
+      const agentPos = getAgentPosition(agent);
       return agentPos.x === pos.x && agentPos.y === pos.y;
     }) || null;
   };
 
   const getActionIcon = (agent: AgentSummary) => {
-    // Map actions to icons (simplified for now)
-    if (agent.aggression > 0.7) return <Swords size={12} className="text-red-500 animate-pulse" />;
-    if (agent.resources > 50) return <HandCoins size={12} className="text-yellow-500" />;
-    if (agent.strength > 50) return <ShieldPlus size={12} className="text-green-500" />;
-    return <Footprints size={12} className="text-slate-400" />;
+    // Find the most recent action for this agent
+    const recentAction = recentEvents
+      .filter(event => event.actor === agent.agent_id)
+      .sort((a, b) => b.turn - a.turn)[0];
+
+    if (!recentAction) {
+      // Fallback to aggression-based icons
+      if (agent.aggression > 0.7) return <Swords size={12} className="text-red-500 animate-pulse" />;
+      if (agent.resources > 50) return <HandCoins size={12} className="text-yellow-500" />;
+      if (agent.strength > 50) return <ShieldPlus size={12} className="text-green-500" />;
+      return <Footprints size={12} className="text-slate-400" />;
+    }
+
+    switch (recentAction.action.toLowerCase()) {
+      case 'attack': return <Swords size={14} className="text-red-500 animate-pulse drop-shadow-lg" />;
+      case 'steal': return <HandCoins size={14} className="text-yellow-500 animate-bounce drop-shadow-lg" />;
+      case 'work': return <ShieldPlus size={14} className="text-green-500 animate-pulse drop-shadow-lg" />;
+      case 'vote': return <Trophy size={14} className="text-blue-500 animate-bounce drop-shadow-lg" />;
+      default: return <Footprints size={14} className="text-slate-400 drop-shadow-lg" />;
+    }
+  };
+
+  const getActionDetails = (agent: AgentSummary) => {
+    const recentAction = recentEvents
+      .filter(event => event.actor === agent.agent_id)
+      .sort((a, b) => b.turn - a.turn)[0];
+
+    if (!recentAction) return null;
+
+    // Parse outcome for specific results like the reference implementation
+    const outcome = recentAction.outcome.toLowerCase();
+
+    switch (recentAction.action.toLowerCase()) {
+      case 'attack':
+        if (outcome.includes('success') || outcome.includes('hit')) {
+          // Try to extract damage from outcome or use default
+          const damageMatch = recentAction.outcome.match(/(\d+)/);
+          const damage = damageMatch ? damageMatch[1] : '5';
+          return `Hit -${damage}`;
+        } else if (outcome.includes('kill')) {
+          // Extract loot amount
+          const lootMatch = recentAction.outcome.match(/(\d+)/);
+          const loot = lootMatch ? lootMatch[1] : '50';
+          return `KILL +${loot}`;
+        } else if (outcome.includes('miss') || outcome.includes('fail')) {
+          return `MISS`;
+        }
+        return recentAction.target ? `⚔️ Attacking #${recentAction.target}!` : '⚔️ Attacking!';
+      case 'steal':
+        if (outcome.includes('success') || outcome.includes('stole')) {
+          // Extract stolen amount
+          const stealMatch = recentAction.outcome.match(/(\d+)/);
+          const stolen = stealMatch ? stealMatch[1] : '5';
+          return `+${stolen} PTS`;
+        } else if (outcome.includes('caught') || outcome.includes('fail')) {
+          return `CAUGHT`;
+        }
+        return recentAction.target ? `💰 Stealing from #${recentAction.target}!` : '💰 Stealing!';
+      case 'work':
+        if (outcome.includes('success')) {
+          return `+2 PTS`;
+        }
+        return '⚒️ Working...';
+      case 'vote':
+        return '🗳️ Voting...';
+      default:
+        return null;
+    }
   };
 
   const getInteractionColor = (action: string) => {
-    switch(action) {
-        case 'ATTACK': return 'text-red-300 bg-red-900/80 border-red-500';
-        case 'STEAL': return 'text-yellow-300 bg-yellow-900/80 border-yellow-500';
-        case 'HEAL': return 'text-green-300 bg-green-900/80 border-green-500';
-        case 'GATHER': return 'text-blue-300 bg-blue-900/80 border-blue-500';
-        default: return 'text-slate-200 bg-slate-900/80 border-slate-500';
+    switch(action.toLowerCase()) {
+        case 'attack': return 'text-red-300 bg-red-900/90 border-red-500 shadow-red-500/50';
+        case 'steal': return 'text-yellow-300 bg-yellow-900/90 border-yellow-500 shadow-yellow-500/50';
+        case 'work': return 'text-green-300 bg-green-900/90 border-green-500 shadow-green-500/50';
+        case 'vote': return 'text-blue-300 bg-blue-900/90 border-blue-500 shadow-blue-500/50';
+        default: return 'text-slate-200 bg-slate-900/90 border-slate-500 shadow-slate-500/50';
     }
   };
 
@@ -117,8 +248,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
           gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
           gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`,
           aspectRatio: '1/1',
-          width: '600px',
-          height: '600px'
+          width: '800px',
+          height: '800px'
         }}
       >
       {cells.map((cell) => {
@@ -130,16 +261,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
             key={`${cell.x}-${cell.y}`}
             className={`
               relative bg-slate-900/50 rounded-sm border border-slate-800/50
-              flex items-center justify-center transition-all duration-300
+              flex items-center justify-center transition-all duration-500 ease-in-out
               ${agent ? 'cursor-pointer hover:bg-slate-800' : ''}
               ${isSelected ? 'ring-2 ring-yellow-400 z-10' : ''}
+              ${agent && recentEvents.some(e => e.actor === agent.agent_id) ? 'shadow-lg shadow-blue-500/20' : ''}
             `}
             onClick={() => agent && onAgentClick(agent)}
           >
             {agent && (
               <div className="relative w-full h-full p-0.5 group">
                 {/* Agent Avatar */}
-                <div className={`w-full h-full rounded overflow-hidden border-2 ${getStrategyColor(agent.strategy)} bg-slate-950`}>
+                <div className={`w-full h-full rounded overflow-hidden border-2 ${getStrategyColor(agent.strategy)} bg-slate-950 ${recentEvents.some(e => e.actor === agent.agent_id) ? 'animate-pulse shadow-inner shadow-blue-400/30' : ''}`}>
                    <img
                     src={`${AVATAR_API_BASE}${agent.agent_id}`}
                     alt={`Agent ${agent.agent_id}`}
@@ -156,11 +288,34 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 </div>
 
                 {/* Action Bubble Icon */}
-                {agent.aggression > 0.5 && (
-                    <div className="absolute -top-2 -right-2 bg-slate-900 rounded-full p-0.5 border border-slate-600 z-20 shadow-md">
+                {(() => {
+                  const recentAction = recentEvents
+                    .filter(event => event.actor === agent.agent_id)
+                    .sort((a, b) => b.turn - a.turn)[0];
+                  return recentAction ? (
+                    <div className="absolute -top-3 -right-3 bg-slate-900 rounded-full p-1 border-2 border-slate-600 z-20 shadow-xl animate-pulse">
                         {getActionIcon(agent)}
                     </div>
-                )}
+                  ) : null;
+                })()}
+
+                {/* Interaction Details Bubble */}
+                {showInteractions && (() => {
+                  const actionDetails = getActionDetails(agent);
+                  const recentAction = recentEvents
+                    .filter(event => event.actor === agent.agent_id)
+                    .sort((a, b) => b.turn - a.turn)[0];
+                  return actionDetails && recentAction ? (
+                    <div className={`
+                        absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap z-30
+                        px-2 py-1 rounded-md text-[10px] font-bold border-2 shadow-xl pointer-events-none
+                        animate-fade-in-up backdrop-blur-sm
+                        ${getInteractionColor(recentAction.action)}
+                    `}>
+                        {actionDetails}
+                    </div>
+                  ) : null;
+                })()}
 
                 {/* Score Tag */}
                 <div className="absolute top-0 left-0 bg-black/60 text-[8px] text-white px-1 rounded-br backdrop-blur-sm font-mono">
@@ -170,11 +325,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
             )}
 
             {/* Render Dead Bodies */}
-            {!agent && agents.find(a => !a.alive) && (
-               <div className="opacity-30 grayscale">
-                  <Skull size={16} className="text-slate-600" />
-               </div>
-            )}
+            {!agent && (() => {
+              const deadAgent = agents.find(a => !a.alive && getAgentPosition(a).x === cell.x && getAgentPosition(a).y === cell.y);
+              return deadAgent ? (
+                <div className="opacity-40 grayscale animate-pulse">
+                  <Skull size={18} className="text-slate-500 drop-shadow-sm" />
+                </div>
+              ) : null;
+            })()}
 
           </div>
         );
