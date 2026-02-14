@@ -35,12 +35,19 @@ class Agent:
     failed_actions: int = 0
     reputation_history: List[float] = None
     token_balance_history: List[int] = None
+    # New attributes
+    health: int = 50  # Default health
+    max_health: int = 50
+    position: tuple = (0, 0)  # (x, y) coordinates
+    alliances: List[int] = None  # List of allied agent IDs
 
     def __post_init__(self):
         if self.reputation_history is None:
             self.reputation_history = []
         if self.token_balance_history is None:
             self.token_balance_history = []
+        if self.alliances is None:
+            self.alliances = []
 
 
 @dataclass
@@ -79,3 +86,21 @@ class Alliance:
     trust_level: float
     strength: int
     formed_turn: int
+    active: bool = True
+    broken_turn: Optional[int] = None
+    
+    def get_combined_strength(self) -> int:
+        """Get combined strength of alliance."""
+        return self.strength
+    
+    def involves_agent(self, agent_id: int) -> bool:
+        """Check if agent is part of this alliance."""
+        return agent_id in (self.agent1_id, self.agent2_id)
+    
+    def get_partner(self, agent_id: int) -> Optional[int]:
+        """Get the partner agent ID."""
+        if agent_id == self.agent1_id:
+            return self.agent2_id
+        elif agent_id == self.agent2_id:
+            return self.agent1_id
+        return None

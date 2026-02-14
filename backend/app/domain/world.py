@@ -30,10 +30,12 @@ class World:
         seed: int,
         initial_resource_range: list[int],
         strength_range: list[int],
+        enable_new_features: bool = False,  # Backward compatibility flag
     ) -> None:
         self.seed = seed
         self.rng = Random(seed)
         self.max_turns = max_turns
+        self.enable_new_features = enable_new_features
 
         self.rule_set = RuleSet(values=rules)
         self.logger = EventLogger()
@@ -55,12 +57,63 @@ class World:
         self.alive: set[int] = {slot.agent_id for slot in self.agent_slots}
         self.reputation.bootstrap(sorted(self.alive))
 
+        # New features (only if enabled)
+        self.health: dict[int, int] = {slot.agent_id: 50 for slot in self.agent_slots}
+        self.positions: dict[int, tuple] = {slot.agent_id: (0, 0) for slot in self.agent_slots}
+        self.alliances: list = []  # List of Alliance objects
+        self.alliance_proposals: dict[int, list] = {}  # Pending alliance proposals
+
         self.action_counts: dict[str, int] = {kind.value: 0 for kind in ActionType}
         self.turns_completed: int = 0
 
     def _rank_of(self, agent_id: int) -> int:
         ordered = sorted(self.alive, key=lambda aid: (-self.token_balances[aid], aid))
         return ordered.index(agent_id) + 1
+    
+    def _get_active_alliances_for(self, agent_id: int) -> list:
+        """Get all active alliances involving this agent."""
+        return [a for a in self.alliances if a.active and a.involves_agent(agent_id)]
+    
+    def _are_allied(self, agent1_id: int, agent2_id: int) -> bool:
+        """Check if two agents are allied."""
+        for alliance in self.alliances:
+            if alliance.active and alliance.involves_agent(agent1_id) and alliance.involves_agent(agent2_id):
+                return True
+        return False
+    
+    def _form_alliance(self, agent1_id: int, agent2_id: int, turn: int) -> tuple[bool, str]:
+        """Form an alliance between two agents."""
+        if self._are_allied(agent1_id, agent2_id):
+            return False, "already_allied"
+        
+        # Calculate trust level
+        trust1 = self.reputation.trust.get(agent1_id, 0.5)
+        trust2 = self.reputation.trust.get(agent2_id, 0.5)
+        trust_level = (trust1 + trust2) / 2
+        
+        # Combined strength
+        combined_strength = self.strength[agent1_id] + self.strength[agent2_id]
+        
+        from .models import Alliance
+        alliance = Alliance(
+            agent1_id=agent1_id,
+            agent2_id=agent2_id,
+            trust_level=trust_level,
+            strength=combined_strength,
+            formed_turn=turn,
+            active=True
+        )
+        self.alliances.append(alliance)
+        return True, "alliance_formed"
+    
+    def _break_alliance(self, agent1_id: int, agent2_id: int, turn: int) -> tuple[bool, str]:
+        """Break an alliance between two agents."""
+        for alliance in self.alliances:
+            if alliance.active and alliance.involves_agent(agent1_id) and alliance.involves_agent(agent2_id):
+                alliance.active = False
+                alliance.broken_turn = turn
+                return True, "alliance_broken"
+        return False, "no_alliance_found"
 
     def _observation_for(self, slot: AgentSlot, turn: int) -> AgentObservation:
         aid = slot.agent_id
@@ -151,6 +204,85 @@ class World:
                 self.reputation.record_work(actor)
                 self._log_action(turn, action, "success", reason, details=outcome)
                 continue
+            
+            if action.kind == ActionType.REST and self.enable_new_features:
+                outcome = self.resolver.resolve_rest(actor, self.health)
+                self._log_action(turn, action, "success", reason, details=outcome)
+                continue
+            
+            if action.kind == ActionType.FORM_ALLIANCE and self.enable_new_features:
+                target_ok, target_reason = self._validate_target(actor, action.target)
+                if not target_ok:
+                    self._log_action(turn, action, "blocked", target_reason)
+                    continue
+                success, alliance_reason = self._form_alliance(actor, int(action.target), turn)
+                status = "success" if success else "failed"
+                self._log_action(turn, action, status, alliance_reason, details={"partner": action.target})
+                continue
+            
+            if action.kind == ActionType.BREAK_ALLIANCE and self.enable_new_features:
+                target_ok, target_reason = self._validate_target(actor, action.target)
+                if not target_ok:
+                    self._log_action(turn, action, "blocked", target_reason)
+                    continue
+                success, alliance_reason = self._break_alliance(actor, int(action.target), turn)
+                status = "success" if success else "failed"
+                self._log_action(turn, action, status, alliance_reason, details={"partner": action.target})
+                continue
+            
+            if action.kind == ActionType.TRADE and self.enable_new_features:
+                target_ok, target_reason = self._validate_target(actor, action.target)
+                if not target_ok:
+                    self._log_action(turn, action, "blocked", target_reason)
+                    continue
+                offer = action.payload.get("offer", 0)
+                request = action.payload.get("request", 0)
+                result = self.resolver.resolve_trade(
+                    actor, int(action.target), offer, request, self.token_balances
+                )
+                status = "success" if result["success"] else "failed"
+                self._log_action(turn, action, status, reason, details=result)
+                continue
+            
+            if action.kind == ActionType.MOVE and self.enable_new_features:
+                new_pos = action.payload.get("position", (0, 0))
+                old_pos = self.positions[actor]
+                self.positions[actor] = new_pos
+                self._log_action(turn, action, "success", reason, details={
+                    "from": old_pos,
+                    "to": new_pos
+                })
+                continue
+            
+            if action.kind == ActionType.COALITION_ATTACK and self.enable_new_features:
+                target_ok, target_reason = self._validate_target(actor, action.target)
+                if not target_ok:
+                    self._log_action(turn, action, "blocked", target_reason)
+                    continue
+                
+                # Get allied agents
+                allies = [actor]
+                for alliance in self._get_active_alliances_for(actor):
+                    partner = alliance.get_partner(actor)
+                    if partner and partner in self.alive:
+                        allies.append(partner)
+                
+                if len(allies) < 2:
+                    self._log_action(turn, action, "blocked", "no_allies_available")
+                    continue
+                
+                result = self.resolver.resolve_coalition_attack(
+                    allies,
+                    int(action.target),
+                    self.token_balances,
+                    self.strength,
+                    self.alive,
+                    self.health,
+                    self.rng,
+                )
+                status = "success" if result["success"] else "failed"
+                self._log_action(turn, action, status, reason, details=result)
+                continue
 
             if action.kind == ActionType.STEAL:
                 target_ok, target_reason = self._validate_target(actor, action.target)
@@ -180,6 +312,7 @@ class World:
                     token_balances=self.token_balances,
                     strength=self.strength,
                     alive=self.alive,
+                    health=self.health if self.enable_new_features else {},
                     rng=self.rng,
                 )
                 self.reputation.record_attack(actor, int(action.target), bool(result["success"]))

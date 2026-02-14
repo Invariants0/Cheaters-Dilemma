@@ -12,6 +12,13 @@ class ActionType(str, Enum):
     PROPOSE_RULE = "PROPOSE_RULE"
     VOTE_RULE = "VOTE_RULE"
     DO_NOTHING = "DO_NOTHING"
+    # New actions
+    FORM_ALLIANCE = "FORM_ALLIANCE"
+    BREAK_ALLIANCE = "BREAK_ALLIANCE"
+    TRADE = "TRADE"
+    MOVE = "MOVE"
+    REST = "REST"
+    COALITION_ATTACK = "COALITION_ATTACK"
 
 
 @dataclass(frozen=True)
