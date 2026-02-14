@@ -1,15 +1,20 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useReducer } from "react";
 import Link from "next/link";
 import { apiClient } from "@/lib/api";
-import { getSimulationStreamSocketUrl } from "@/lib/ws";
-import { SimulationState, SimulationEvent } from "@/lib/types";
-import { InteractiveWorld } from "@/components/InteractiveWorld";
-import { AllianceGraph } from "@/components/AllianceGraph";
+import { SimulationState, SimulationEvent, SimulationSummary } from "@/lib/types";
 import { SimulationControls } from "@/components/SimulationControls";
 import { LiveEventLog } from "@/components/LiveEventLog";
 import { GamePanel, GameButton } from "@/components/GameUI";
+import GameBoard from "@/components/GameBoard";
+import AgentCard from "@/components/AgentCard";
+import { Modal } from "@/components/Modal";
+import { FinalResults } from "@/components/FinalResults";
+import { useSimulationStream } from "@/hooks/useSimulationStream";
+import { SimulationConfigPanel } from "@/components/SimulationConfigPanel";
+import { SimulationStatusPanel } from "@/components/SimulationStatusPanel";
+import { LaunchConfigPanel } from "@/components/LaunchConfigPanel";
 
 interface SimulationConfig {
   agent_count: number;
@@ -22,6 +27,7 @@ type StreamStatus = "idle" | "connecting" | "connected" | "paused" | "complete" 
 interface SimulationPageState {
   simulationId: string | null;
   simulationState: SimulationState | null;
+  simulationSummary: SimulationSummary | null;
   events: SimulationEvent[];
   displayTurn: number;
   isRunning: boolean;
@@ -30,6 +36,8 @@ interface SimulationPageState {
   streamStatus: StreamStatus;
   streamError: string | null;
   config: SimulationConfig;
+  selectedAgentId: number | null;
+  showResultsModal: boolean;
 }
 
 type SimulationPageAction =
@@ -39,11 +47,13 @@ type SimulationPageAction =
   | { type: "START_FAILURE"; error?: string }
   | { type: "STREAM_CONNECTING"; mode: "play" | "step" }
   | { type: "STREAM_CONNECTED" }
-  | { type: "STREAM_TURN"; turn: number; events: SimulationEvent[] }
+  | { type: "STREAM_TURN"; turn: number; events: SimulationEvent[]; simulationState?: SimulationState }
   | { type: "STREAM_PAUSED" }
-  | { type: "STREAM_COMPLETE"; turnsCompleted: number }
+  | { type: "STREAM_COMPLETE"; turnsCompleted: number; summary?: SimulationSummary }
   | { type: "STREAM_ERROR"; error: string }
-  | { type: "RESET" };
+  | { type: "RESET" }
+  | { type: "SELECT_AGENT"; agentId: number | null }
+  | { type: "SHOW_RESULTS_MODAL"; show: boolean };
 
 const DEFAULT_CONFIG: SimulationConfig = {
   agent_count: 10,
@@ -54,6 +64,7 @@ const DEFAULT_CONFIG: SimulationConfig = {
 const initialState: SimulationPageState = {
   simulationId: null,
   simulationState: null,
+  simulationSummary: null,
   events: [],
   displayTurn: 0,
   isRunning: false,
@@ -62,6 +73,8 @@ const initialState: SimulationPageState = {
   streamStatus: "idle",
   streamError: null,
   config: DEFAULT_CONFIG,
+  selectedAgentId: null,
+  showResultsModal: false,
 };
 
 function mergeEvents(existing: SimulationEvent[], incoming: SimulationEvent[]): SimulationEvent[] {
@@ -135,6 +148,7 @@ function simulationReducer(state: SimulationPageState, action: SimulationPageAct
         ...state,
         displayTurn: Math.max(state.displayTurn, action.turn),
         events: mergeEvents(state.events, action.events),
+        simulationState: action.simulationState ?? state.simulationState,
       };
     case "STREAM_PAUSED":
       return {
@@ -150,6 +164,13 @@ function simulationReducer(state: SimulationPageState, action: SimulationPageAct
         isAutoPlaying: false,
         isStepping: false,
         streamStatus: "complete",
+        simulationSummary: action.summary ?? state.simulationSummary,
+        showResultsModal: true,
+      };
+    case "SHOW_RESULTS_MODAL":
+      return {
+        ...state,
+        showResultsModal: action.show,
       };
     case "STREAM_ERROR":
       return {
@@ -164,146 +185,61 @@ function simulationReducer(state: SimulationPageState, action: SimulationPageAct
         ...initialState,
         config: state.config,
       };
+    case "SELECT_AGENT":
+      return {
+        ...state,
+        selectedAgentId: action.agentId,
+      };
     default:
       return state;
   }
 }
 
-function parseIntOrFallback(value: string, fallback: number): number {
-  const parsed = Number.parseInt(value, 10);
-  return Number.isNaN(parsed) ? fallback : parsed;
-}
-
-interface StreamMessage {
-  type: string;
-  turn?: number;
-  turns_completed?: number;
-  events?: SimulationEvent[];
-  message?: string;
-}
-
 export default function SimulationPage() {
   const [state, dispatch] = useReducer(simulationReducer, initialState);
-  const socketRef = useRef<WebSocket | null>(null);
-  const streamModeRef = useRef<"play" | "step" | null>(null);
-  const expectedCloseRef = useRef(false);
 
-  const closeStream = useCallback((status: "paused" | "complete" = "paused") => {
-    expectedCloseRef.current = true;
-    if (socketRef.current) {
-      socketRef.current.close();
-      socketRef.current = null;
-    }
-    streamModeRef.current = null;
-    if (status === "complete") {
-      return;
-    }
-    dispatch({ type: "STREAM_PAUSED" });
+  const handleStreamTurn = useCallback((turn: number, events: SimulationEvent[], simulationState?: SimulationState) => {
+    dispatch({ type: "STREAM_TURN", turn, events, simulationState });
   }, []);
 
-  const connectStream = useCallback(
-    (mode: "play" | "step") => {
-      if (!state.simulationId) return;
+  const handleStreamComplete = useCallback((turnsCompleted: number, summary?: SimulationSummary) => {
+    dispatch({ type: "STREAM_COMPLETE", turnsCompleted, summary });
+  }, []);
 
-      const maxTurn = state.simulationState?.current_turn ?? 0;
-      if (state.displayTurn >= maxTurn) {
-        dispatch({ type: "STREAM_COMPLETE", turnsCompleted: maxTurn });
-        return;
-      }
+  const handleStreamError = useCallback((error: string) => {
+    dispatch({ type: "STREAM_ERROR", error });
+  }, []);
 
-      if (socketRef.current && socketRef.current.readyState <= WebSocket.OPEN) {
-        return;
-      }
-
-      const fromTurn = state.displayTurn + 1;
-      const intervalMs = mode === "step" ? 60 : 300;
-      const url = getSimulationStreamSocketUrl(state.simulationId, intervalMs, fromTurn);
-
-      dispatch({ type: "STREAM_CONNECTING", mode });
-      streamModeRef.current = mode;
-      expectedCloseRef.current = false;
-
-      const socket = new WebSocket(url);
-      socketRef.current = socket;
-
-      socket.onopen = () => {
+  const handleStreamStatusChange = useCallback((status: StreamStatus) => {
+    switch (status) {
+      case "connecting":
+        dispatch({ type: "STREAM_CONNECTING", mode: "play" });
+        break;
+      case "connected":
         dispatch({ type: "STREAM_CONNECTED" });
-      };
-
-      socket.onmessage = (event) => {
-        let payload: StreamMessage;
-        try {
-          payload = JSON.parse(event.data) as StreamMessage;
-        } catch {
-          return;
-        }
-
-        if (payload.type === "turn" && typeof payload.turn === "number") {
-          dispatch({ type: "STREAM_TURN", turn: payload.turn, events: payload.events ?? [] });
-
-          if (streamModeRef.current === "step") {
-            closeStream("paused");
-          }
-          return;
-        }
-
-        if (payload.type === "complete") {
-          const turnsCompleted = payload.turns_completed ?? state.simulationState?.current_turn ?? state.displayTurn;
-          dispatch({ type: "STREAM_COMPLETE", turnsCompleted });
-          expectedCloseRef.current = true;
-          socket.close();
-          socketRef.current = null;
-          streamModeRef.current = null;
-          return;
-        }
-
-        if (payload.type === "error") {
-          dispatch({ type: "STREAM_ERROR", error: payload.message || "Stream error" });
-          expectedCloseRef.current = true;
-          socket.close();
-          socketRef.current = null;
-          streamModeRef.current = null;
-        }
-      };
-
-      socket.onerror = () => {
-        dispatch({ type: "STREAM_ERROR", error: "WebSocket connection error" });
-      };
-
-      socket.onclose = () => {
-        socketRef.current = null;
-        if (expectedCloseRef.current) {
-          expectedCloseRef.current = false;
-          return;
-        }
+        break;
+      case "paused":
         dispatch({ type: "STREAM_PAUSED" });
-      };
-    },
-    [
-      closeStream,
-      state.displayTurn,
-      state.simulationId,
-      state.simulationState?.current_turn,
-    ]
-  );
-
-  useEffect(() => {
-    return () => {
-      if (socketRef.current) {
-        expectedCloseRef.current = true;
-        socketRef.current.close();
-        socketRef.current = null;
-      }
-    };
+        break;
+      case "complete":
+        // Status change handled in handleStreamComplete
+        break;
+      case "error":
+        // Error handled in handleStreamError
+        break;
+    }
   }, []);
+
+  const { connectStream, closeStream } = useSimulationStream({
+    simulationId: state.simulationId,
+    onTurn: handleStreamTurn,
+    onComplete: handleStreamComplete,
+    onError: handleStreamError,
+    onStatusChange: handleStreamStatusChange,
+  });
 
   const startSimulation = async () => {
     try {
-      if (socketRef.current) {
-        expectedCloseRef.current = true;
-        socketRef.current.close();
-        socketRef.current = null;
-      }
       dispatch({ type: "START_REQUEST" });
       const response = await apiClient.startSimulation(state.config);
       const simulationState = await apiClient.getSimulationState(response.simulation_id);
@@ -320,91 +256,41 @@ export default function SimulationPage() {
   };
 
   const stepSimulation = useCallback(async () => {
-    connectStream("step");
-  }, [connectStream]);
+    connectStream("step", state.displayTurn + 1);
+  }, [connectStream, state.displayTurn]);
 
   const playSimulation = () => {
-    connectStream("play");
+    console.log("Play button clicked, simulationId:", state.simulationId);
+    console.log("Current state:", {
+      displayTurn: state.displayTurn,
+      simulationState: state.simulationState,
+      streamStatus: state.streamStatus
+    });
+    connectStream("play", state.displayTurn + 1);
   };
 
-  const pauseSimulation = () => {
+  const pauseSimulation = useCallback(() => {
     closeStream("paused");
-  };
+  }, [closeStream]);
 
   const resetSimulation = () => {
-    if (socketRef.current) {
-      expectedCloseRef.current = true;
-      socketRef.current.close();
-      socketRef.current = null;
-    }
-    streamModeRef.current = null;
+    closeStream("paused");
     dispatch({ type: "RESET" });
   };
 
-  const maxTurns = state.simulationState?.current_turn || state.config.turns;
+  const selectedAgent = state.simulationState?.agents.find(a => a.agent_id === state.selectedAgentId) || null;
+
+  const maxTurns = state.config.turns || 500;
 
   if (!state.simulationId) {
     return (
       <div className="w-full h-screen bg-[#0a0e27] p-8 flex items-center justify-center">
-        <GamePanel title="LAUNCH SIMULATION" className="max-w-md w-full">
-          <div className="space-y-4">
-            <div>
-              <label className="stat-label block mb-2">AGENT COUNT</label>
-              <input
-                type="number"
-                min="5"
-                max="20"
-                value={state.config.agent_count}
-                onChange={(e) =>
-                  dispatch({
-                    type: "SET_CONFIG",
-                    patch: { agent_count: parseIntOrFallback(e.target.value, state.config.agent_count) },
-                  })
-                }
-                className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
-              />
-            </div>
-            <div>
-              <label className="stat-label block mb-2">RANDOM SEED</label>
-              <input
-                type="number"
-                value={state.config.seed}
-                onChange={(e) =>
-                  dispatch({
-                    type: "SET_CONFIG",
-                    patch: { seed: parseIntOrFallback(e.target.value, state.config.seed) },
-                  })
-                }
-                className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
-              />
-            </div>
-            <div>
-              <label className="stat-label block mb-2">MAX TURNS (OPTIONAL)</label>
-              <input
-                type="number"
-                placeholder="500"
-                value={state.config.turns || ""}
-                onChange={(e) =>
-                  dispatch({
-                    type: "SET_CONFIG",
-                    patch: {
-                      turns: e.target.value ? parseIntOrFallback(e.target.value, state.config.turns ?? 500) : undefined,
-                    },
-                  })
-                }
-                className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
-              />
-            </div>
-            <div className="flex gap-2">
-              <GameButton onClick={startSimulation} disabled={state.isRunning} className="flex-1">
-                {state.isRunning ? "LOADING..." : "LAUNCH"}
-              </GameButton>
-              <Link href="/" className="flex-1">
-                <GameButton className="w-full">BACK</GameButton>
-              </Link>
-            </div>
-          </div>
-        </GamePanel>
+        <LaunchConfigPanel
+          config={state.config}
+          onConfigChange={(patch) => dispatch({ type: "SET_CONFIG", patch })}
+          onStart={startSimulation}
+          isRunning={state.isRunning}
+        />
       </div>
     );
   }
@@ -425,63 +311,26 @@ export default function SimulationPage() {
             agentCount={state.config.agent_count}
           />
 
-          <GamePanel title="STREAM STATUS">
-            <div className="space-y-2 text-xs font-mono">
-              <div className="flex justify-between">
-                <span className="text-[#00d9ff]">STATE:</span>
-                <span className="text-[#00ffff]">{state.streamStatus.toUpperCase()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#00d9ff]">TURN:</span>
-                <span className="text-[#00ffff]">{state.displayTurn}/{maxTurns || "?"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#00d9ff]">EVENTS:</span>
-                <span className="text-[#00ffff]">{state.events.length}</span>
-              </div>
-              {state.streamError && (
-                <div className="text-[#ff0055]">{state.streamError}</div>
-              )}
-            </div>
-          </GamePanel>
+          <SimulationStatusPanel
+            streamStatus={state.streamStatus}
+            currentTurn={state.displayTurn}
+            maxTurns={maxTurns}
+            eventCount={state.events.length}
+            streamError={state.streamError}
+          />
 
-          <GamePanel title="CONFIGURATION">
-            <div className="space-y-3">
-              <div>
-                <label className="block text-xs text-[#00d9ff] mb-1">AGENTS</label>
-                <input
-                  type="number"
-                  value={state.config.agent_count}
-                  onChange={(e) =>
-                    dispatch({
-                      type: "SET_CONFIG",
-                      patch: { agent_count: parseIntOrFallback(e.target.value, state.config.agent_count) },
-                    })
-                  }
-                  className="w-full bg-[#0f1629] border border-[#00d9ff] text-[#00ffff] px-2 py-1 text-xs font-mono"
-                  min="2"
-                  max="20"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-[#00d9ff] mb-1">SEED</label>
-                <input
-                  type="number"
-                  value={state.config.seed}
-                  onChange={(e) =>
-                    dispatch({
-                      type: "SET_CONFIG",
-                      patch: { seed: parseIntOrFallback(e.target.value, state.config.seed) },
-                    })
-                  }
-                  className="w-full bg-[#0f1629] border border-[#00d9ff] text-[#00ffff] px-2 py-1 text-xs font-mono"
-                />
-              </div>
-              <GameButton onClick={startSimulation} className="w-full" disabled={state.isRunning || state.isStepping}>
-                START NEW
-              </GameButton>
-            </div>
-          </GamePanel>
+          {state.streamStatus === "complete" && state.simulationSummary && (
+            <GamePanel title="🏆 FINAL RESULTS">
+              <FinalResults simulationSummary={state.simulationSummary} compact={true} />
+            </GamePanel>
+          )}
+
+          <SimulationConfigPanel
+            config={state.config}
+            onConfigChange={(patch) => dispatch({ type: "SET_CONFIG", patch })}
+            onStart={startSimulation}
+            isRunning={state.isRunning || state.isStepping}
+          />
         </div>
 
         <div className="lg:col-span-2">
@@ -495,14 +344,17 @@ export default function SimulationPage() {
               </div>
             ) : (
               <div className="h-full flex flex-col">
-                <div className="flex-1 mb-4 min-h-0">
-                  <InteractiveWorld
+                <div className="flex-1 mb-4 min-h-0 flex items-center justify-center">
+                  <GameBoard
                     agents={state.simulationState.agents}
-                    turn={state.displayTurn}
+                    onAgentClick={(agent) => dispatch({ type: "SELECT_AGENT", agentId: agent.agent_id })}
+                    selectedAgentId={state.selectedAgentId}
+                    showInteractions={true}
+                    agentCount={state.config.agent_count}
                     seed={state.config.seed}
-                    events={state.events}
                   />
                 </div>
+
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <GamePanel title="RESOURCE DISTRIBUTION">
@@ -562,7 +414,9 @@ export default function SimulationPage() {
         </div>
 
         <div className="lg:col-span-1 space-y-4">
-          <AllianceGraph alliances={[]} loading={state.isRunning || state.isStepping || state.streamStatus === "connecting"} />
+          <GamePanel title="SELECTED AGENT">
+            <AgentCard agent={selectedAgent} />
+          </GamePanel>
 
           <GamePanel title="EVENT LOG">
             <LiveEventLog
@@ -580,6 +434,25 @@ export default function SimulationPage() {
           </GamePanel>
         </div>
       </div>
+
+      {state.showResultsModal && state.simulationSummary && (
+        <Modal
+          isOpen={state.showResultsModal}
+          title="🏆 FINAL RESULTS"
+          onClose={() => dispatch({ type: "SHOW_RESULTS_MODAL", show: false })}
+        >
+          <FinalResults simulationSummary={state.simulationSummary} showActionSummary={true} compact={false} />
+
+          <div className="flex justify-center gap-2 pt-4">
+            <GameButton onClick={() => dispatch({ type: "SHOW_RESULTS_MODAL", show: false })}>
+              CLOSE
+            </GameButton>
+            <GameButton onClick={resetSimulation}>
+              NEW SIMULATION
+            </GameButton>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
