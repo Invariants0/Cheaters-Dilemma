@@ -26,13 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0e27] min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 min-h-screen`}
       >
-        <GameLayout
-          topBar={<TopBar />}
-          centerContent={children}
-        />
+        <GameLayout topBar={<TopBar />} centerContent={children} />
       </body>
     </html>
   );
 }
+

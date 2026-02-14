@@ -71,7 +71,7 @@ export function ConfirmDialog({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <GamePanel title={title} className="max-w-sm w-full mx-4">
-        <div className="mb-6 text-[#00d9ff] font-mono text-sm">{message}</div>
+        <div className="mb-6 text-[#94a3b8] font-mono text-sm">{message}</div>
         <div className="flex gap-2">
           <GameButton
             onClick={onConfirm}
@@ -87,3 +87,4 @@ export function ConfirmDialog({
     </div>
   );
 }
+

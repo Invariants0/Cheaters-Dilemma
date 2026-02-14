@@ -50,12 +50,12 @@ export function ReplayPlayer({ events, totalTurns, onTurnChange }: ReplayPlayerP
         />
 
         {/* Progress Bar */}
-        <div className="relative w-full h-6 bg-[#0a0e27] border border-[#00ffff]">
+        <div className="relative w-full h-6 bg-[#0f1419] border border-[#eab308]">
           <div
-            className="h-full bg-linear-to-r from-[#00ffff] to-[#ff00ff] transition-all"
+            className="h-full bg-linear-to-r from-[#eab308] to-[#475569] transition-all"
             style={{ width: `${progress}%` }}
           />
-          <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-[#0a0e27] pointer-events-none">
+          <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-[#0f1419] pointer-events-none">
             {progress.toFixed(0)}%
           </div>
         </div>
@@ -67,7 +67,7 @@ export function ReplayPlayer({ events, totalTurns, onTurnChange }: ReplayPlayerP
           max={totalTurns - 1}
           value={currentTurn}
           onChange={(e) => setCurrentTurn(parseInt(e.target.value))}
-          className="w-full accent-[#ff00ff]"
+          className="w-full accent-[#475569]"
         />
 
         {/* Controls */}
@@ -119,26 +119,26 @@ export function ReplayPlayer({ events, totalTurns, onTurnChange }: ReplayPlayerP
         </div>
 
         {/* Events at current turn */}
-        <div className="bg-[#0a0e27] border border-[#00ffff] p-3 max-h-64 overflow-y-auto">
-          <div className="text-[#ff00ff] font-bold text-xs mb-2">
+        <div className="bg-[#0f1419] border border-[#eab308] p-3 max-h-64 overflow-y-auto">
+          <div className="text-[#475569] font-bold text-xs mb-2">
             EVENTS AT TURN {currentTurn}
           </div>
           {turnEvents.length > 0 ? (
             <div className="space-y-2 text-xs font-mono">
               {turnEvents.map((event, idx) => (
-                <div key={idx} className="text-[#00d9ff] border-l-2 border-[#ff00ff] pl-2">
-                  <div className="text-[#ff00ff]">
+                <div key={idx} className="text-[#94a3b8] border-l-2 border-[#475569] pl-2">
+                  <div className="text-[#475569]">
                     Agent {event.actor} {event.action}
                     {event.target ? ` on Agent ${event.target}` : ""}
                   </div>
                   {event.outcome && (
-                    <div className="text-[#00d9ff]/70">{event.outcome}</div>
+                    <div className="text-[#94a3b8]/70">{event.outcome}</div>
                   )}
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-[#00d9ff] text-center py-4 text-xs opacity-50">
+            <div className="text-[#94a3b8] text-center py-4 text-xs opacity-50">
               NO EVENTS THIS TURN
             </div>
           )}
@@ -147,3 +147,4 @@ export function ReplayPlayer({ events, totalTurns, onTurnChange }: ReplayPlayerP
     </GamePanel>
   );
 }
+

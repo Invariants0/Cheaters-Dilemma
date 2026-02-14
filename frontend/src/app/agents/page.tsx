@@ -56,12 +56,12 @@ export default function AgentsPage() {
                   onClick={() => setSelectedStrategy(selectedStrategy === strat ? null : strat)}
                   className={`w-full text-left p-2 border-2 ${
                     selectedStrategy === strat
-                      ? "border-[#ff00ff] bg-[#1a1f3a]"
-                      : "border-[#00ffff] hover:border-[#ff00ff]"
-                  } text-[#00d9ff] transition-all`}
+                      ? "border-[#475569] bg-[#1a1f3a]"
+                      : "border-[#eab308] hover:border-[#475569]"
+                  } text-[#94a3b8] transition-all`}
                 >
-                  <div className="font-bold uppercase text-[#00ffff]">{strat}</div>
-                  <div className="text-[#00d9ff] text-xs mt-1">
+                  <div className="font-bold uppercase text-[#eab308]">{strat}</div>
+                  <div className="text-[#94a3b8] text-xs mt-1">
                     {strategyDescriptions[strat]}
                   </div>
                 </button>
@@ -87,7 +87,7 @@ export default function AgentsPage() {
         <div className="lg:col-span-3">
           {loading ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-[#00ffff] font-mono text-xl">&gt; LOADING AGENTS... &lt;</div>
+              <div className="text-[#eab308] font-mono text-xl">&gt; LOADING AGENTS... &lt;</div>
             </div>
           ) : (
             <GamePanel title={selectedStrategy ? selectedStrategy.toUpperCase() : "ALL AGENTS"} className="h-full">
@@ -105,3 +105,4 @@ export default function AgentsPage() {
     </div>
   );
 }
+

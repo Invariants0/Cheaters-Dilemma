@@ -5,7 +5,13 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { apiClient } from "@/lib/api";
 import { ReplayDetail, ReplayEvent, AgentLeaderboardEntry } from "@/lib/types";
-import { GamePanel, GameButton, StatDisplay, EventLog, AgentCard } from "@/components/GameUI";
+import {
+  GamePanel,
+  GameButton,
+  StatDisplay,
+  EventLog,
+  AgentCard,
+} from "@/components/GameUI";
 
 export default function ReplayDetailPage() {
   const params = useParams();
@@ -34,7 +40,9 @@ export default function ReplayDetailPage() {
       <div className="w-full h-full overflow-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
           <div className="lg:col-span-4 flex items-center justify-center">
-            <div className="text-[#00ffff] font-mono text-2xl">LOADING REPLAY...</div>
+            <div className="text-yellow-500 font-mono text-2xl">
+              LOADING REPLAY...
+            </div>
           </div>
         </div>
       </div>
@@ -46,8 +54,8 @@ export default function ReplayDetailPage() {
       <div className="w-full h-full overflow-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-full">
           <div className="lg:col-span-4 flex items-center justify-center">
-            <GamePanel title="ERROR">
-              <p className="text-[#ff0055] font-mono">Replay not found</p>
+            <GamePanel title="ERROR" variant="red">
+              <p className="text-red-500 font-mono">Replay not found</p>
               <Link href="/replays" className="block mt-4">
                 <GameButton className="w-full">BACK TO REPLAYS</GameButton>
               </Link>
@@ -60,7 +68,7 @@ export default function ReplayDetailPage() {
 
   // Filter events for current turn
   const turnEvents = replay.events.filter(
-    (e: ReplayEvent) => e.turn === currentTurn
+    (e: ReplayEvent) => e.turn === currentTurn,
   );
 
   // Get leaderboard at current turn (simplified - would need turn snapshots in real implementation)
@@ -85,13 +93,15 @@ export default function ReplayDetailPage() {
 
           <GamePanel title="LEADERBOARD AT TURN {currentTurn}">
             <div className="space-y-2 max-h-64 overflow-y-auto">
-              {leaderboardAtTurn.map((agent: AgentLeaderboardEntry, idx: number) => (
-                <AgentCard
-                  key={agent.agent_id}
-                  agent={agent}
-                  rank={idx + 1}
-                />
-              ))}
+              {leaderboardAtTurn.map(
+                (agent: AgentLeaderboardEntry, idx: number) => (
+                  <AgentCard
+                    key={agent.agent_id}
+                    agent={agent}
+                    rank={idx + 1}
+                  />
+                ),
+              )}
             </div>
           </GamePanel>
 
@@ -103,13 +113,19 @@ export default function ReplayDetailPage() {
         {/* Center - Replay Controls & Events */}
         <div className="lg:col-span-3">
           <div className="space-y-4 h-full overflow-y-auto">
-            <GamePanel title={`TURN ${currentTurn} / ${maxTurn}`} className="mb-4">
+            <GamePanel
+              title={`TURN ${currentTurn} / ${maxTurn}`}
+              className="mb-4"
+              variant="yellow"
+            >
               <div className="space-y-4">
                 {/* Turn Scrubber */}
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs text-[#00d9ff] font-mono">
+                  <div className="flex justify-between text-xs text-slate-400 font-mono">
                     <span>TURN TIMELINE</span>
-                    <span>{currentTurn}/{maxTurn}</span>
+                    <span>
+                      {currentTurn}/{maxTurn}
+                    </span>
                   </div>
                   <input
                     type="range"
@@ -117,9 +133,9 @@ export default function ReplayDetailPage() {
                     max={maxTurn}
                     value={currentTurn}
                     onChange={(e) => setCurrentTurn(parseInt(e.target.value))}
-                    className="w-full h-2 bg-[#0a0e27] border-2 border-[#00ffff] appearance-none cursor-pointer"
+                    className="w-full h-2 bg-slate-900 border-2 border-yellow-600 appearance-none cursor-pointer rounded"
                     style={{
-                      background: `linear-gradient(to right, #00ffff 0%, #00ffff ${progress}%, #0a0e27 ${progress}%, #0a0e27 100%)`,
+                      background: `linear-gradient(to right, #eab308 0%, #eab308 ${progress}%, #0f1419 ${progress}%, #0f1419 100%)`,
                     }}
                   />
                 </div>
@@ -139,7 +155,9 @@ export default function ReplayDetailPage() {
                     PREV
                   </GameButton>
                   <GameButton
-                    onClick={() => setCurrentTurn(Math.min(maxTurn, currentTurn + 1))}
+                    onClick={() =>
+                      setCurrentTurn(Math.min(maxTurn, currentTurn + 1))
+                    }
                     disabled={currentTurn === maxTurn}
                   >
                     NEXT
@@ -164,7 +182,9 @@ export default function ReplayDetailPage() {
                 maxHeight="h-auto"
               />
               {turnEvents.length === 0 && (
-                <p className="text-[#00d9ff] font-mono text-xs">No events on this turn</p>
+                <p className="text-[#00d9ff] font-mono text-xs">
+                  No events on this turn
+                </p>
               )}
             </GamePanel>
           </div>

@@ -20,25 +20,29 @@ export function EventVisualization({
     <div className="space-y-2 max-h-64 overflow-y-auto">
       {events.slice(-8).map((event, idx) => {
         const actionColor = event.outcome.includes("success")
-          ? "#00ffff"
-          : "#ff0055";
+          ? "#eab308"
+          : "#dc2626";
         return (
           <div
             key={`${event.turn}-${idx}`}
-            className="text-xs font-mono p-2 border-l-2 border-[#ff00ff] bg-[#0a0e27]"
+            className="text-xs font-mono p-2 border-l-2 border-slate-600 bg-slate-900 rounded-sm"
             style={{ borderLeftColor: actionColor }}
           >
-            <div className="text-[#00d9ff]">
-              T{event.turn}: <span style={{ color: actionColor }}>{event.action.toUpperCase()}</span>
+            <div className="text-slate-300">
+              T{event.turn}:{" "}
+              <span style={{ color: actionColor }}>
+                {event.action.toUpperCase()}
+              </span>
             </div>
-            <div className="text-[#00d9ff] opacity-75">
+            <div className="text-slate-400 opacity-75">
               Agent {event.actor}
               {event.target !== null && ` → Agent ${event.target}`}
             </div>
-            <div className="text-[#00d9ff] opacity-50">{event.outcome}</div>
+            <div className="text-slate-500 opacity-50">{event.outcome}</div>
           </div>
         );
       })}
     </div>
   );
 }
+

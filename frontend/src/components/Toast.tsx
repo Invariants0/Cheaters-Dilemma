@@ -14,22 +14,22 @@ export interface ToastProps {
 
 const typeColors: Record<ToastType, { bg: string; border: string; text: string }> = {
   success: {
-    bg: "bg-[#0f1629]",
+    bg: "bg-[#1a1f2e]",
     border: "border-[#00ff00]",
     text: "text-[#00ff00]",
   },
   error: {
-    bg: "bg-[#0f1629]",
+    bg: "bg-[#1a1f2e]",
     border: "border-[#ff0055]",
     text: "text-[#ff0055]",
   },
   info: {
-    bg: "bg-[#0f1629]",
-    border: "border-[#00d9ff]",
-    text: "text-[#00d9ff]",
+    bg: "bg-[#1a1f2e]",
+    border: "border-[#94a3b8]",
+    text: "text-[#94a3b8]",
   },
   warning: {
-    bg: "bg-[#0f1629]",
+    bg: "bg-[#1a1f2e]",
     border: "border-[#ffff00]",
     text: "text-[#ffff00]",
   },
@@ -62,3 +62,4 @@ export function Toast({ id, message, type, duration = 3000, onClose }: ToastProp
     </div>
   );
 }
+

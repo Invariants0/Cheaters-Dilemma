@@ -83,7 +83,7 @@ function getStrategyColor(strategy: string): string {
     case "greedy": return "#ff9900";
     case "politician": return "#ffff00";
     case "warlord": return "#ff3366";
-    default: return "#00ffff";
+    default: return "#eab308";
   }
 }
 
@@ -171,7 +171,7 @@ export function InteractiveWorld({
     if (!ctx) return;
 
     // Clear background
-    ctx.fillStyle = "#0a0e27";
+    ctx.fillStyle = "#0f1419";
     ctx.fillRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
     // Draw terrain
@@ -185,7 +185,7 @@ export function InteractiveWorld({
       );
 
       // Add subtle grid
-      ctx.strokeStyle = "#00ffff";
+      ctx.strokeStyle = "#eab308";
       ctx.lineWidth = 0.5;
       ctx.globalAlpha = 0.1;
       ctx.strokeRect(
@@ -223,7 +223,7 @@ export function InteractiveWorld({
       ctx.fill();
 
       // Draw border - brighter if active
-      ctx.strokeStyle = isActive ? "#00ffff" : color;
+      ctx.strokeStyle = isActive ? "#eab308" : color;
       ctx.lineWidth = isActive ? 2.5 : 1.5;
       ctx.beginPath();
       ctx.arc(agent.position.x, agent.position.y, AGENT_RADIUS, 0, Math.PI * 2);
@@ -231,7 +231,7 @@ export function InteractiveWorld({
 
       // Draw agent ID only on hover
       if (hoveredAgent === agent.agent_id) {
-        ctx.fillStyle = "#00ffff";
+        ctx.fillStyle = "#eab308";
         ctx.font = "bold 9px monospace";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -248,7 +248,7 @@ export function InteractiveWorld({
 
         if (actorAgent && targetAgent) {
           const animFrame = activeEvents.get(lastEvent.actor) || activeEvents.get(lastEvent.target) || 0;
-          ctx.strokeStyle = lastEvent.outcome.includes("success") ? "#00ffff" : "#ff0055";
+          ctx.strokeStyle = lastEvent.outcome.includes("success") ? "#eab308" : "#ff0055";
           ctx.lineWidth = 1.5;
           ctx.globalAlpha = (animFrame / 10) * 0.6;
           ctx.setLineDash([3, 3]);
@@ -265,7 +265,7 @@ export function InteractiveWorld({
     }
 
     // Draw turn indicator
-    ctx.fillStyle = "#00ffff";
+    ctx.fillStyle = "#eab308";
     ctx.font = "bold 12px monospace";
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
@@ -327,18 +327,18 @@ export function InteractiveWorld({
           onClick={handleCanvasClick}
           onMouseMove={handleCanvasHover}
           onMouseLeave={() => setHoveredAgent(null)}
-          className="w-full border-2 border-[#00ffff] bg-[#0a0e27] cursor-pointer hover:border-[#ff00ff] transition-colors"
+          className="w-full border-2 border-[#eab308] bg-[#0f1419] cursor-pointer hover:border-[#475569] transition-colors"
           style={{ imageRendering: "pixelated" }}
         />
 
         {/* Hovered Agent Info */}
         {hoveredAgent !== null && (
-          <div className="absolute top-4 right-4 bg-[#0a0e27] border-2 border-[#ff00ff] p-3 text-xs font-mono">
-            <div className="text-[#ff00ff]">AGENT #{hoveredAgent}</div>
+          <div className="absolute top-4 right-4 bg-[#0f1419] border-2 border-[#475569] p-3 text-xs font-mono">
+            <div className="text-[#475569]">AGENT #{hoveredAgent}</div>
             {worldAgents
               .filter((a) => a.agent_id === hoveredAgent)
               .map((a) => (
-                <div key={a.agent_id} className="space-y-1 text-[#00d9ff]">
+                <div key={a.agent_id} className="space-y-1 text-[#94a3b8]">
                   <div>STRATEGY: {a.strategy}</div>
                   <div>RESOURCES: ${a.resources}</div>
                   <div>STRENGTH: {a.strength}</div>
@@ -348,8 +348,8 @@ export function InteractiveWorld({
         )}
 
         {/* Legend */}
-        <div className="absolute bottom-4 left-4 bg-[#0a0e27]/80 border-2 border-[#00ffff] p-3 text-xs font-mono space-y-1">
-          <div className="text-[#00ffff] font-bold mb-2">&gt; LEGEND &lt;</div>
+        <div className="absolute bottom-4 left-4 bg-[#0f1419]/80 border-2 border-[#eab308] p-3 text-xs font-mono space-y-1">
+          <div className="text-[#eab308] font-bold mb-2">&gt; LEGEND &lt;</div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-[#ff0055]"></div>
             <span className="text-[#ff0055]">CHEATER</span>
@@ -371,3 +371,4 @@ export function InteractiveWorld({
     </GamePanel>
   );
 }
+

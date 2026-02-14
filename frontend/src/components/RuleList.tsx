@@ -12,7 +12,7 @@ export function RuleList({ ruleset, loading = false }: RuleListProps) {
   if (loading) {
     return (
       <GamePanel title="RULES">
-        <div className="text-[#00d9ff] text-center py-4">LOADING RULESET...</div>
+        <div className="text-[#94a3b8] text-center py-4">LOADING RULESET...</div>
       </GamePanel>
     );
   }
@@ -29,9 +29,9 @@ export function RuleList({ ruleset, loading = false }: RuleListProps) {
     <GamePanel title={`RULESET V${ruleset.version}`}>
       <div className="space-y-2 text-xs font-mono">
         {Object.entries(ruleset.rules).map(([key, value]) => (
-          <div key={key} className="flex justify-between items-center p-2 border-l-2 border-[#00ffff] hover:bg-[#00ffff]/10">
-            <span className="text-[#00ffff] uppercase word-break flex-1">{key}</span>
-            <span className="text-[#ff00ff] font-bold ml-2">
+          <div key={key} className="flex justify-between items-center p-2 border-l-2 border-[#eab308] hover:bg-[#eab308]/10">
+            <span className="text-[#eab308] uppercase word-break flex-1">{key}</span>
+            <span className="text-[#475569] font-bold ml-2">
               {typeof value === "boolean" ? (value ? "ON" : "OFF") : String(value)}
             </span>
           </div>
@@ -50,7 +50,7 @@ export function RuleTimeline({ history, loading = false }: RuleTimelineProps) {
   if (loading) {
     return (
       <GamePanel title="RULE HISTORY">
-        <div className="text-[#00d9ff] text-center py-4">LOADING HISTORY...</div>
+        <div className="text-[#94a3b8] text-center py-4">LOADING HISTORY...</div>
       </GamePanel>
     );
   }
@@ -64,24 +64,25 @@ export function RuleTimeline({ history, loading = false }: RuleTimelineProps) {
             .map((change, idx) => (
               <div
                 key={idx}
-                className="p-2 border-l-2 border-[#ff00ff] hover:bg-[#ff00ff]/10 text-[#00d9ff]"
+                className="p-2 border-l-2 border-[#475569] hover:bg-[#475569]/10 text-[#94a3b8]"
               >
-                <div className="text-[#ff00ff] font-bold">
+                <div className="text-[#475569] font-bold">
                   TURN {change.turn} - V{change.version}
                 </div>
-                <div className="text-[#00ffff]">{change.change_type}</div>
-                <div className="text-[#00d9ff] text-xs mt-1">
+                <div className="text-[#eab308]">{change.change_type}</div>
+                <div className="text-[#94a3b8] text-xs mt-1">
                   {change.key}: {String(change.old_value)} → {String(change.new_value)}
                 </div>
                 {change.description && (
-                  <div className="text-[#00d9ff]/70 text-xs mt-1 italic">{change.description}</div>
+                  <div className="text-[#94a3b8]/70 text-xs mt-1 italic">{change.description}</div>
                 )}
               </div>
             ))
         ) : (
-          <div className="text-[#00d9ff] text-center py-4">NO CHANGES YET</div>
+          <div className="text-[#94a3b8] text-center py-4">NO CHANGES YET</div>
         )}
       </div>
     </GamePanel>
   );
 }
+

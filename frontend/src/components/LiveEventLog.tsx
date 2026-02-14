@@ -92,15 +92,15 @@ export function LiveEventLog({ events, maxHeight = "h-64", live = false }: LiveE
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search events..."
-            className="flex-1 bg-[#0f1629] border border-[#00d9ff] text-[#00ffff] px-2 py-1 focus:outline-none focus:border-[#ff00ff]"
+            className="flex-1 bg-[#1a1f2e] border border-[#94a3b8] text-[#eab308] px-2 py-1 focus:outline-none focus:border-[#475569]"
           />
           <button
             type="button"
             onClick={toggleFollowTail}
             className={`px-2 py-1 border text-[10px] tracking-wide ${
               followTail
-                ? "border-[#00ffff] text-[#00ffff]"
-                : "border-[#ff00ff] text-[#ff00ff]"
+                ? "border-[#eab308] text-[#eab308]"
+                : "border-[#475569] text-[#475569]"
             }`}
           >
             {followTail ? "FOLLOW ON" : "FOLLOW OFF"}
@@ -115,7 +115,7 @@ export function LiveEventLog({ events, maxHeight = "h-64", live = false }: LiveE
           <select
             value={actionFilter}
             onChange={(e) => setActionFilter(e.target.value)}
-            className="bg-[#0f1629] border border-[#00d9ff] text-[#00ffff] px-2 py-1"
+            className="bg-[#1a1f2e] border border-[#94a3b8] text-[#eab308] px-2 py-1"
           >
             <option value="ALL">ALL ACTIONS</option>
             {actionOptions.map((action) => (
@@ -127,7 +127,7 @@ export function LiveEventLog({ events, maxHeight = "h-64", live = false }: LiveE
           <select
             value={agentFilter}
             onChange={(e) => setAgentFilter(e.target.value)}
-            className="bg-[#0f1629] border border-[#00d9ff] text-[#00ffff] px-2 py-1"
+            className="bg-[#1a1f2e] border border-[#94a3b8] text-[#eab308] px-2 py-1"
           >
             <option value="ALL">ALL AGENTS</option>
             {agentOptions.map((agentId) => (
@@ -137,7 +137,7 @@ export function LiveEventLog({ events, maxHeight = "h-64", live = false }: LiveE
             ))}
           </select>
         </div>
-        <div className="text-[10px] text-[#00d9ff] opacity-75">
+        <div className="text-[10px] text-[#94a3b8] opacity-75">
           SHOWING {filteredEvents.length} / {events.length}
         </div>
       </div>
@@ -155,14 +155,14 @@ export function LiveEventLog({ events, maxHeight = "h-64", live = false }: LiveE
             {filteredEvents.map((event, idx) => (
               <div
                 key={`${event.turn}-${event.action ?? "event"}-${event.actor ?? "x"}-${event.target ?? "x"}-${idx}`}
-                className="text-[#00d9ff] border-l-2 border-[#ff00ff] pl-2 py-1"
+                className="text-[#94a3b8] border-l-2 border-[#475569] pl-2 py-1"
               >
-                <span className="text-[#ff00ff]">[{event.turn ?? "?"}]</span> {event.message || event.type}
+                <span className="text-[#475569]">[{event.turn ?? "?"}]</span> {event.message || event.type}
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-[#00d9ff] opacity-50 text-center py-8">
+          <div className="text-[#94a3b8] opacity-50 text-center py-8">
             &gt; NO EVENTS &lt;
           </div>
         )}
@@ -170,3 +170,4 @@ export function LiveEventLog({ events, maxHeight = "h-64", live = false }: LiveE
     </div>
   );
 }
+
