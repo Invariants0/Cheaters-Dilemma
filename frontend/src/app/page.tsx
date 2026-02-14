@@ -140,24 +140,26 @@ export default function Home() {
           {/* Right Column: Menu & Actions */}
           <div className="lg:col-span-5 space-y-4 flex flex-col">
             {/* Launch World Button */}
-            <button className="group relative bg-slate-900 hover:bg-slate-800 border-2 border-yellow-600/40 hover:border-yellow-500 p-6 transition-all duration-300 text-left overflow-hidden shadow-lg rounded-sm">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Terminal size={100} />
-              </div>
-              <div className="relative z-10">
-                <h3 className="text-2xl text-yellow-500 font-pixel mb-3 group-hover:translate-x-2 transition-transform">
-                  &gt; LAUNCH WORLD &lt;
-                </h3>
-                <p className="text-slate-400 font-mono text-xs max-w-[85%]">
-                  Initialize 20 autonomous agents. Observe real-time combat,
-                  stealing algorithms, and emergent dynamics.
-                </p>
-                <div className="mt-4 flex items-center gap-2 text-[10px] font-mono text-yellow-600">
-                  <span className="animate-pulse">●</span>{" "}
-                  <span>SIMULATION ENGINE READY</span>
+            <Link href="/simulation">
+              <button className="group relative bg-slate-900 hover:bg-slate-800 border-2 border-yellow-600/40 hover:border-yellow-500 p-6 transition-all duration-300 text-left overflow-hidden shadow-lg rounded-sm">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Terminal size={100} />
                 </div>
-              </div>
-            </button>
+                <div className="relative z-10">
+                  <h3 className="text-2xl text-yellow-500 font-pixel mb-3 group-hover:translate-x-2 transition-transform">
+                    &gt; LAUNCH WORLD &lt;
+                  </h3>
+                  <p className="text-slate-400 font-mono text-xs max-w-[85%]">
+                    Initialize 20 autonomous agents. Observe real-time combat,
+                    stealing algorithms, and emergent dynamics.
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-[10px] font-mono text-yellow-600">
+                    <span className="animate-pulse">●</span>{" "}
+                    <span>SIMULATION ENGINE READY</span>
+                  </div>
+                </div>
+              </button>
+            </Link>
 
             {/* Sub Menu Grid */}
             <div className="grid grid-cols-1 gap-3 flex-1">
@@ -219,15 +221,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Footer Stats */}
-        <div className="border-t border-slate-700 pt-6 flex justify-between items-center text-slate-600 font-mono text-xs">
-          <div className="space-y-1">
-            <div>&gt; SYSTEM: OPERATIONAL &lt;</div>
-            <div>&gt; VERSION: 1.0.4 &lt;</div>
-          </div>
-          <div>&gt; EXPERIMENTAL BUILD &lt;</div>
         </div>
       </div>
     </div>

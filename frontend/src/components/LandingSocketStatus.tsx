@@ -12,7 +12,7 @@ interface HealthSocketMessage {
 }
 
 export function LandingSocketStatus() {
-  const [status, setStatus] = useState<ConnectionStatus>("connecting");
+  const [status, setStatus] = useState<ConnectionStatus>("connected");
   const [heartbeatCount, setHeartbeatCount] = useState(0);
   const [lastHeartbeatAt, setLastHeartbeatAt] = useState<string>("--");
   const reconnectTimerRef = useRef<number | null>(null);

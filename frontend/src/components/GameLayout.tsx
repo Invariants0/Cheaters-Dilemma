@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { StatusIndicator } from "./StatusIndicator";
 
 interface GameLayoutProps {
   leftPanel?: ReactNode;
@@ -55,11 +56,6 @@ export function GameLayout({
           </div>
         )}
       </div>
-
-      <div className="border-t border-slate-700 bg-slate-900/50 px-6 py-2 text-xs font-mono text-slate-400 flex justify-between scanlines z-10">
-        <div>&gt; SYSTEM READY &lt;</div>
-        <div>&gt; VERSION 1.0.4 &lt;</div>
-      </div>
     </div>
   );
 }
@@ -98,10 +94,7 @@ export function TopBar() {
         </div>
       </div>
       <div className="flex gap-6 text-xs font-mono text-slate-500">
-        <div>
-          <span className="text-slate-300">&gt; STATUS:</span>{" "}
-          <span className="text-green-400 animate-pulse">ONLINE</span>
-        </div>
+        <StatusIndicator />
       </div>
     </>
   );

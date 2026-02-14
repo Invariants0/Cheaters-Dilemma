@@ -1,6 +1,7 @@
 "use client";
 
 import { GamePanel, GameButton, StatDisplay } from "@/components/GameUI";
+import { Play, Pause, SkipForward, RotateCcw, Download } from "lucide-react";
 
 interface SimulationControlsProps {
   isRunning: boolean;
@@ -51,33 +52,57 @@ export function SimulationControls({
         </div>
 
         {/* Control Buttons */}
-        <div className="grid grid-cols-2 gap-2">
-          {onStep && (
-            <GameButton onClick={onStep} disabled={isRunning} className="text-xs py-1">
-              ⏭ STEP
-            </GameButton>
-          )}
-          {onPlay && (
-            <GameButton onClick={onPlay} disabled={isRunning} className="text-xs py-1">
-              ▶ PLAY
-            </GameButton>
-          )}
-          {onPause && (
-            <GameButton onClick={onPause} disabled={!isRunning} className="text-xs py-1">
-              ⏸ PAUSE
-            </GameButton>
-          )}
-          {onReset && (
-            <GameButton onClick={onReset} className="text-xs py-1 border-[#ff0055] text-[#ff0055]">
-              🔄 RESET
-            </GameButton>
-          )}
+        <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            {onPlay && (
+              <GameButton 
+                onClick={onPlay} 
+                disabled={isRunning} 
+                className={`text-sm py-2 font-bold ${isRunning ? 'opacity-50' : 'hover:bg-green-600/20 border-green-500'}`}
+              >
+                <Play size={16} className="mr-1" />
+                PLAY
+              </GameButton>
+            )}
+            {onPause && (
+              <GameButton 
+                onClick={onPause} 
+                disabled={!isRunning} 
+                className={`text-sm py-2 font-bold ${!isRunning ? 'opacity-50' : 'hover:bg-yellow-600/20 border-yellow-500'}`}
+              >
+                <Pause size={16} className="mr-1" />
+                PAUSE
+              </GameButton>
+            )}
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {onStep && (
+              <GameButton 
+                onClick={onStep} 
+                disabled={isRunning} 
+                className={`text-sm py-2 font-bold ${isRunning ? 'opacity-50' : 'hover:bg-blue-600/20 border-blue-500'}`}
+              >
+                <SkipForward size={16} className="mr-1" />
+                STEP
+              </GameButton>
+            )}
+            {onReset && (
+              <GameButton 
+                onClick={onReset} 
+                className="text-sm py-2 font-bold border-red-500 text-red-400 hover:bg-red-600/20 hover:border-red-400"
+              >
+                <RotateCcw size={16} className="mr-1" />
+                RESET
+              </GameButton>
+            )}
+          </div>
         </div>
 
         {/* Export Button */}
         {onExport && (
           <GameButton onClick={onExport} className="w-full text-xs py-1">
-            💾 EXPORT
+            <Download size={14} className="mr-1" />
+            EXPORT
           </GameButton>
         )}
       </div>
