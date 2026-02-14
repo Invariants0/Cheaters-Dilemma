@@ -352,6 +352,7 @@ export default function SimulationPage() {
                     showInteractions={true}
                     agentCount={state.config.agent_count}
                     seed={state.config.seed}
+                    recentEvents={state.events.slice(-20)} // Pass last 20 events for action display
                   />
                 </div>
 
@@ -415,7 +416,10 @@ export default function SimulationPage() {
 
         <div className="lg:col-span-1 space-y-4">
           <GamePanel title="SELECTED AGENT">
-            <AgentCard agent={selectedAgent} />
+            <AgentCard 
+              agent={selectedAgent} 
+              recentEvents={state.events.slice(-10)} // Pass last 10 events for status display
+            />
           </GamePanel>
 
           <GamePanel title="EVENT LOG">
