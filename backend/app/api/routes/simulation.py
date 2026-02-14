@@ -25,14 +25,15 @@ class SimulationManager:
         import uuid
         sim_id = str(uuid.uuid4())
         service = SimulationService()
-        result = service.start_simulation(
+        world = service.create_world(
             agent_count=config["agent_count"],
             seed=config["seed"],
             turns=config.get("turns")
         )
+        initial_result = world.snapshot()
         self.simulations[sim_id] = {
-            "service": service,
-            "result": result,
+            "world": world,
+            "result": initial_result,
             "current_turn": 0,
             "is_running": False
         }
@@ -48,7 +49,13 @@ class SimulationManager:
         if sim["is_running"]:
             raise HTTPException(status_code=400, detail="Simulation is already running")
 
-        # For now, return the full result since we run all turns at once
+        world = sim["world"]
+        for _ in range(steps):
+            if not world.step():
+                break  # Simulation is complete
+
+        # Update the result with current snapshot
+        sim["result"] = world.snapshot()
         return sim["result"]
 
 
@@ -188,10 +195,13 @@ async def simulation_stream_socket(
     from_turn: int = 1,
 ) -> None:
     """Stream simulation events turn-by-turn over WebSocket."""
+    print(f"WebSocket connection for simulation {simulation_id}, from_turn={from_turn}")
     await websocket.accept()
     try:
         sim = simulation_manager.get_simulation(simulation_id)
+        print(f"Found simulation, world turns_completed: {sim['world'].turns_completed}")
     except HTTPException:
+        print(f"Simulation {simulation_id} not found")
         await websocket.send_json(
             {
                 "type": "error",
@@ -202,56 +212,67 @@ async def simulation_stream_socket(
         await websocket.close(code=4404)
         return
 
-    result = sim["result"]
-    events = sorted(
-        result.get("events", []),
-        key=lambda e: (
-            e.get("turn", 0),
-            e.get("actor", -1),
-            e.get("action", ""),
-            e.get("target", -1) if e.get("target") is not None else -1,
-        ),
-    )
-
-    events_by_turn: Dict[int, list[dict[str, Any]]] = {}
-    for event in events:
-        turn = int(event.get("turn", 0))
-        events_by_turn.setdefault(turn, []).append(event)
-
-    turns_completed = int(result.get("turns_completed", 0))
+    world = sim["world"]
     delay_seconds = max(50, min(interval_ms, 5000)) / 1000.0
     start_turn = max(1, from_turn)
+
+    print(f"Starting simulation stream: delay={delay_seconds}s, start_turn={start_turn}")
 
     try:
         await websocket.send_json(
             {
                 "type": "init",
                 "simulation_id": simulation_id,
-                "turns_completed": turns_completed,
-                "event_count": len(events),
+                "turns_completed": world.turns_completed,
+                "event_count": len(world.logger.events),
                 "from_turn": start_turn,
                 "timestamp": _utc_now_iso(),
             }
         )
 
-        for turn in range(start_turn, turns_completed + 1):
+        # Run simulation from current turn onwards
+        current_turn = max(world.turns_completed, start_turn - 1)
+        print(f"Starting simulation loop from turn {current_turn + 1}")
+
+        turn_count = 0
+        while world.step():
+            current_turn += 1
+            turn_count += 1
+
+            # Get events for this turn
+            turn_events = [e for e in world.logger.events if e.get("turn") == current_turn]
+            print(f"Turn {current_turn}: {len(turn_events)} events, {len(world.alive)} agents alive")
+
+            # Update stored result
+            sim["result"] = world.snapshot()
+
             await websocket.send_json(
                 {
                     "type": "turn",
                     "simulation_id": simulation_id,
-                    "turn": turn,
-                    "events": events_by_turn.get(turn, []),
+                    "turn": current_turn,
+                    "events": turn_events,
                     "timestamp": _utc_now_iso(),
                 }
             )
             await asyncio.sleep(delay_seconds)
 
+            # Safety check - don't run forever
+            if turn_count > 1000:
+                print("Safety: stopping after 1000 turns")
+                break
+
+        print(f"Simulation completed after {turn_count} turns")
+
+        # Update final result
+        sim["result"] = world.snapshot()
+
         await websocket.send_json(
             {
                 "type": "complete",
                 "simulation_id": simulation_id,
-                "turns_completed": turns_completed,
-                "event_count": len(events),
+                "turns_completed": world.turns_completed,
+                "event_count": len(world.logger.events),
                 "timestamp": _utc_now_iso(),
             }
         )
