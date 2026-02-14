@@ -13,13 +13,13 @@ class SimulationService:
     def __init__(self):
         pass
 
-    def start_simulation(
+    def create_world(
         self,
         agent_count: int,
         seed: int,
         turns: Optional[int] = None
-    ) -> Dict[str, Any]:
-        """Start a new simulation and run it to completion"""
+    ) -> World:
+        """Create a world without running the simulation"""
         if not (5 <= agent_count <= 20):
             raise ValueError("agent_count must be within [5, 20]")
 
@@ -49,10 +49,17 @@ class SimulationService:
             strength_range=world_cfg["strength_range"],
         )
 
-        # Run simulation
-        result = world.run()
+        return world
 
-        return result
+    def start_simulation(
+        self,
+        agent_count: int,
+        seed: int,
+        turns: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Start a new simulation and return initial state"""
+        world = self.create_world(agent_count, seed, turns)
+        return world.snapshot()
 
     def _build_agents(self, count: int):
         """Build the roster of agents"""

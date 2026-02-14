@@ -122,95 +122,101 @@ class World:
             },
         )
 
-    def run(self) -> dict[str, Any]:
-        for turn in range(1, self.max_turns + 1):
-            if len(self.alive) <= 1:
-                break
+    def step(self) -> bool:
+        """Run one turn of the simulation. Returns True if the turn was executed, False if simulation is complete."""
+        if len(self.alive) <= 1 or self.turns_completed >= self.max_turns:
+            return False
 
-            for slot in self.agent_slots:
-                actor = slot.agent_id
-                if actor not in self.alive:
+        turn = self.turns_completed + 1
+
+        for slot in self.agent_slots:
+            actor = slot.agent_id
+            if actor not in self.alive:
+                continue
+
+            obs = self._observation_for(slot, turn)
+            action = slot.brain.decide(obs, self.rng)
+            self.action_counts[action.kind.value] += 1
+
+            valid, reason = self.rule_set.validate_action(
+                action=action,
+                actor_state={"resources": self.resources[actor]},
+            )
+            if not valid:
+                self._log_action(turn, action, "blocked", reason)
+                continue
+
+            if action.kind == ActionType.WORK:
+                outcome = self.resolver.resolve_work(actor, self.resources, self.rng)
+                self.reputation.record_work(actor)
+                self._log_action(turn, action, "success", reason, details=outcome)
+                continue
+
+            if action.kind == ActionType.STEAL:
+                target_ok, target_reason = self._validate_target(actor, action.target)
+                if not target_ok:
+                    self._log_action(turn, action, "blocked", target_reason)
                     continue
-
-                obs = self._observation_for(slot, turn)
-                action = slot.brain.decide(obs, self.rng)
-                self.action_counts[action.kind.value] += 1
-
-                valid, reason = self.rule_set.validate_action(
-                    action=action,
-                    actor_state={"resources": self.resources[actor]},
+                result = self.resolver.resolve_steal(
+                    actor=actor,
+                    target=int(action.target),
+                    resources=self.resources,
+                    strength=self.strength,
+                    rng=self.rng,
                 )
-                if not valid:
-                    self._log_action(turn, action, "blocked", reason)
+                self.reputation.record_steal(actor, int(action.target), bool(result["success"]))
+                status = "success" if result["success"] else "failed"
+                self._log_action(turn, action, status, reason, details=result)
+                continue
+
+            if action.kind == ActionType.ATTACK:
+                target_ok, target_reason = self._validate_target(actor, action.target)
+                if not target_ok:
+                    self._log_action(turn, action, "blocked", target_reason)
                     continue
+                result = self.resolver.resolve_attack(
+                    actor=actor,
+                    target=int(action.target),
+                    resources=self.resources,
+                    strength=self.strength,
+                    alive=self.alive,
+                    rng=self.rng,
+                )
+                self.reputation.record_attack(actor, int(action.target), bool(result["success"]))
+                status = "success" if result["success"] else "failed"
+                self._log_action(turn, action, status, reason, details=result)
+                continue
 
-                if action.kind == ActionType.WORK:
-                    outcome = self.resolver.resolve_work(actor, self.resources, self.rng)
-                    self.reputation.record_work(actor)
-                    self._log_action(turn, action, "success", reason, details=outcome)
-                    continue
+            if action.kind == ActionType.PROPOSE_RULE:
+                ok, proposal_reason = self.governance.propose(actor, action.payload, turn)
+                status = "accepted" if ok else "rejected"
+                proposal_id = self.governance.pending["proposal_id"] if ok and self.governance.pending else None
+                self._log_action(
+                    turn,
+                    action,
+                    status,
+                    reason,
+                    details={"proposal_reason": proposal_reason, "proposal_id": proposal_id},
+                )
+                self._try_governance_resolution(turn, force=False)
+                continue
 
-                if action.kind == ActionType.STEAL:
-                    target_ok, target_reason = self._validate_target(actor, action.target)
-                    if not target_ok:
-                        self._log_action(turn, action, "blocked", target_reason)
-                        continue
-                    result = self.resolver.resolve_steal(
-                        actor=actor,
-                        target=int(action.target),
-                        resources=self.resources,
-                        strength=self.strength,
-                        rng=self.rng,
-                    )
-                    self.reputation.record_steal(actor, int(action.target), bool(result["success"]))
-                    status = "success" if result["success"] else "failed"
-                    self._log_action(turn, action, status, reason, details=result)
-                    continue
+            if action.kind == ActionType.VOTE_RULE:
+                ok, vote_reason = self.governance.vote(actor, action.payload.get("vote", ""))
+                status = "accepted" if ok else "rejected"
+                self._log_action(turn, action, status, reason, details={"vote_reason": vote_reason})
+                self._try_governance_resolution(turn, force=False)
+                continue
 
-                if action.kind == ActionType.ATTACK:
-                    target_ok, target_reason = self._validate_target(actor, action.target)
-                    if not target_ok:
-                        self._log_action(turn, action, "blocked", target_reason)
-                        continue
-                    result = self.resolver.resolve_attack(
-                        actor=actor,
-                        target=int(action.target),
-                        resources=self.resources,
-                        strength=self.strength,
-                        alive=self.alive,
-                        rng=self.rng,
-                    )
-                    self.reputation.record_attack(actor, int(action.target), bool(result["success"]))
-                    status = "success" if result["success"] else "failed"
-                    self._log_action(turn, action, status, reason, details=result)
-                    continue
+            self._log_action(turn, action, "noop", reason)
 
-                if action.kind == ActionType.PROPOSE_RULE:
-                    ok, proposal_reason = self.governance.propose(actor, action.payload, turn)
-                    status = "accepted" if ok else "rejected"
-                    proposal_id = self.governance.pending["proposal_id"] if ok and self.governance.pending else None
-                    self._log_action(
-                        turn,
-                        action,
-                        status,
-                        reason,
-                        details={"proposal_reason": proposal_reason, "proposal_id": proposal_id},
-                    )
-                    self._try_governance_resolution(turn, force=False)
-                    continue
+        self._try_governance_resolution(turn, force=True)
+        self.turns_completed = turn
+        return True
 
-                if action.kind == ActionType.VOTE_RULE:
-                    ok, vote_reason = self.governance.vote(actor, action.payload.get("vote", ""))
-                    status = "accepted" if ok else "rejected"
-                    self._log_action(turn, action, status, reason, details={"vote_reason": vote_reason})
-                    self._try_governance_resolution(turn, force=False)
-                    continue
-
-                self._log_action(turn, action, "noop", reason)
-
-            self._try_governance_resolution(turn, force=True)
-            self.turns_completed = turn
-
+    def run(self) -> dict[str, Any]:
+        while self.step():
+            pass
         return self.snapshot()
 
     def snapshot(self) -> dict[str, Any]:
