@@ -40,12 +40,12 @@ export function SimulationControls({
         </div>
 
         {/* Progress Bar */}
-        <div className="bg-[#0a0e27] border border-[#00ffff] h-6 overflow-hidden">
+        <div className="bg-[#0f1419] border border-[#eab308] h-6 overflow-hidden">
           <div
-            className="h-full bg-linear-to-r from-[#00ffff] to-[#ff00ff]"
+            className="h-full bg-linear-to-r from-[#eab308] to-[#475569]"
             style={{ width: `${progress}%` }}
           />
-          <div className="absolute top-0 left-0 right-0 h-6 flex items-center justify-center text-xs font-bold text-[#0a0e27]">
+          <div className="absolute top-0 left-0 right-0 h-6 flex items-center justify-center text-xs font-bold text-[#0f1419]">
             {progress.toFixed(0)}%
           </div>
         </div>
@@ -84,3 +84,4 @@ export function SimulationControls({
     </GamePanel>
   );
 }
+

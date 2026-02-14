@@ -23,16 +23,16 @@ export function SimulationStatusPanel({
     <GamePanel title="STREAM STATUS">
       <div className="space-y-2 text-xs font-mono">
         <div className="flex justify-between">
-          <span className="text-[#00d9ff]">STATE:</span>
-          <span className="text-[#00ffff]">{streamStatus.toUpperCase()}</span>
+          <span className="text-[#94a3b8]">STATE:</span>
+          <span className="text-[#eab308]">{streamStatus.toUpperCase()}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-[#00d9ff]">TURN:</span>
-          <span className="text-[#00ffff]">{currentTurn}/{maxTurns || "?"}</span>
+          <span className="text-[#94a3b8]">TURN:</span>
+          <span className="text-[#eab308]">{currentTurn}/{maxTurns || "?"}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-[#00d9ff]">EVENTS:</span>
-          <span className="text-[#00ffff]">{eventCount}</span>
+          <span className="text-[#94a3b8]">EVENTS:</span>
+          <span className="text-[#eab308]">{eventCount}</span>
         </div>
         {streamError && (
           <div className="text-[#ff0055]">{streamError}</div>
@@ -41,3 +41,4 @@ export function SimulationStatusPanel({
     </GamePanel>
   );
 }
+

@@ -12,7 +12,10 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -33,14 +36,12 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   render() {
     if (this.state.hasError) {
       return (
-        <div className="w-full h-full flex items-center justify-center p-4 bg-[#0a0e27]">
-          <GamePanel title="ERROR" className="max-w-md">
-            <div className="space-y-4 text-[#ff0055]">
-              <p className="font-mono text-sm">
-                An unexpected error occurred:
-              </p>
-              <div className="bg-[#0a0e27] border border-[#ff0055] p-3 rounded text-xs max-h-32 overflow-y-auto">
-                <code className="text-[#00ffff]">
+        <div className="w-full h-full flex items-center justify-center p-4 bg-slate-950">
+          <GamePanel title="ERROR" className="max-w-md" variant="red">
+            <div className="space-y-4 text-red-500">
+              <p className="font-mono text-sm">An unexpected error occurred:</p>
+              <div className="bg-slate-900 border border-red-600 p-3 rounded-sm text-xs max-h-32 overflow-y-auto">
+                <code className="text-slate-300">
                   {this.state.error?.message || "Unknown error"}
                 </code>
               </div>
@@ -56,3 +57,4 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     return this.props.children;
   }
 }
+

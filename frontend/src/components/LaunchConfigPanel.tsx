@@ -42,7 +42,7 @@ export function LaunchConfigPanel({
                 agent_count: parseIntOrFallback(e.target.value, config.agent_count),
               })
             }
-            className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
+            className="w-full bg-[#0f1419] border-2 border-[#eab308] text-[#eab308] px-3 py-2 font-mono focus:outline-none focus:border-[#475569]"
           />
         </div>
         <div>
@@ -53,7 +53,7 @@ export function LaunchConfigPanel({
             onChange={(e) =>
               onConfigChange({ seed: parseIntOrFallback(e.target.value, config.seed) })
             }
-            className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
+            className="w-full bg-[#0f1419] border-2 border-[#eab308] text-[#eab308] px-3 py-2 font-mono focus:outline-none focus:border-[#475569]"
           />
         </div>
         <div>
@@ -67,7 +67,7 @@ export function LaunchConfigPanel({
                 turns: e.target.value ? parseIntOrFallback(e.target.value, config.turns ?? 500) : undefined,
               })
             }
-            className="w-full bg-[#0a0e27] border-2 border-[#00ffff] text-[#00ffff] px-3 py-2 font-mono focus:outline-none focus:border-[#ff00ff]"
+            className="w-full bg-[#0f1419] border-2 border-[#eab308] text-[#eab308] px-3 py-2 font-mono focus:outline-none focus:border-[#475569]"
           />
         </div>
         <div className="flex gap-2">
@@ -82,3 +82,4 @@ export function LaunchConfigPanel({
     </GamePanel>
   );
 }
+

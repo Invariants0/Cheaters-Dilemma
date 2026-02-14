@@ -49,12 +49,12 @@ export default function ReplaysPage() {
                 onClick={() => setSelectedStrategy(null)}
                 className={`w-full text-left p-2 border-2 ${
                   selectedStrategy === null
-                    ? "border-[#ff00ff] bg-[#1a1f3a]"
-                    : "border-[#00ffff] hover:border-[#ff00ff]"
-                } text-[#00d9ff] transition-all`}
+                    ? "border-[#475569] bg-[#1a1f3a]"
+                    : "border-[#eab308] hover:border-[#475569]"
+                } text-[#94a3b8] transition-all`}
               >
-                <div className="font-bold uppercase text-[#00ffff]">ALL STRATEGIES</div>
-                <div className="text-[#00d9ff] text-xs mt-1">{replays.length} replays</div>
+                <div className="font-bold uppercase text-[#eab308]">ALL STRATEGIES</div>
+                <div className="text-[#94a3b8] text-xs mt-1">{replays.length} replays</div>
               </button>
               {Object.entries(strategyWins)
                 .sort((a, b) => b[1] - a[1])
@@ -64,19 +64,19 @@ export default function ReplaysPage() {
                     onClick={() => setSelectedStrategy(selectedStrategy === strategy ? null : strategy)}
                     className={`w-full text-left p-2 border-2 ${
                       selectedStrategy === strategy
-                        ? "border-[#ff00ff] bg-[#1a1f3a]"
-                        : "border-[#00ffff] hover:border-[#ff00ff]"
-                    } text-[#00d9ff] transition-all`}
+                        ? "border-[#475569] bg-[#1a1f3a]"
+                        : "border-[#eab308] hover:border-[#475569]"
+                    } text-[#94a3b8] transition-all`}
                   >
-                    <div className="font-bold uppercase text-[#00ffff]">{strategy}</div>
-                    <div className="text-[#00d9ff] text-xs mt-1">{count} victories</div>
+                    <div className="font-bold uppercase text-[#eab308]">{strategy}</div>
+                    <div className="text-[#94a3b8] text-xs mt-1">{count} victories</div>
                   </button>
                 ))}
             </div>
           </GamePanel>
 
           <GamePanel title="STATISTICS">
-            <div className="space-y-2 text-xs text-[#00d9ff]">
+            <div className="space-y-2 text-xs text-[#94a3b8]">
               <StatDisplay label="Total Replays" value={replays.length} />
               <StatDisplay label="Avg agents" value={(replays.reduce((s, r) => s + r.agent_count, 0) / replays.length).toFixed(0)} />
               <StatDisplay label="Avg turns" value={(replays.reduce((s, r) => s + r.turns_completed, 0) / replays.length).toFixed(0)} />
@@ -92,12 +92,12 @@ export default function ReplaysPage() {
         <div className="lg:col-span-3">
           {loading ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-[#00ffff] font-mono text-2xl">&gt; LOADING REPLAYS... &lt;</div>
+              <div className="text-[#eab308] font-mono text-2xl">&gt; LOADING REPLAYS... &lt;</div>
             </div>
           ) : filtered.length === 0 ? (
             <GamePanel title="NO REPLAYS FOUND" className="max-w-md mx-auto mt-12">
               <div className="space-y-4 text-center">
-                <p className="text-[#00d9ff] font-mono">
+                <p className="text-[#94a3b8] font-mono">
                   {selectedStrategy
                     ? `No replays won by ${selectedStrategy} yet`
                     : "No replays available yet"}
@@ -113,24 +113,24 @@ export default function ReplaysPage() {
                 <GamePanel key={replay.replay_id} title={`REPLAY ${idx + 1}`} className="p-6">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#00ffff]">{replay.agent_count}</div>
-                      <div className="text-xs text-[#00d9ff]">AGENTS</div>
+                      <div className="text-2xl font-bold text-[#eab308]">{replay.agent_count}</div>
+                      <div className="text-xs text-[#94a3b8]">AGENTS</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#00ffff]">{replay.turns_completed}</div>
-                      <div className="text-xs text-[#00d9ff]">TURNS</div>
+                      <div className="text-2xl font-bold text-[#eab308]">{replay.turns_completed}</div>
+                      <div className="text-xs text-[#94a3b8]">TURNS</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-bold text-[#ff00ff] uppercase">{replay.winner_strategy}</div>
-                      <div className="text-xs text-[#00d9ff]">WINNER</div>
+                      <div className="text-lg font-bold text-[#475569] uppercase">{replay.winner_strategy}</div>
+                      <div className="text-xs text-[#94a3b8]">WINNER</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#00ffff]">{replay.winner_resources}</div>
-                      <div className="text-xs text-[#00d9ff]">RESOURCES</div>
+                      <div className="text-2xl font-bold text-[#eab308]">{replay.winner_resources}</div>
+                      <div className="text-xs text-[#94a3b8]">RESOURCES</div>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-[#00d9ff] font-mono mb-4">
+                  <div className="flex items-center justify-between text-xs text-[#94a3b8] font-mono mb-4">
                     <span>SEED: {replay.seed}</span>
                     <span>{new Date(replay.created_at).toLocaleString()}</span>
                   </div>
@@ -147,3 +147,4 @@ export default function ReplaysPage() {
     </div>
   );
 }
+

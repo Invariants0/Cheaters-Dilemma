@@ -1,37 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 @import "tailwindcss";
 
 @layer base {
   :root {
-    /* Retro Game Aesthetic */
-    --bg-dark: #0a0e27;
-    --bg-darker: #050810;
-    --bg-card: #0f1629;
-    --text-primary: #00ffff;
-    --text-secondary: #00d9ff;
-    --text-accent: #ff00ff;
-    --border-color: #00ffff;
-    --border-accent: #ff00ff;
-    --success: #00ff00;
-    --warning: #ffff00;
-    --danger: #ff0055;
-    --info: #00d9ff;
+    /* Sleek Dark Aesthetic with Yellow/Blue/Red/Green Accents */
+    --bg-dark: #0f1419;
+    --bg-darker: #0a0d15;
+    --bg-card: #1a1f2e;
+    --text-primary: #eab308;
+    --text-secondary: #f8fafc;
+    --text-tertiary: #64748b;
+    --border-color: #475569;
+    --border-accent-blue: #3b82f6;
+    --border-accent-red: #dc2626;
+    --border-accent-green: #16a34a;
+    --border-accent-yellow: #eab308;
+    --success: #16a34a;
+    --warning: #eab308;
+    --danger: #dc2626;
+    --info: #3b82f6;
+    --font-pixel: "Press Start 2P", cursive;
   }
-}
 
-@layer base {
   body {
-    @apply bg-[#0a0e27] text-[#00ffff] font-mono;
-    background-image: 
-      linear-gradient(
-        rgba(0, 255, 255, 0.03) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        rgba(0, 255, 255, 0.03) 1px,
-        transparent 1px
-      );
-    background-size: 20px 20px;
+    @apply bg-[#0f1419] text-slate-300 font-mono;
+    background-color: #0f1419;
   }
 
   html {
@@ -44,35 +37,60 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-[#0a0e27];
+    @apply bg-[#0f1419];
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-[#00ffff] hover:bg-[#ff00ff];
+    @apply bg-slate-600 hover:bg-slate-500;
   }
 }
 
 @layer components {
-  /* Retro Panel with Pixel Borders */
+  /* Pixel Font for Titles */
+  .font-pixel {
+    font-family: var(--font-pixel);
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+
+  /* Retro Panel - Updated Colors */
   .retro-panel {
-    @apply bg-[#0f1629] border-2 border-[#00ffff] rounded-none;
-    box-shadow: 
-      inset 0 0 0 1px rgba(0, 255, 255, 0.3),
-      0 0 20px rgba(0, 255, 255, 0.2),
-      0 0 40px rgba(0, 255, 255, 0.1);
+    @apply bg-slate-900/50 border border-slate-700 rounded-sm;
+    box-shadow:
+      inset 0 0 0 1px rgba(71, 85, 105, 0.3),
+      0 0 15px rgba(71, 85, 105, 0.1);
   }
 
   .retro-panel:hover {
-    @apply border-[#ff00ff];
-    box-shadow: 
-      inset 0 0 0 1px rgba(255, 0, 255, 0.3),
-      0 0 30px rgba(255, 0, 255, 0.3),
-      0 0 60px rgba(0, 255, 255, 0.2);
+    @apply border-slate-600;
+    box-shadow:
+      inset 0 0 0 1px rgba(71, 85, 105, 0.4),
+      0 0 20px rgba(71, 85, 105, 0.2);
+  }
+
+  .retro-panel.panel-blue {
+    @apply border-blue-600/60 bg-blue-950/20;
+  }
+
+  .retro-panel.panel-red {
+    @apply border-red-600/60 bg-red-950/20;
+  }
+
+  .retro-panel.panel-green {
+    @apply border-green-600/60 bg-green-950/20;
+  }
+
+  .retro-panel.panel-yellow {
+    @apply border-yellow-600/60 bg-yellow-950/20;
   }
 
   /* Retro Button */
   .retro-button {
-    @apply px-4 py-2 font-mono font-bold text-[#00ffff] border-2 border-[#00ffff] bg-[#0a0e27] hover:bg-[#00ffff] hover:text-[#0a0e27] transition-all duration-200 hover:shadow-[0_0_20px_rgba(0,255,255,0.6)] cursor-pointer;
+    @apply px-4 py-2 font-mono font-bold text-slate-900 bg-yellow-500 border-2 border-yellow-600 hover:bg-yellow-400 hover:border-yellow-500 transition-all duration-200 hover:shadow-[0_0_10px_rgba(234,179,8,0.4)] cursor-pointer rounded-sm;
+  }
+
+  .retro-button:hover {
+    @apply transform -translate-y-0.5;
   }
 
   .retro-button:active {
@@ -81,26 +99,41 @@
 
   /* Retro Title */
   .retro-title {
-    @apply font-mono font-bold text-3xl text-[#00ffff] drop-shadow-[0_0_10px_rgba(0,255,255,0.8)];
-    text-shadow: 2px 2px 0px #ff00ff;
+    font-family: var(--font-pixel);
+    @apply text-3xl text-yellow-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)];
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+  }
+
+  @media (min-width: 768px) {
+    .retro-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .retro-title {
+      font-size: 3rem;
+    }
   }
 
   /* Retro Subtitle */
   .retro-subtitle {
-    @apply font-mono text-sm text-[#00d9ff];
-    text-shadow: 1px 1px 0px rgba(0, 255, 255, 0.5);
+    @apply font-mono text-sm text-white font-bold;
+    letter-spacing: 0.05em;
   }
 
   /* Stat Label */
   .stat-label {
-    @apply text-xs font-bold text-[#ff00ff] uppercase tracking-wider;
+    @apply text-xs font-bold text-yellow-500 uppercase tracking-wider font-mono;
   }
 
   .stat-value {
-    @apply text-xl font-bold text-[#00ffff] font-mono;
+    @apply text-lg font-bold text-yellow-400 font-mono;
   }
 
-  /* Glitch Effect */
+  /* Glitch Effect - Updated */
   .glitch {
     position: relative;
   }
@@ -116,14 +149,14 @@
   }
 
   .glitch::before {
-    animation: glitch 2s infinite;
-    color: #ff00ff;
+    animation: glitch 3s infinite;
+    color: #64748b;
     z-index: -1;
   }
 
   .glitch::after {
-    animation: glitch 2s infinite reverse;
-    color: #00d9ff;
+    animation: glitch 3s infinite reverse;
+    color: #94a3b8;
     z-index: -2;
   }
 
@@ -152,6 +185,10 @@
   }
 
   /* Scanlines Effect */
+  .scanlines {
+    position: relative;
+  }
+
   .scanlines::after {
     content: "";
     position: absolute;
@@ -161,11 +198,49 @@
     height: 100%;
     background: repeating-linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.15),
-      rgba(0, 0, 0, 0.15) 1px,
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.08) 1px,
       transparent 1px,
       transparent 2px
     );
     pointer-events: none;
+  }
+
+  /* Fadeup Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  /* Section Title Highlight */
+  .section-title {
+    font-family: var(--font-pixel);
+    @apply text-2xl mb-6;
+  }
+
+  .section-title.title-blue {
+    @apply text-blue-400;
+  }
+
+  .section-title.title-red {
+    @apply text-red-400;
+  }
+
+  .section-title.title-green {
+    @apply text-green-400;
+  }
+
+  .section-title.title-yellow {
+    @apply text-yellow-500;
   }
 }

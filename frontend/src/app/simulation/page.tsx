@@ -284,7 +284,7 @@ export default function SimulationPage() {
 
   if (!state.simulationId) {
     return (
-      <div className="w-full h-screen bg-[#0a0e27] p-8 flex items-center justify-center">
+      <div className="w-full h-screen bg-[#0f1419] p-8 flex items-center justify-center">
         <LaunchConfigPanel
           config={state.config}
           onConfigChange={(patch) => dispatch({ type: "SET_CONFIG", patch })}
@@ -336,9 +336,9 @@ export default function SimulationPage() {
         <div className="lg:col-span-2">
           <GamePanel title="WORLD VISUALIZATION" className="h-full">
             {!state.simulationState ? (
-              <div className="h-full flex items-center justify-center text-[#00d9ff] font-mono text-center">
+              <div className="h-full flex items-center justify-center text-[#94a3b8] font-mono text-center">
                 <div>
-                  <div className="text-xl font-bold text-[#00ffff] mb-4">&gt; READY TO LAUNCH &lt;</div>
+                  <div className="text-xl font-bold text-[#eab308] mb-4">&gt; READY TO LAUNCH &lt;</div>
                   <div className="text-sm opacity-50">Configure parameters and start simulation</div>
                 </div>
               </div>
@@ -361,12 +361,12 @@ export default function SimulationPage() {
                     <div className="space-y-2 text-xs font-mono">
                       {state.simulationState.agents.slice(0, 5).map((agent) => (
                         <div key={agent.agent_id} className="flex justify-between">
-                          <span className="text-[#00d9ff]">Agent {agent.agent_id}:</span>
-                          <span className="text-[#00ffff]">${agent.resources}</span>
+                          <span className="text-[#94a3b8]">Agent {agent.agent_id}:</span>
+                          <span className="text-[#eab308]">${agent.resources}</span>
                         </div>
                       ))}
                       {state.simulationState.agents.length > 5 && (
-                        <div className="text-[#00d9ff] opacity-50">... +{state.simulationState.agents.length - 5} more</div>
+                        <div className="text-[#94a3b8] opacity-50">... +{state.simulationState.agents.length - 5} more</div>
                       )}
                     </div>
                   </GamePanel>
@@ -374,36 +374,36 @@ export default function SimulationPage() {
                     <div className="space-y-2 text-xs font-mono">
                       {state.simulationState.agents.slice(0, 5).map((agent) => (
                         <div key={agent.agent_id} className="flex justify-between">
-                          <span className="text-[#00d9ff]">Agent {agent.agent_id}:</span>
-                          <span className="text-[#00ffff]">{agent.trust?.toFixed(2)}</span>
+                          <span className="text-[#94a3b8]">Agent {agent.agent_id}:</span>
+                          <span className="text-[#eab308]">{agent.trust?.toFixed(2)}</span>
                         </div>
                       ))}
                       {state.simulationState.agents.length > 5 && (
-                        <div className="text-[#00d9ff] opacity-50">... +{state.simulationState.agents.length - 5} more</div>
+                        <div className="text-[#94a3b8] opacity-50">... +{state.simulationState.agents.length - 5} more</div>
                       )}
                     </div>
                   </GamePanel>
                   <GamePanel title="METRICS">
                     <div className="space-y-2 text-xs font-mono">
                       <div className="flex justify-between">
-                        <span className="text-[#00d9ff]">GINI:</span>
-                        <span className="text-[#00ffff]">{state.simulationState.metrics?.gini_resources?.toFixed(3) || "0.000"}</span>
+                        <span className="text-[#94a3b8]">GINI:</span>
+                        <span className="text-[#eab308]">{state.simulationState.metrics?.gini_resources?.toFixed(3) || "0.000"}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#00d9ff]">HHI:</span>
-                        <span className="text-[#00ffff]">{state.simulationState.metrics?.hhi_resources?.toFixed(3) || "0.000"}</span>
+                        <span className="text-[#94a3b8]">HHI:</span>
+                        <span className="text-[#eab308]">{state.simulationState.metrics?.hhi_resources?.toFixed(3) || "0.000"}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#00d9ff]">AVG STR:</span>
-                        <span className="text-[#00ffff]">{state.simulationState.metrics?.avg_strength?.toFixed(2) || "0.00"}</span>
+                        <span className="text-[#94a3b8]">AVG STR:</span>
+                        <span className="text-[#eab308]">{state.simulationState.metrics?.avg_strength?.toFixed(2) || "0.00"}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#00d9ff]">AVG RES:</span>
-                        <span className="text-[#00ffff]">{state.simulationState.metrics?.avg_resources?.toFixed(2) || "0.00"}</span>
+                        <span className="text-[#94a3b8]">AVG RES:</span>
+                        <span className="text-[#eab308]">{state.simulationState.metrics?.avg_resources?.toFixed(2) || "0.00"}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#00d9ff]">GOV:</span>
-                        <span className="text-[#00ffff]">{state.simulationState.metrics?.governance_level?.toFixed(2) || "0.00"}</span>
+                        <span className="text-[#94a3b8]">GOV:</span>
+                        <span className="text-[#eab308]">{state.simulationState.metrics?.governance_level?.toFixed(2) || "0.00"}</span>
                       </div>
                     </div>
                   </GamePanel>
@@ -456,3 +456,4 @@ export default function SimulationPage() {
     </div>
   );
 }
+
